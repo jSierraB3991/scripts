@@ -2,11 +2,21 @@
 
 FOLDER_WALLPAPER="$HOME/Source/Wallpapers"
 #Tiemp en minutes
-TIME=300
+TIME=500
 
 while true; do
+    picture_number=$(echo $((1 + $RANDOM % $(ls $FOLDER_WALLPAPER | wc -l) )))
+    echo "image number $picture_number"
+    image=""
+    count=1
     for wallpaper in $(ls $FOLDER_WALLPAPER); do
-        feh --bg-fil $FOLDER_WALLPAPER/$wallpaper
-        sleep $TIME
+        if [ $count == $picture_number ]; then
+            image=$wallpaper
+            break
+        fi
+        let count+=1
     done
+    echo "change background with $image"
+    feh --bg-fil $FOLDER_WALLPAPER/$image
+    sleep $TIME
 done
