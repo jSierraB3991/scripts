@@ -17,6 +17,6 @@ while true; do
         let count+=1
     done
     echo "change background with $image"
-    feh --bg-fil $FOLDER_WALLPAPER/$image
+    feh --bg-fill $FOLDER_WALLPAPER/$image
     sleep $TIME
 done
