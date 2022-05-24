@@ -86,7 +86,7 @@ func ShowRandomsUsers(usersCmd *flag.FlagSet, sendToUrl *string, showName *bool,
             if err != nil {
                 fmt.Printf("fail send info to user with email %s\n", value.Email)
             } else {
-                fmt.Printf("success send info to user with email %s\n", value.Email)
+                fmt.Printf("success send info to user email: %s, password: %s\n", value.Email, value.Password)
             }
 
         } else {
