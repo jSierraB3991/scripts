@@ -22,4 +22,6 @@ func main() {
     }
     c := exec.Command(send, "Title", "Message body", "-i", "dialog-information")
     c.Run()
+    c = exec.Command(send, "Title", "Message body", "-i", "dialog-error")
+    c.Run()
 }
