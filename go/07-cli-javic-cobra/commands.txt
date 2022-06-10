@@ -1,0 +1,5 @@
+go mod init github.com/spf13/myapp
+cobra-cli init
+
+cobra-cli add mk
+cobra-cli add -p mkCmd mdl
