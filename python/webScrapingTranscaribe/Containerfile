@@ -1,0 +1,7 @@
+FROM  docker.io/library/python:3.10.5-buster
+RUN python -m pip install --upgrade pip
+RUN pip --version
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+COPY web-scraping-moovitapp-transcaribe.py .
+CMD [ "python", "./web-scraping-moovitapp-transcaribe.py" ]
