@@ -1,6 +1,12 @@
 build:
-	sudo podman build . -t scraping-transcaribe
+	sudo podman build ./Containerfile -t scraping-transcaribe
+build_docker:
+	sudo docker ./Dockerfile -t scraping-transcaribe
+
 run:
 	sudo podman run scraping-transcaribe
+run_docker:
+	sudo docker run scraping-transcaribe
 
+all_docker: build_docker run_docker
 all: build run
