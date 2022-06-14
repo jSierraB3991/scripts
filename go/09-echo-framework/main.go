@@ -37,7 +37,6 @@ func main() {
 				if pId == k {
 					product = p
 					break
-					break
 				}
 			}
 		}
@@ -45,6 +44,22 @@ func main() {
 		if product == nil {
 			return c.JSON(http.StatusNotFound, "Product Not Found")
 		}
+		return c.JSON(http.StatusOK, product)
+	})
+
+	e.POST("/products", func(c echo.Context) error {
+		type Body struct {
+			Name string `json:"product_name"`
+		}
+		var reqBody Body
+		if err := c.Bind(&reqBody); err != nil {
+			return err
+		}
+
+		product := map[int]string{
+			len(products) + 1: reqBody.Name,
+		}
+		products = append(products, product)
 		return c.JSON(http.StatusOK, product)
 	})
 
