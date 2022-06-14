@@ -36,6 +36,8 @@ func main() {
 			for k := range p {
 				if pId == k {
 					product = p
+					break
+					break
 				}
 			}
 		}
