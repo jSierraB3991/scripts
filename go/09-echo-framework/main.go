@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 )
 
@@ -20,9 +21,12 @@ func main() {
 	}
 	products := []map[int]string{{1: "Moviles"}, {2: "Tv"}, {3: "Laptops"}}
 	e := echo.New()
+	v := validator.New()
 
 	e.GET("/", hello)
+	// GET  products?pageSize=4
 	e.GET("/products", func(c echo.Context) error {
+		fmt.Printf("pageSize: %s\n", c.QueryParam("pageSize"))
 		return c.JSON(http.StatusOK, products)
 	})
 	e.GET("/products/:id", func(c echo.Context) error {
@@ -49,10 +53,18 @@ func main() {
 
 	e.POST("/products", func(c echo.Context) error {
 		type Body struct {
-			Name string `json:"product_name"`
+			Name string `json:"product_name" validate:"required,min=4"`
+			// Vendor string `json:"vendor" validate:"min=5,max=10"`
+			//Email string `json:"email" validate:"required_with=vendor,email"`
+			//Website string `json:"website" validate:"url"`
+			//Country string `json:"country" validate:"len=2"`
+			//DefaultDeviceIp string `json:"defaul_device_ip" validate:"ip"`
 		}
 		var reqBody Body
 		if err := c.Bind(&reqBody); err != nil {
+			return err
+		}
+		if err := v.Struct(reqBody); err != nil {
 			return err
 		}
 
