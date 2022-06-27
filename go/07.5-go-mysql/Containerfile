@@ -1,5 +1,0 @@
-FROM docker.io/library/mariadb:10.6.8-focal
-
-COPY up.sql /docker-entrypoint-initdb.d/1.sql
-
-CMD ["mariadbd"]
