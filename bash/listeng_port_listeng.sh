@@ -22,7 +22,7 @@ while true; do
                 done
                 if [ $is_add -eq 1 ]; then
                     port_change=$port_new
-                    notify-send "A port $port_change is change to up" -i dialog-information
+                    dunstify "PORT OPEN" "A port $port_change is change to up"
                 else
                     is_add=1
                 fi
@@ -40,7 +40,7 @@ while true; do
                     is_add=1
                 else
                     port_change=$port
-                    notify-send "A port $port_change is change to down" -i dialog-information
+                    dunstify "PORT CLOSE" "A port $port_change is change to down"
                 fi
             done
         fi
