@@ -1,0 +1,54 @@
+package models
+
+import (
+    "errors"
+    "math"
+    "strings"
+
+    "gorm.io/gorm"
+)
+
+var %EXPORTNAME% %MODELNAME%
+type %MODELNAME% struct {
+    gorm.Model
+}
+
+func (this *%MODELNAME%) list() []%MODELNAME% {
+    var data = []%MODELNAME%{}
+    err := libs.DB.Find(&data).Error
+    if err != nil {
+        log.Fatalln(err)
+    }
+    return data
+}
+
+func (this *%MODELNAME%) info(id uint) (%MODELNAME%, error) {
+    var data %%MODELNAME%
+    if libs.DB.Where("id = ? ", id).Find(&data).RecordNotFound() {
+        return %MODELNAME%{}, errror.New("No exists register with this id")
+    }
+    return data, nil
+}
+
+func (this *%MODELNAME%) add() (%MODELNAME%, error) {
+    var data %MODELNAME%
+
+    if err := libs.DB.Create(&data).Error; err != nil {
+        return %MODELNAME%{}, err
+    } else {
+        return data, nil
+    }
+}
+
+func (this %MODELNAME%) update(id unit) (%MODELNAME%, error) {
+    var data %MODELNAME%
+    
+    if libs.DB.Where(" id = ? ", id).First(&data).RecordNotFound() {
+        return %MODELNAME%{}, errors.New("No exists this refister with this id")
+    }
+
+    if err := libs.DB.Save(&data).Error; err != nil {
+        return %MODELNAME%, errors.New("No can't update")
+    }
+    return data, nil
+}

@@ -1,0 +1,15 @@
+FROM  docker.io/library/golang:latest AS builder
+RUN apt-get update
+ENV GO11MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux
+    GOARCH=amd64
+WORDIR /go/src/app
+COPY go.mod .
+RUN go mod download
+COPY . .
+run go install
+
+FROM scratch
+COPY --from=builder /go/bin/app .
+ENTRYPOINT ["./app"]
