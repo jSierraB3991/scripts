@@ -28,5 +28,5 @@ def moveFiles():
             print("no move name: ", name, "extension: ", extension)
 
 
-
-moveFiles()
+if "__main__" == __name__:
+    moveFiles()
