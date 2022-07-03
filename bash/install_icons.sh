@@ -3,7 +3,7 @@
 FOLDER="$HOME/Descargas/icons"
 THIS_FILE="$FOLDER/install_icons.sh"
 COUNT_FILES="$(ls $FOLDER | wc -l )"
-FOLDER_ICONS="$HOME/.icons"
+FOLDER_ICONS="$HOME/.icons/"
 
 function descompress() {
     file=$1
