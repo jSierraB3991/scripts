@@ -1,0 +1,11 @@
+[default]
+host = "127.0.0.1"
+port = "3306"
+database = "example_gorm"
+user = "root"
+password = "chrrot"
+charset = "utf8"
+sql_log = false
+
+MaxIdleConns = 10
+MaxOpenConns = 100
