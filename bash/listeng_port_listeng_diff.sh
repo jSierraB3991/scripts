@@ -15,12 +15,12 @@ while true; do
     port=$(diff <(echo "$old_ports") <(echo "$new_ports") | tail -1 | awk 'BEGIN{FS=":"} {print $2}' )
     if [ "$type_change" != "" ] && [ "$port" != "" ]; then
         echo "type: $type_change port: $port"
-        if [ "$type_change" == "2d1" ]; then
+        if [ "$(echo $type_change | grep '[0-9]d[0-9]')" != "" ]  ; then
             send_notification "DOWN" $port
-        elif [ "$type_change" == "1a2" ]  ; then
+        elif [ "$(echo $type_change | grep '[0-9]a[0-9]')" != "" ]  ; then
             send_notification "UP" $port
         fi
     fi
     old_ports=$new_ports
-    sleep 2
+    sleep 1
 done
