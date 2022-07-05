@@ -23,7 +23,7 @@ def moveFiles():
         name, extension = os.path.splitext(downloadFolder + filename)
 
         if extension != "":
-            if extension in [ ".jpg", ".jpeg", ".png" ]:
+            if extension in [ ".jpg", ".jpeg", ".png", ".webp" ]:
                 picture = Image.open(downloadFolder + filename)
                 newName = imageFolder + "compress_" + filename
                 picture.save(newName, optimize=True, quality=60)
@@ -35,7 +35,7 @@ def moveFiles():
                 print("Video move ", filename, " to ", videoFolder+filename)
             elif extension in [ ".pdf" ]:
                 os.rename(downloadFolder+filename, documentFolder+filename)
-                print("Document move ", filename, " to ", documentFolder+filename)
+                print(bcolors.OKGREEN + "Document move ", filename, " to ", documentFolder+filename + bcolors.END)
             else:
                 print(bcolors.WARNING + "no move name: ", name, "extension: ", extension + bcolors.ENDC)
 
