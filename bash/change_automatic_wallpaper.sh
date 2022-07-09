@@ -1,6 +1,6 @@
 #! /bin/bash
 
-FOLDER_WALLPAPER="$HOME/Source/Wallpapers"
+FOLDER_WALLPAPER="$HOME/Images/background"
 #Tiemp en minutes
 TIME=5
 

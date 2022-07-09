@@ -6,6 +6,7 @@ downloadFolder = "/home/lelouch/Descargas/"
 imageFolder="/home/lelouch/Imágenes/"
 videoFolder="/home/lelouch/Vídeos/"
 documentFolder="/home/lelouch/Documentos/"
+codeFolder="/home/lelouch/Code/"
 
 class bcolors:
     HEADER = '\033[95m'
@@ -33,9 +34,15 @@ def moveFiles():
             elif extension in [ ".mp4", ".mkv" ]:
                 os.rename(downloadFolder+filename, videoFolder+filename)
                 print("Video move ", filename, " to ", videoFolder+filename)
-            elif extension in [ ".pdf" ]:
+            elif extension in [ ".pdf", ".doc", ".docx", ".txt", ".xlsx" ]:
                 os.rename(downloadFolder+filename, documentFolder+filename)
-                print(bcolors.OKGREEN + "Document move ", filename, " to ", documentFolder+filename + bcolors.END)
+                print(bcolors.OKGREEN + "Document move ", filename, " to ", documentFolder+filename + bcolors.ENDC)
+            elif extension in [ ".py", ".sql", ".html" ]:
+                if not os.path.exists(codeFolder):
+                    os.mkdir(codeFolder)
+                    print(bcolors.OKGREEN + "Create folder ", codeFolder, bcolors.ENDC)
+                os.rename(downloadFolder+filename, codeFolder+filename)
+                print(bcolors.OKGREEN + "Document move ", filename, " to ", codeFolder+filename + bcolors.ENDC)
             else:
                 print(bcolors.WARNING + "no move name: ", name, "extension: ", extension + bcolors.ENDC)
 
