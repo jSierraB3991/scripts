@@ -2,7 +2,7 @@
 
 FOLDER_WALLPAPER="$HOME/Source/Wallpapers"
 #Tiemp en minutes
-TIME=500
+TIME=5
 
 while true; do
     picture_number=$(echo $((1 + $RANDOM % $(ls $FOLDER_WALLPAPER | wc -l) )))
@@ -18,5 +18,5 @@ while true; do
     done
     echo "change background with $image"
     feh --bg-fill $FOLDER_WALLPAPER/$image
-    sleep $TIME
+    sleep $((TIME * 60))
 done
