@@ -33,7 +33,7 @@ def moveFiles():
                 print(bcolors.OKGREEN + "remove images ", downloadFolder + filename + bcolors.ENDC)
             elif extension in [ ".mp4", ".mkv" ]:
                 os.rename(downloadFolder+filename, videoFolder+filename)
-                print("Video move ", filename, " to ", videoFolder+filename)
+                print(bcolors.OKGREEN + "Video move ", filename, " to ", videoFolder+filename + bcolors.ENDC)
             elif extension in [ ".pdf", ".doc", ".docx", ".txt", ".xlsx" ]:
                 os.rename(downloadFolder+filename, documentFolder+filename)
                 print(bcolors.OKGREEN + "Document move ", filename, " to ", documentFolder+filename + bcolors.ENDC)
