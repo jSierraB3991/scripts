@@ -9,7 +9,7 @@ function descompress() {
     7z l $FOLDER/$file 2>/dev/null 1>/dev/null
     if [ "$?" == "0" ]; then
         echo "Descompress file $file"
-        7z x $FOLDER/$file
+        7z x $FOLDER/$file 1>/dev/nul
         rm -r $FOLDER/$file
     fi
 
@@ -40,8 +40,20 @@ function moveToFolderCursorIcons() {
     done
 }
 
-main
-main
-main
+while true; do
+    hasCompressFile=false
+    for element in $(lsd $FOLDER); do
+        7z l $FOLDER/$element 1>/dev/null 2>/dev/null
+        if [ "$?" != "2" ];then
+            hasCompressFile=true
+        fi
+    done
+
+    if [ "$hasCompressFile" == "true" ]; then
+        main
+    else
+        break
+    fi
+done
 
 moveToFolderCursorIcons
