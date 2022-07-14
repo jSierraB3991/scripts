@@ -46,6 +46,7 @@ while true; do
         7z l $FOLDER/$element 1>/dev/null 2>/dev/null
         if [ "$?" != "2" ];then
             hasCompressFile=true
+            break
         fi
     done
 
