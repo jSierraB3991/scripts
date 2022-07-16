@@ -56,7 +56,7 @@ function get_comman_container() {
 }
 
 
-#TODO: VALIDATE WITH HOST AND VERIFY IN DOCKER AND LOCAL
+#TODO: VALIDATE WITH HOST AND VERIFY LOCAL
 function validate_host() {
 
     if [ "$HOST" == "local" ]; then
@@ -105,7 +105,9 @@ function validate_table() {
 
     table_in_db=""
     if [ "$TYPE_DATABASE" == "postgres" ]; then
-        db_in_host=$($command_container psql -U postgres -d $DATABASE -c "\dt" | awk '{print $3}' |grep $TABLE)
+        read -p "What schema using? " SCHEMA
+        $command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $SCHEMA.$TABLE" 2>/dev/null 1>/dev/null
+        db_in_host="$?"
     else
         echo "Database incorrect"
         exit 1
@@ -120,6 +122,7 @@ HOST="local"
 TYPE_DATABASE=""
 DATABASE=""
 TABLE=""
+SCHEMA=""
 while getopts "t:d:y:l:h" FLAG; do
     case "${FLAG}" in
         t) TABLE="${OPTARG}" ;;
@@ -164,9 +167,9 @@ done
 function extract_data() {
     command_container=$(get_comman_container)
     if [ "$TYPE_DATABASE" == "postgres" ]; then
-        number_data=$($command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $TABLE;" | wc -l)
-        headers_db=$($command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $TABLE;" | head -1)
-        $command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $TABLE;"  \
+        number_data=$($command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $SCHEMA.$TABLE;" | wc -l)
+        headers_db=$($command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $SCHEMA.$TABLE;" | head -1)
+        $command_container psql -U postgres -d $DATABASE -c "SELECT * FROM $SCHEMA.$TABLE;"  \
             | head -$((number_data-2)) \
             | tail -$((number_data-4)) > $HOME/.local/data/to_json.txt
 
