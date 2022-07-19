@@ -28,6 +28,7 @@ def moveFiles():
                 picture = Image.open(downloadFolder + filename)
                 newName = imageFolder + "compress_" + filename
                 picture.save(newName, optimize=True, quality=60)
+                print(bcolors.OKBLUE + "Compreess Image ", filename , " to " + newName + bcolors.ENDC)
                 print(bcolors.OKGREEN + "Image save in ", newName + bcolors.ENDC)
                 os.remove(downloadFolder + filename)
                 print(bcolors.OKGREEN + "remove images ", downloadFolder + filename + bcolors.ENDC)
