@@ -82,15 +82,16 @@ function what_image() {
 }
 
 function run_mongo_inscription() {
-    volumes=" -v $ZABUD_HOME/data/mongo_inscription:/data/db"
+    volumes=" -v $REPOS_HOME/data/mongo_inscription:/data/db"
     echo -e "\e[32mRUN CONTAINER mongo-inscription\e[0m"
 
-    sudo $(what_container) run --rm -d --network host $volumes --name mongo-inscription $(what_image mongo):5.0.3-focal
+    echo "sudo $(what_container) run --rm -d -p 27017:27017 $volumes --name mongo-inscription $(what_image mongo):5.0.3-focal"
+    sudo $(what_container) run --rm -d -p 27017:27017 $volumes --name mongo-inscription $(what_image mongo):5.0.3-focal
 }
 
 function run_mysql_database() {
     mysql_data="mysql_database"
-    sudo $(what_container) run --rm -d --network host --name $mysql_data -v $ZABUD_HOME/data/$mysql_data:/var/lib/mysql -e MARIADB_USER=mariadb -e MARIADB_ROOT_PASSWORD=chroot -e MARIADB_PASSWORD=root mariadb:10.6.5-focal
+    sudo $(what_container) run --rm -d -p 3306:3306 --name $mysql_data -v $REPOS_HOME/data/$mysql_data:/var/lib/mysql -e MARIADB_USER=mariadb -e MARIADB_ROOT_PASSWORD=chroot -e MARIADB_PASSWORD=root mariadb:10.6.5-focal
 }
 
 function run-postgre-database() {
@@ -100,9 +101,9 @@ function run-postgre-database() {
     array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial)
     tiemp_of_sleep=4
 
-    volumes=" -v $ZABUD_HOME/data/$name:/var/lib/postgresql/data"
+    volumes=" -v $REPOS_HOME/data/$name:/var/lib/postgresql/data"
     enviorment=" -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -e POSTGRES_PASSWORD=root"
-    configurations=" run --rm -d --network host --name $name $volumes $enviorment"
+    configurations=" run --rm -d -p $port:5432 --name $name $volumes $enviorment"
 
     echo -e "\e[32mRUN CONTAINER $name\e[0m"
     sudo $container_provider $configurations postgres:12.9-alpine
@@ -128,7 +129,7 @@ function pg_docker_dbs() {
 
 function queue_activemq() {
     echo -e "\e[32mRUN CONTAINER activemq\e[0m"
-    sudo $(what_container) run --rm --name activemq -d --network host rmohr/activemq:5.14.0-alpine
+    sudo $(what_container) run --rm --name activemq -d -p 8161:8161 -p 61616:61616 rmohr/activemq:5.14.0-alpine
 }
 
 function get_ip() {
@@ -152,7 +153,7 @@ function zookeeper_kafka() {
     echo -e "\e[32mVerifing container zookeeper\e[0m"
     if [ "$id_container_of_zookeper" == "" ]; then
     echo -e "\e[32mRUN CONTAINER Zookeeper\e[0m"
-        sudo $container_provider run --rm --name zookeeper -d --network host wurstmeister/zookeeper
+        sudo $container_provider run --rm --name zookeeper -d -p 2181:2181 wurstmeister/zookeeper
     else
         echo "The container of Zookeeper zookeeper is already exists"
     fi
@@ -162,7 +163,7 @@ function zookeeper_kafka() {
         ip_private=$(get_ip)
         enviorment=" -e KAFKA_ADVERTISED_HOST_NAME=$ip_private"
         enviorment="$enviorment -e KAFKA_ZOOKEEPER_CONNECT=$ip_private:2181"
-        configurations="--rm --name kafka -d --network host $enviorment"
+        configurations="--rm --name kafka -d -p 9092:9092 $enviorment"
         echo -e "\e[32mRUN CONTAINER Kafka\e[0m"
         sudo $container_provider run $configurations wurstmeister/kafka
     else
@@ -187,15 +188,15 @@ function create_image_zabud() {
            [ $response == "s" ] || 
            [ $response == "Y" ] || 
            [ $response == "S" ]; then
-            if [ -d $ZABUD_HOME/$name_repo ]; then 
-                cd $ZABUD_HOME/$name_repo
-                if [ ! -f $ZABUD_HOME/$name_repo/Dockerfile ]; then
+            if [ -d $REPOS_HOME/$name_repo ]; then 
+                cd $REPOS_HOME/$name_repo
+                if [ ! -f $REPOS_HOME/$name_repo/Dockerfile ]; then
                     cp $DOT_FILES/Docker/spring-Dockerfile ./Dockerfile
                 fi
                 echo -e "\e[32mGenerate Image $name_repo\e[0m"
                 sudo $container_provider build -t $name_repo:1.0 .
             else
-                echo "The repo $name_repo is not exists in $ZABUD_HOME"
+                echo "The repo $name_repo is not exists in $REPOS_HOME"
             fi
         fi
     fi
@@ -207,7 +208,7 @@ function create_image_zabud() {
             db_connection="-e POSTGRE_DB=$db -e KAFKA=$db -e ACTIVEMQ=$db -e DISCOVERY=$db -e MONGO=$db"
         fi
         echo $db_connection
-        sudo $container_provider run --rm -d $db_connection --network host --name $name_repo $name_repo:$version
+        sudo $container_provider run --rm -d $db_connection -p $port_out:$port_in --name $name_repo $name_repo:$version
     fi
     cd $folder
 }
@@ -254,8 +255,8 @@ if [ "$isRunning" == "stopped" ]; then
     sudo rc-service $container start
 fi
 
-if [ -z $ZABUD_HOME ]; then
-    echo "I Need enviroment varible ZABUD_HOME"
+if [ -z $REPOS_HOME ]; then
+    echo "I Need enviroment varible REPOS_HOME"
 elif [ -z $DOT_FILES ]; then
     echo "I Need enviroment varible DOT_FILES"
 else
