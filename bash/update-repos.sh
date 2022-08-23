@@ -1,6 +1,6 @@
 #! /bin/bash
 FOLDER=$(echo "${PWD}")
-SHOW_WITH="echo"
+SHOW_WITH="cowsay"
 
 set -e
 
