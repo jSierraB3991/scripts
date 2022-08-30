@@ -98,7 +98,7 @@ function run-postgre-database() {
     container_provider=$(what_container)
     port=5432
     name=postgre_zabud
-    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial)
+    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment)
     tiemp_of_sleep=4
 
     volumes=" -v $REPOS_HOME/data/$name:/var/lib/postgresql/data"
@@ -158,9 +158,9 @@ function zookeeper_kafka() {
         echo "The container of Zookeeper zookeeper is already exists"
     fi
 
+    ip_private=$(get_ip)
     echo -e "\e[32mVerifing container Kafka\e[0m"
     if [ "$id_container_of_kafka" == "" ]; then
-        ip_private=$(get_ip)
         enviorment=" -e KAFKA_ADVERTISED_HOST_NAME=$ip_private"
         enviorment="$enviorment -e KAFKA_ZOOKEEPER_CONNECT=$ip_private:2181"
         configurations="--rm --name kafka -d -p 9092:9092 $enviorment"
@@ -169,6 +169,10 @@ function zookeeper_kafka() {
     else
         echo "The container of Kafka kafka is already exists"
     fi
+
+    port_kafka_ui=2002
+    echo -e "\e[32mRUN CONTAINER UI Web Of Kafka in Port $port_kafka_ui \e[0m"
+    sudo $container_provider run -p 2002:8080 -e KAFKA_CLUSTERS_0_NAME=local -e KAFKA_CLUSTERS_0_ZOOKEEPER=$ip_private:2181 -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=$ip_private:9092  -d provectuslabs/kafka-ui:latest
 }
 
 function create_image_zabud() {
