@@ -172,7 +172,7 @@ function zookeeper_kafka() {
 
     port_kafka_ui=2002
     echo -e "\e[32mRUN CONTAINER UI Web Of Kafka in Port $port_kafka_ui \e[0m"
-    sudo $container_provider run -p 2002:8080 -e KAFKA_CLUSTERS_0_NAME=local -e KAFKA_CLUSTERS_0_ZOOKEEPER=$ip_private:2181 -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=$ip_private:9092  -d provectuslabs/kafka-ui:latest
+    sudo $container_provider run -p $port_kafka_ui:8080 -e KAFKA_CLUSTERS_0_NAME=local -e KAFKA_CLUSTERS_0_ZOOKEEPER=$ip_private:2181 -e KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=$ip_private:9092  -d provectuslabs/kafka-ui:latest
 }
 
 function create_image_zabud() {
