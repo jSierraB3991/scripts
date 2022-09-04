@@ -3,6 +3,7 @@ package main
 import (
 	"archive/zip"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -46,7 +47,6 @@ func GetMainBranchName(username string, reponame string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-
 	data, _ := ioutil.ReadAll(response.Body)
 	// bodyStr := string(data)
 	var obj GitHubResponse
@@ -59,12 +59,14 @@ func GetMainBranchName(username string, reponame string) (string, error) {
 
 func checkError(err error) {
 	if err != nil {
+		if _, err := os.Stat(".templify-temp"); !errors.Is(err, os.ErrNotExist) {
+			_ = os.RemoveAll(".templify-temp")
+		}
 		panic(err)
 	}
 }
 
 func DownloadFile(filepath string, reponame string, url string) error {
-
 	req, _ := http.NewRequest("GET", url, nil)
 	resp, _ := http.DefaultClient.Do(req)
 	defer resp.Body.Close()
@@ -187,11 +189,11 @@ func main() {
 
 	isGitInstall := checkGitInstall()
 	if isGitInstall {
-		fmt.Println("Download file")
 		// Create temp folder
 		tempDir := ".templify-temp"
 		err := os.Mkdir(".templify-temp", 0755)
 		checkError(err)
+		fmt.Println("Download file")
 		DownloadZip(ownerRepo, repoName, branchName, tempDir, repoName)
 	} else {
 		fmt.Println("Clone file")
