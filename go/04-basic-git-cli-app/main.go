@@ -188,7 +188,7 @@ func main() {
 	}
 
 	isGitInstall := checkGitInstall()
-	if isGitInstall {
+	if !isGitInstall {
 		// Create temp folder
 		tempDir := ".templify-temp"
 		err := os.Mkdir(".templify-temp", 0755)
