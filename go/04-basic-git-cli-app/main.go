@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/go-git/go-git/v5"
 	"github.com/schollz/progressbar/v3"
 )
 
@@ -150,16 +151,11 @@ func DownloadZip(ownerRepo string, repoName string, branchName string, tempDir s
 	defer os.RemoveAll(tempDir)
 }
 
-func CloneRepo(urlRepo string) {
-	gitBin, _ := exec.LookPath("git")
-	cmd := &exec.Cmd{
-		Path:   gitBin,
-		Args:   []string{gitBin, "clone", urlRepo},
-		Stdout: os.Stdout,
-		Stdin:  os.Stdin,
-	}
-
-	err := cmd.Run()
+func CloneRepo(urlRepo string, path string) {
+	_, err := git.PlainClone(path, false, &git.CloneOptions{
+		URL:      urlRepo,
+		Progress: os.Stdout,
+	})
 	checkError(err)
 }
 
@@ -197,7 +193,7 @@ func main() {
 		DownloadZip(ownerRepo, repoName, branchName, tempDir, repoName)
 	} else {
 		fmt.Println("Clone file")
-		CloneRepo(urlRepo)
+		CloneRepo(urlRepo, repoName)
 	}
 
 	fmt.Printf("\nbranch:%v\nrepo:%v\noutputName: %v\n", branchName, urlRepo, repoName)
