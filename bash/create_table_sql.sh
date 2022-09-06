@@ -48,7 +48,19 @@ while $add_table; do
         BODY_OF_COLUMN="$BODY_OF_COLUMN $column_name $column_type $null_value $default_value $comma"
     done
 
+    sequence_sub="_seq"
+    sequence_id="$table_name$sequence_sub"
+    key_name_sub="_pkey"
+    key_name="$table_name$key_name_sub"
     SQL="$SQL CREATE TABLE $table_name ( $BODY_OF_COLUMN );"
+    SQL="$SQL ALTER TABLE $table_name OWNER TO \${flyway:user}; "
+    
+    SQL="$SQL CREATE SEQUENCE $sequence_id START WITH 1 INCREMENT BY 1 NO MINVALUE NO MAXVALUE CACHE 1;"
+    SQL="$SQL ALTER TABLE $sequence_id OWNER TO \${flyway:user};"
+    SQL="$SQL ALTER TABLE ONLY $table_name ALTER COLUMN id SET DEFAULT nextval('$sequence_id'::regclass);"
+    SQL="$SQL ALTER TABLE ONLY $table_name ADD CONSTRAINT $key_name PRIMARY KEY (id);"
+
+    echo ""
     read -p "¿Want do you add new table? y/n: " another_table
     if [ "$another_table" == "n" ] || [ "$another_table" == "N" ]; then
         add_table=false
