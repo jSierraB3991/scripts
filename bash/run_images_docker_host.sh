@@ -225,18 +225,6 @@ function zabud_discovery() {
     create_image_zabud zabud-discovery-ms 8761 8761
 }
 
-function zabud_tronos_core() {
-    create_image_zabud zabud-tronos-core-ms 8081 8081 $( get_ip )
-}
-
-function zabud_tronos_reports() {
-    create_image_zabud zabud-tronos-reports-ms 5000 5000 $( get_ip )
-}
-
-function zabud_tronos_planning() {
-    create_image_zabud zabud-tronos-planning-ms 8082 8082 $( get_ip )
-}
-
 function run_help() {
     echo -e "\nrun_zabud_images.sh [-r [OPTIONS]]" \
         "\noptions | containers configurate:" \
@@ -245,10 +233,7 @@ function run_help() {
         "\n\tqueue_activemq" \
         "\n\tzookeeper_kafka | Zookeeper and Kafka" \
         "\n\tzabud_discovery" \
-        "\n\tzabud_tronos_reports" \
-        "\n\tzabud_tronos_planning" \
         "\n\tmysql_database" \
-        "\n\tzabud_tronos_core"
 }
 
 function error_to_help() {
@@ -291,9 +276,6 @@ else
             "queue_activemq") verify_container activemq queue_activemq;;
             "zookeeper_kafka") zookeeper_kafka;;
             "zabud_discovery") verify_container zabud-discovery zabud_discovery;;
-            "zabud_tronos_core") verify_container zabud-tronos-core-ms zabud_tronos_core;;
-            "zabud_tronos_reports") verify_container zabud-tronos-reports-ms zabud_tronos_reports;;
-            "zabud_tronos_planning") verify_container zabud-tronos-planning-ms zabud_tronos_planning;;
             "mysql_database") verify_container mysql_database run_mysql_database;;
             *)  error_to_help "The container $2 not configurate";;
         esac
