@@ -233,7 +233,7 @@ function run_help() {
         "\n\tqueue_activemq" \
         "\n\tzookeeper_kafka | Zookeeper and Kafka" \
         "\n\tzabud_discovery" \
-        "\n\tmysql_database" \
+        "\n\tmysql_database"
 }
 
 function error_to_help() {
