@@ -26,6 +26,7 @@ fi
 for repo in $(ls $REPOS_HOME)
 do
     if [ -d $REPOS_HOME/$repo ] && [ -d $REPOS_HOME/$repo/.git ]; then
+
 	cd $REPOS_HOME/$repo
         if [ "$repo" == $CONFIGURATION_REPO ]; then
             if [ $# -eq 1 ] && [ "$1" == "-y" ]; then
@@ -41,6 +42,8 @@ do
             branch=$(git branch --show-current)
             #branch="develop"
             git checkout $branch
+            echo "------------------------------------------------------------------------"
+            echo -e "-----------------Updating $repo--------------------------\n"
             git pull origin $branch
         fi
 
