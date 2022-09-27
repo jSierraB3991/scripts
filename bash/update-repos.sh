@@ -12,10 +12,6 @@ fi
 FAIL_ENV=""
 if [ -z $REPOS_HOME ]; then
     FAIL_ENV="REPOS_HOME"
-elif [ -z $CONFIGURATION_REPO ]; then
-    FAIL_ENV="CONFIGURATION_REPO"
-elif [ "$CONFIGURATION_BRANCHS" == "" ]; then
-    FAIL_ENV="CONFIGURATION_BRANCHS"
 fi
 
 if [ "$FAIL_ENV" != "" ]; then
