@@ -100,7 +100,6 @@ function run-postgre-database() {
     name=postgre_zabud
     array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment)
     tiemp_of_sleep=6
-    pg_admin_port=2006
 
     volumes=" -v $REPOS_HOME/data/$name:/var/lib/postgresql/data"
     enviorment=" -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -e POSTGRES_PASSWORD=root"
@@ -122,9 +121,6 @@ function run-postgre-database() {
             echo "The database $db_name already exists"
         fi
     done
-
-    echo -e "\e[32mRun Pg Admin on Port $pg_admin_port\e[0m"
-    sudo docker run -d -p $pg_admin_port:80 -e PGADMIN_DEFAULT_EMAIL=$DEFAULT_EMAIL -e PGADMIN_DEFAULT_PASSWORD=$DEFAULT_PASSWORD dpage/pgadmin4
 }
 
 function pg_docker_dbs() {
