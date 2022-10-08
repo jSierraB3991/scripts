@@ -161,9 +161,10 @@ function zookeeper_kafka() {
     ip_private=$(get_ip)
     echo -e "\e[32mVerifing container Kafka\e[0m"
     if [ "$id_container_of_kafka" == "" ]; then
+        volumes=" -v $REPOS_HOME/kafka:/kafka"
         enviorment=" -e KAFKA_ADVERTISED_HOST_NAME=$ip_private"
         enviorment="$enviorment -e KAFKA_ZOOKEEPER_CONNECT=$ip_private:2181"
-        configurations="--rm --name kafka -d -p 9092:9092 $enviorment"
+        configurations="--rm --name kafka -d -p 9092:9092 $enviorment $volumes"
         echo -e "\e[32mRUN CONTAINER Kafka\e[0m"
         sudo $container_provider run $configurations wurstmeister/kafka
     else
