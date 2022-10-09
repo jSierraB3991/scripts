@@ -1,6 +1,6 @@
 #! /bin/bash
 
-FOLDER="$HOME/Descargas/icons"
+FOLDER="$HOME/Downloads/icons"
 COUNT_FILES="$(ls $FOLDER | wc -l )"
 FOLDER_ICONS="$HOME/.icons/"
 
@@ -28,7 +28,7 @@ function main() {
 
     while true; do
         hasCompressFile=false
-        for element in $(lsd $FOLDER); do
+        for element in $(ls $FOLDER); do
             7z l $FOLDER/$element 1>/dev/null 2>/dev/null
             if [ "$?" != "2" ];then
                 hasCompressFile=true
@@ -37,7 +37,7 @@ function main() {
         done
 
         if [ "$hasCompressFile" == "true" ]; then
-            for element in $(lsd $FOLDER); do
+            for element in $(ls $FOLDER); do
                 7z l $FOLDER/$element 1>/dev/null 2>/dev/null
                 if [ "$?" != "2" ];then
                     descompress $element
