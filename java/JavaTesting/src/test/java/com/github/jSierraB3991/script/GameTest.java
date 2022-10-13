@@ -20,7 +20,7 @@ public class GameTest {
     private Scanner scanner;
 
     @Test
-    public void when_writeQuit_then_exitGame() {
+    public void when_writeAnyOptions_then_notErrorsForExit() {
         when(scanner.nextLine())
                 .thenReturn("Paper")
                 .thenReturn("Rock")
