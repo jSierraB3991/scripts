@@ -215,4 +215,16 @@ public class GameTest {
         assertTrue(outputStream.toString().contains("loses:1"));
         assertTrue(outputStream.toString().contains("you lose."));
     }
+
+    @Test
+    public void when_playerNoChooseValid_then_anotherChance() {
+        when(scanner.nextLine())
+                .thenReturn("Bad")
+                .thenReturn(USER_PAPER)
+                .thenReturn(USER_QUIT);
+
+        game.play();
+
+        assertTrue(outputStream.toString().contains("Sorry, it looks like you didn't enter a correct input. Try again."));
+    }
 }
