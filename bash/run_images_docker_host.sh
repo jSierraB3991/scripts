@@ -239,10 +239,20 @@ function error_to_help() {
 }
 
 container=$(what_container)
-isRunning=$(rc-service $container status | awk '{print $3}' )
-if [ "$isRunning" == "stopped" ]; then
-    echo "running $contareports"
-    sudo rc-service $container start
+
+type rc-service 2>/dev/null 1>/dev/null
+if [ "$?" != "0" ]; then
+    isRunning=$(systemctl status $container | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
+    if [ "$isRunning" == "deadd" ]; then
+        echo "running $contareports"
+        sudo systemctl start $container
+    fi
+else 
+    isRunning=$(rc-service $container status | awk '{print $3}' )
+    if [ "$isRunning" == "stopped" ]; then
+        echo "running $contareports"
+        sudo rc-service $container start
+    fi
 fi
 
 if [ -z $REPOS_HOME ]; then
