@@ -8,81 +8,67 @@ public class Game {
     private Random random = new Random();
 
     public void play() {
-        //start game
-        System.out.println("Let's play Rock, Paper, Scissors!");
-        System.out.println("Say \"Rock\", \"Paper\", or \"Scissors\" to indicate your choice. Otherwise say \"Quit\" to quit.");
-        String choice = input.nextLine(); //prompt response
-        choice = choice.toLowerCase(); //change to lowercase for consistency
-
-        //initialize variables
-        int tienum = 0;
-        int winnum = 0;
-        int lossnum = 0;
-
-        while (!choice.equals("quit")) //do the following if the user does not put in "quit"
-        {
-            int choicenum = 0;
-            if (choice.equals("rock")) //assign numbers to string
-            {
-                choicenum = 1;
-            } else if (choice.equals("paper")) //assign numbers to string
-            {
-                choicenum = 2;
-            } else if (choice.equals("scissors"))//assign numbers to string
-            {
-                choicenum = 3;
-            } else //not valid responses
-            {
-                while (choicenum == 0) //continue while user input is still not valid
-                {
-                    System.out.println("Sorry, it looks like you didn't enter a correct input. Try again.");
-                    choice = input.nextLine();
-                    choice = choice.toLowerCase();
-                    if (choice.equals("rock")) {
-                        choicenum = 1;
-                    } else if (choice.equals("paper")) {
-                        choicenum = 2;
-                    } else if (choice.equals("scissors")) {
-                        choicenum = 3;
-                    } else if (choice.equals("quit"))
-                        System.exit(0); //quit program
-                }
-            }
-            int compnum = (int) (random.nextInt(3)) + 1;//computer generate random num
-            //print computer choice
-            if (compnum == 1) System.out.println("Computer chose rock");
-            if (compnum == 2) System.out.println("Computer chose paper");
-            if (compnum == 3) System.out.println("Computer chose scissors");
-
-
-            if (choicenum == compnum) //tie cases
-            {
-                System.out.println("It's a tie");
-                tienum++;
-            } else if (choicenum == 1 && compnum == 3) //user wins rock vs scissors
-            {
-                System.out.println("you win!");
-                winnum++;
-            } else if (choicenum == 3 && compnum == 2) //user wins scissors vs paper
-            {
-                System.out.println("you win!");
-                winnum++;
-            } else if (choicenum == 2 && compnum == 1) //user wins paper vs rock
-            {
-                System.out.println("you win!");
-                winnum++;
-            } else //otherwise computer wins
-            {
-                System.out.println("you lose.");
-                lossnum++;
-            }
-            System.out.println("wins:" + winnum + "\nloses:" + lossnum + "\nties:" + tienum); //print out number of wins, ties, and loses
-            System.out.println("Let's play again! \n \n"); //start game again
+        ScoreDahBoard dahBoard = new ScoreDahBoard();
+        GameOptions option = null;
+        do {
+            System.out.println("Let's play Rock, Paper, Scissors!");
             System.out.println("Say \"Rock\", \"Paper\", or \"Scissors\" to indicate your choice. Otherwise say \"Quit\" to quit.");
-            choice = input.nextLine(); //prompt for new user input
-            choice = choice.toLowerCase();
+            option = findChoose(input.nextLine());
+            if (option == null){
+                System.out.println("Sorry, it looks like you didn't enter a correct input. Try again.");
+            } else if (option != GameOptions.QUIT) {
+                GameOptions optionPc = generateChoosePc();
+                decideWins(dahBoard, option, optionPc);
+                printResults(dahBoard);
+            }
+        }while (option != GameOptions.QUIT);
+    }
+
+    private static void decideWins(ScoreDahBoard dahBoard, GameOptions option, GameOptions optionPc) {
+        if (option == optionPc) {
+            playTie(dahBoard);
+        } else if ((option == GameOptions.ROCK && optionPc == GameOptions.SCISSORS)
+            || (option == GameOptions.SCISSORS && optionPc == GameOptions.PAPER)
+            || (option == GameOptions.PAPER && optionPc == GameOptions.ROCK) ) {
+            playerWins(dahBoard);
+        } else {
+            playerLose(dahBoard);
         }
-        if (choice.equals("quit")) //if user prints "quit", then quit program
-            return;
+    }
+
+    private static void playerLose(ScoreDahBoard dahBoard) {
+        System.out.println("you lose.");
+        dahBoard.incrementLose();
+    }
+
+    private static void playerWins(ScoreDahBoard dahBoard) {
+        System.out.println("you win!");
+        dahBoard.incrementWins();
+    }
+
+    private static void playTie(ScoreDahBoard dahBoard) {
+        System.out.println("It's a tie");
+        dahBoard.incrementTies();
+    }
+
+    private GameOptions generateChoosePc() {
+        int randomValue = random.nextInt(3);
+        GameOptions option = GameOptions.values()[randomValue];
+        System.out.println("Computer chose " + option.toString().toLowerCase());
+        return option;
+    }
+
+    private GameOptions findChoose(String choose) {
+        GameOptions options = null;
+        try {
+            options = GameOptions.valueOf(choose.toUpperCase());
+        }catch (Exception ex){
+            return null;
+        }
+        return options;
+    }
+
+    private static void printResults(ScoreDahBoard dahBoard) {
+        System.out.println("wins:" + dahBoard.getWins() + "\nloses:" + dahBoard.getLose() + "\nties:" + dahBoard.getTies());
     }
 }
