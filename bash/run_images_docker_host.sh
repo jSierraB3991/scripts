@@ -98,7 +98,7 @@ function run-postgre-database() {
     container_provider=$(what_container)
     port=5432
     name=postgre_zabud
-    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment)
+    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment zabud_tronos_teacher_ms zabud_tronos_request)
     tiemp_of_sleep=6
 
     volumes=" -v $REPOS_HOME/data/$name:/var/lib/postgresql/data"
@@ -162,7 +162,7 @@ function zookeeper_kafka() {
     echo -e "\e[32mVerifing container Kafka\e[0m"
     if [ "$id_container_of_kafka" == "" ]; then
         volumes=" -v $REPOS_HOME/kafka:/kafka"
-        enviorment=" -e KAFKA_ADVERTISED_HOST_NAME=$ip_private"
+        enviorment="-e KAFKA_ADVERTISED_HOST_NAME=$ip_private"
         enviorment="$enviorment -e KAFKA_ZOOKEEPER_CONNECT=$ip_private:2181"
         configurations="--rm --name kafka -d -p 9092:9092 $enviorment $volumes"
         echo -e "\e[32mRUN CONTAINER Kafka\e[0m"
