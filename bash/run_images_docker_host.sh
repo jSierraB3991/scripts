@@ -1,6 +1,9 @@
 #! /bin/bash
 
 folder=$(echo "${PWD}")
+postgre_version="14.6-alpine"
+
+
 
 function what_container() {
     if [ "$(which docker)" != "" ]; then
@@ -106,7 +109,7 @@ function run-postgre-database() {
     configurations=" run --rm -d -p $port:5432 --name $name $volumes $enviorment"
 
     echo -e "\e[32mRUN CONTAINER $name\e[0m"
-    sudo $container_provider $configurations postgres:12.9-alpine
+    sudo $container_provider $configurations postgres:$postgre_version
 
     echo "Sleeping $tiemp_of_sleep seconds"
     sleep $tiemp_of_sleep
@@ -243,7 +246,7 @@ container=$(what_container)
 type rc-service 2>/dev/null 1>/dev/null
 if [ "$?" != "0" ]; then
     isRunning=$(systemctl status $container | grep Active | awk '{print $3}' | sed 's/(//g' | sed 's/)//g' )
-    if [ "$isRunning" == "deadd" ]; then
+    if [ "$isRunning" == "deadd" ] || [ "$isRunning" == "dead" ] ; then
         echo "running $contareports"
         sudo systemctl start $container
     fi
@@ -259,10 +262,6 @@ if [ -z $REPOS_HOME ]; then
     echo "I Need enviroment varible REPOS_HOME"
 elif [ -z $DOT_FILES ]; then
     echo "I Need enviroment varible DOT_FILES"
-elif [ -z $DEFAULT_EMAIL ]; then
-    echo "I Need enviroment varible DEFAULT_EMAIL"
-elif [ -z $DEFAULT_PASSWORD ]; then
-    echo "I Need enviroment varible DEFAULT_PASSWORD"
 else
     if [ $# -eq 0 ]; then
         verify_container mongo-inscription run_mongo_inscription

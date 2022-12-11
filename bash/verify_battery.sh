@@ -1,13 +1,27 @@
 #! /bin/bash
 
+folder_icons="/usr/share/icons/Papirus-Dark/24x24/panel"
+
 function get_battery() {
     battery=$1
     if [[ $battery -le 10 ]]; then
-        echo "0"
+        echo "010"
     elif [[ $battery -le 20 ]]; then
-        echo "10"
+        echo "020"
     elif [[ $battery -le 30 ]]; then
-        echo "20"
+        echo "030"
+    elif [[ $battery -le 40 ]]; then
+        echo "040"
+    elif [[ $battery -le 50 ]]; then
+        echo "050"
+    elif [[ $battery -le 60 ]]; then
+        echo "060"
+    elif [[ $battery -le 70 ]]; then
+        echo "070"
+    elif [[ $battery -le 80 ]]; then
+        echo "080"
+    elif [[ $battery -le 90 ]]; then
+        echo "090"
     else
         echo "100"
     fi
@@ -22,9 +36,11 @@ while true; do
         killall verify_battery.sh
     elif [[ $battery -ge 1 ]] && [[ $battery -le 30 ]]; then
         batstat="$(/usr/bin/cat /sys/class/power_supply/BAT1/status)"
-        icon="battery-level-$(get_battery $battery)"
+
         if [ "$batstat" == "Charging" ]; then
-            icon="battery-level-$(get_battery $battery)-charging"
+            icon="$folder_icons/battery-$(get_battery $battery)-charging.svg"
+        else
+            icon="$folder_icons/battery-$(get_battery $battery).svg"
         fi
         #icon=$(echo "/usr/share/icons/Adwaita/64x64/status/$icon")
         number=$(cat /sys/class/power_supply/BAT1/capacity)
