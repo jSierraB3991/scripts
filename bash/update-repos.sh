@@ -24,7 +24,7 @@ do
     if [ -d $REPOS_HOME/$repo ] && [ -d $REPOS_HOME/$repo/.git ]; then
 
 	cd $REPOS_HOME/$repo
-        if [ "$repo" == $CONFIGURATION_REPO ]; then
+        if [ "$repo" == "$CONFIGURATION_REPO" ]; then
             if [ $# -eq 1 ] && [ "$1" == "-y" ]; then
                 for branch in $(echo  $CONFIGURATION_BRANCHS)
                 do

@@ -11,4 +11,5 @@ do
         cowsay "Have internet"
         break
     fi
+    sleep 3
 done
