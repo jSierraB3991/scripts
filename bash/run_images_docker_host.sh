@@ -101,7 +101,7 @@ function run-postgre-database() {
     container_provider=$(what_container)
     port=5432
     name=postgre_zabud
-    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment zabud_tronos_teacher_ms zabud_tronos_request)
+    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment zabud_tronos_teacher_ms zabud_tronos_request zabud_nwa_gateway)
     tiemp_of_sleep=6
 
     volumes=" -v $REPOS_HOME/data/$name:/var/lib/postgresql/data"
