@@ -1,0 +1,3 @@
+cargo new <project name>    -> Create rust project with cargo
+cargo build                 -> Have build of project
+cargo run                   -> building (if not run "cargo build") and run cargo project
