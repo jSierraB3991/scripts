@@ -1,0 +1,18 @@
+#! /bin/bash
+
+anime="$1"
+folder_icons="/usr/share/icons/Papirus/64x64/apps"
+
+while true; do
+    char_bleach=$(http https://www3.animeflv.net/ | grep "$anime" | wc -l)
+    echo "$char_bleach"
+    if [ $char_bleach -eq 4 ] || [ $char_bleach -eq 2 ] ; then
+        notify-send "Animeflv.net" "Ya hay capitulo de $anime" -i "$folder_icons/firefox.svg"
+        break
+    else
+        echo "Aun no"
+    fi
+
+    sleep 30
+done
+

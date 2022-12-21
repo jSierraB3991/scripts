@@ -16,6 +16,7 @@ function update_program {
     function_download=$3
     if [ "$version" != "$new_version" ]; then
 
+
         notify-send "New Version of $program $new_version" "update notifier" -u CRITICAL 
 
         if [ "$version" != "" ]; then
@@ -57,7 +58,7 @@ function downloading_dbeaver {
 function downloading_insomnia {
     version=$1
     url="https://github.com/Kong/insomnia/releases/download/core@$version/Insomnia.Core-$version.tar.gz"
-    echo "Creating folder for downloading Brave $version"
+    echo "Creating folder for downloading Insomnia $version"
     cd $HOME/Descargas/programs
     
     echo "Downloading new version of Insomnia $version"
@@ -68,6 +69,27 @@ function downloading_insomnia {
     rm Insomnia.Core-$version.tar.gz
     sudo rm -rf /opt/insomnia
     sudo mv Insomnia.Core-$version /opt/insomnia
+
+}
+
+
+version_of_jdk=17
+function downloading_graalvm {
+    version=$1
+    url="https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-$version/graalvm-ce-java$version_of_jdk-linux-amd64-$version.tar.gz"
+
+    echo "Creating folder for downloading GraalVM $version_of_jdk $version"
+    cd $HOME/Descargas/programs
+    
+    echo "Downloading new version of GraalVM $version"
+    wget $url
+
+    echo "Descompress for file GraalVM $version"
+    tar -xzf graalvm-ce-java$version_of_jdk-linux-amd64-$version.tar.gz
+    rm graalvm-ce-java$version_of_jdk-linux-amd64-$version.tar.gz
+    sudo rm -rf /opt/graalvm
+    sudo mv graalvm-ce-java$version_of_jdk-$version /opt/graalvm
+
 
 }
 
@@ -87,3 +109,10 @@ update_program "dbeaver" "$new_version" downloading_dbeaver
 echo "Verifing Insomnia"
 new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
 update_program "insomnia" $new_version downloading_insomnia
+
+
+
+#dbeaver
+echo "Verifing $version_of_jdk GraalVM"
+new_version=$(curl -s https://github.com/graalvm/graalvm-ce-builds/releases | grep Edition | sed -e 's/<[^>]*>//g' | head -1 | awk '{print $4}')
+update_program "graalvm" "$new_version" downloading_graalvm

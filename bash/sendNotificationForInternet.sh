@@ -8,7 +8,7 @@ do
     then
         echo "No having Internet"
     else
-        cowsay "Have internet"
+        cowsay-go "Have internet"
         break
     fi
     sleep 3

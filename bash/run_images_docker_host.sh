@@ -97,6 +97,10 @@ function run_mysql_database() {
     sudo $(what_container) run --rm -d -p 3306:3306 --name $mysql_data -v $REPOS_HOME/data/$mysql_data:/var/lib/mysql -e MARIADB_USER=mariadb -e MARIADB_ROOT_PASSWORD=chroot -e MARIADB_PASSWORD=root mariadb:10.6.5-focal
 }
 
+function run_keycloack() {
+    sudo docker run --rm -d -p 9090:8080 --name keyclock_local -e KEYCLOAK_ADMIN=admin -e KEYCLOAK_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:20.0.2 start-dev
+}
+
 function run-postgre-database() {
     container_provider=$(what_container)
     port=5432
@@ -233,6 +237,7 @@ function run_help() {
         "\n\tqueue_activemq" \
         "\n\tzookeeper_kafka | Zookeeper and Kafka" \
         "\n\tzabud_discovery" \
+        "\n\tkeycloak" \
         "\n\tmysql_database"
 }
 
@@ -283,6 +288,8 @@ else
             "zookeeper_kafka") zookeeper_kafka;;
             "zabud_discovery") verify_container zabud-discovery zabud_discovery;;
             "mysql_database") verify_container mysql_database run_mysql_database;;
+            "keycloak") verify_container keyclock_local run_keycloack;;
+
             *)  error_to_help "The container $2 not configurate";;
         esac
 
