@@ -1,12 +1,14 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
-	"math/rand"
-	"time"
 )
 
 func main() {
-	rand.Seed(time.Now().UnixNano())
-	fmt.Println(rand.Intn(100))
+
+	StringToEncode := "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+	Encoding := base64.StdEncoding.EncodeToString([]byte(StringToEncode))
+	fmt.Println(Encoding)
 }
