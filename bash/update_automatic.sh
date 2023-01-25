@@ -52,7 +52,19 @@ function downloading_brave {
 
 function downloading_dbeaver {
     url="https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64-nojdk.tar.gz"
-    echo "Descargando version de DBEAVER"
+     cd $HOME/Descargas/programs
+    
+    echo "Downloading new version of dbeaver $version"
+    wget $url
+
+    lsd -la
+    echo "Descompress for file Insomnia $version"
+    tar -xzf dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
+    rm dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
+    sudo rm -rf /opt/dbeaver
+    sudo mv dbeaver /opt/
+
+
 }
 
 function downloading_insomnia {
