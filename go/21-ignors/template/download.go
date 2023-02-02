@@ -12,9 +12,13 @@ import (
 )
 
 func DownloadIgnor(language string) {
-	url := configuration.Configuration("./", "ignors").Url
-	fmt.Println(url)
-	fmt.Println(language)
+	config := configuration.Configuration("./", "ignors")
+	url := config.Url
+
+	if !strings.Contains(strings.Join(config.Templates, ","), language) {
+		fmt.Println("The language: ", language, " is not present on languages list")
+		os.Exit(1)
+	}
 
 	definitiveUrl := fmt.Sprintf("%s/%s.gitignore", url, language)
 	req, _ := http.NewRequest("GET", definitiveUrl, nil)
