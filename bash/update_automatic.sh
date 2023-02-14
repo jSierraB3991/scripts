@@ -119,7 +119,7 @@ update_program "dbeaver" "$new_version" downloading_dbeaver
 
 #insomnia
 echo "Verifing Insomnia"
-new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
+new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
 update_program "insomnia" $new_version downloading_insomnia
 
 

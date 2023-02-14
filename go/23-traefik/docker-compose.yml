@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  reverse-proxy:
+    image: traefik:v2.9.6
+    command: --api.insecure=true --providers.docker
+    networks: 
+      - traefik-net
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  traefik-net:
+    external: true
