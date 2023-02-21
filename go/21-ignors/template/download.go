@@ -12,7 +12,8 @@ import (
 )
 
 func DownloadIgnor(language string) {
-	config := configuration.Configuration("./", "ignors")
+	home := os.Getenv("HOME")
+	config := configuration.Configuration(home+"/.config/ignors", "ignors")
 	url := config.Url
 
 	if !strings.Contains(strings.Join(config.Templates, ","), language) {
