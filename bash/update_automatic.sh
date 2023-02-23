@@ -39,7 +39,7 @@ function downloading_brave {
     cd brave
 
     echo "Downloading new version of Brave $version"
-    wget $url 1>/dev/null
+    wget -nv $url 1>/dev/null
     echo "Unzip for file Brave $version"
     unzip *zip 1>/dev/null
     rm *.zip
@@ -55,7 +55,7 @@ function downloading_dbeaver {
      cd $HOME/Descargas/programs
     
     echo "Downloading new version of dbeaver $version"
-    wget $url
+    wget -nv $url
 
     lsd -la
     echo "Descompress for file Insomnia $version"
@@ -74,7 +74,7 @@ function downloading_insomnia {
     cd $HOME/Descargas/programs
     
     echo "Downloading new version of Insomnia $version"
-    wget $url
+    wget -nv $url
 
     echo "Descompress for file Insomnia $version"
     tar -xzf Insomnia.Core-$version.tar.gz
@@ -84,6 +84,33 @@ function downloading_insomnia {
 
 }
 
+function downloading_linux_notification_center {
+    version=$1
+    echo "Creating folder for downloading linux notification center"
+    cd $HOME/Descargas/programs
+    
+    echo "Downloading linux notification center $version"
+    wget -nv https://github.com/phuhl/linux_notification_center/archive/refs/tags/$version.tar.gz
+
+    echo "Descompress for file linux_notification_center$version"
+    tar -xzf $version.tar.gz
+
+    sudo rm -rf /opt/linux_notification_center
+    sudo mv linux_notification_center-$version /opt/linux_notification_center
+    rm $version.tar.gz
+
+    echo "Installing linux_notification_center $version"
+    killall deadd-notification-center
+
+    cd /opt/linux_notification_center
+    echo "downloading daemon set $version"
+    wget -nv https://github.com/phuhl/linux_notification_center/releases/download/$version/deadd-notification-center
+    mkdir -p .out
+    mv deadd-notification-center .out
+    sudo make install
+    
+    deadd-notification-center &
+}
 
 version_of_jdk=17
 function downloading_graalvm {
@@ -94,7 +121,7 @@ function downloading_graalvm {
     cd $HOME/Descargas/programs
     
     echo "Downloading new version of GraalVM $version"
-    wget $url
+    wget -nv $url
 
     echo "Descompress for file GraalVM $version"
     tar -xzf graalvm-ce-java$version_of_jdk-linux-amd64-$version.tar.gz
@@ -103,6 +130,10 @@ function downloading_graalvm {
     sudo mv graalvm-ce-java$version_of_jdk-$version /opt/graalvm
 
 
+}
+
+function downloading_vscode {
+    notify-send "Downloaded Version: $1 of Visual Studio Code"
 }
 
 #brave
@@ -122,9 +153,17 @@ echo "Verifing Insomnia"
 new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
 update_program "insomnia" $new_version downloading_insomnia
 
-
+#Linux notification Center
+echo "Verifing Linux Notification Center"
+new_version=$(curl -s https://github.com/phuhl/linux_notification_center/releases | grep tree | awk 'BEGIN{FS="\""}{print $2}' | head -1 | awk 'BEGIN{FS="/"}NF{print $NF}')
+update_program "linux_notification_center" "$new_version" downloading_linux_notification_center
 
 #dbeaver
 echo "Verifing $version_of_jdk GraalVM"
 new_version=$(curl -s https://github.com/graalvm/graalvm-ce-builds/releases | grep Edition | sed -e 's/<[^>]*>//g' | head -1 | awk '{print $4}')
 update_program "graalvm" "$new_version" downloading_graalvm
+
+#VsCode
+echo "Verifing VsCode for Linux"
+new_version=$(curl -s 'https://code.visualstudio.com/#alt-downloads' | grep "Version" | sed -e 's/<[^>]*>//g' | head -1 | awk '{ print $2}')
+update_program "VsCode" $new_version downloading_vscode
