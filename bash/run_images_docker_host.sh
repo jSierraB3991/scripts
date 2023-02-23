@@ -105,8 +105,6 @@ function run-postgre-database() {
     container_provider=$(what_container)
     port=5432
     name=postgre_zabud
-    array_db_names=(zabud_inscription zabud_core zabud_notification zabud_planning zabud_ifinancial zabud_tronos_score zabud_tronos_enrollment zabud_tronos_teacher_ms zabud_tronos_request zabud_nwa_gateway)
-    tiemp_of_sleep=6
 
     volumes=" -v $REPOS_HOME/data/$name:/var/lib/postgresql/data"
     enviorment=" -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -e POSTGRES_PASSWORD=root"
@@ -114,20 +112,6 @@ function run-postgre-database() {
 
     echo -e "\e[32mRUN CONTAINER $name\e[0m"
     sudo $container_provider $configurations postgres:$postgre_version
-
-    echo "Sleeping $tiemp_of_sleep seconds"
-    sleep $tiemp_of_sleep
-    echo "Wake up"
-
-    for db_name in ${array_db_names[*]}; do
-        db_exists=$(sudo $container_provider exec $name psql -U postgres -lqt | grep $db_name | awk '{print $1}')
-        if [ "$db_exists" == "" ]; then
-            echo -e "\e[32mCreating Datbase $db_name\e[0m"
-            sudo $container_provider exec $name psql -U postgres -c "CREATE DATABASE $db_name"
-        else
-            echo "The database $db_name already exists"
-        fi
-    done
 }
 
 function pg_docker_dbs() {
@@ -283,7 +267,7 @@ else
     elif [ $# -eq 2 ] && [ "$1" == "-r" ]; then
         case $2 in
             "mongo_inscription") verify_container mongo-inscription run_mongo_inscription;;
-            "postgre_zabud") pg_docker_dbs;;
+            "postgres") pg_docker_dbs;;
             "queue_activemq") verify_container activemq queue_activemq;;
             "zookeeper_kafka") zookeeper_kafka;;
             "zabud_discovery") verify_container zabud-discovery zabud_discovery;;
