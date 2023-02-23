@@ -1,13 +1,12 @@
 #! /bin/bash
 
-icon_folder="/usr/share/icons/Papirus/64x64/apps"
 old_ports=$(ss -tulpn | grep LISTEN | awk '{print $5}' | grep "^[1 | 0 | * ]")
 
 function send_notification() {
     status=$1
     port=$2
-    echo "notify-send PORT SCAN PORT $port is $status -a PORT_SCAN -i breeze-settings.svg"
-    notify-send "PORT SCAN" "PORT $port is $status" -a PORT_SCAN -i $icon_folder/breeze-settings.svg
+    echo "notify-send PORT SCAN PORT $port is $status -a PORT_SCAN -i breeze-settings"
+    notify-send "PORT SCAN" "PORT $port is $status" -a PORT_SCAN -i breeze-settings
 }
 
 while true; do
