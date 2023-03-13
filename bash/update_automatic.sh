@@ -61,6 +61,7 @@ function downloading_dbeaver {
     echo "Descompress for file Insomnia $version"
     tar -xzf dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
     rm dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
+    echo "Moving version $version of dbeaver"
     sudo rm -rf /opt/dbeaver
     sudo mv dbeaver /opt/
 
@@ -79,6 +80,8 @@ function downloading_insomnia {
     echo "Descompress for file Insomnia $version"
     tar -xzf Insomnia.Core-$version.tar.gz
     rm Insomnia.Core-$version.tar.gz
+
+    echo "Moving version $version of insomnia"
     sudo rm -rf /opt/insomnia
     sudo mv Insomnia.Core-$version /opt/insomnia
 
@@ -133,7 +136,19 @@ function downloading_graalvm {
 }
 
 function downloading_vscode {
-    notify-send "Downloaded Version: $1 of Visual Studio Code"
+    version=$1
+    name_file="code.tar.gz"
+    url=$(curl -s 'https://code.visualstudio.com/sha/download?build=stable&os=linux-x64' | awk '{print $4}')
+    cd $HOME/Descargas/programs
+    
+    echo "Downloading new version of Visual Studio Code $version"
+    wget -nv $url -O $name_file
+
+    echo "Descompress for file VS Code $version"
+    tar -xzf $name_file
+    rm $name_file
+    sudo rm -rf /opt/code
+    sudo mv VSCode-linux-x64/ /opt/code
 }
 
 #brave
@@ -151,6 +166,10 @@ update_program "dbeaver" "$new_version" downloading_dbeaver
 #insomnia
 echo "Verifing Insomnia"
 new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
+
+if [ "$new_version" == ""  ]; then
+    new_version=$(curl -s https://github.com/Kong/insomnia/releases?page=2 | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
+fi
 update_program "insomnia" $new_version downloading_insomnia
 
 #Linux notification Center
