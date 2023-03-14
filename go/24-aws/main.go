@@ -8,7 +8,7 @@ import (
 )
 
 func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	log.Println("Hello world")
+	log.Println("Hello world in Deploy With AWS CLI 5")
 
 	response := events.APIGatewayProxyResponse{
 		StatusCode: 200,
