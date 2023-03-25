@@ -57,8 +57,7 @@ function downloading_dbeaver {
     echo "Downloading new version of dbeaver $version"
     wget -nv $url
 
-    lsd -la
-    echo "Descompress for file Insomnia $version"
+    echo "Descompress for file Dbeaver $version"
     tar -xzf dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
     rm dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
     echo "Moving version $version of dbeaver"
