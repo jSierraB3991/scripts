@@ -2,8 +2,11 @@ package product
 
 import (
 	"encoding/json"
+	"errors"
+	"time"
 
 	"github.com/aws/aws-sdk-go/service/dynamodb"
+	"github.com/google/uuid"
 	"github.com/jsierrab3991/scripts/26-golang-dynamo/internals/entities"
 )
 
@@ -40,6 +43,30 @@ func (p *Product) GetMap() map[string]interface{} {
 	return nil
 }
 
-func ParseDynamoAttributteToStruct(item map[string]*dynamodb.AttributeValue) (entity Product, err error) {
-	return Product{}, nil
+func ParseDynamoAttributteToStruct(response map[string]*dynamodb.AttributeValue) (p Product, err error) {
+	if response == nil || (response != nil && len(response) == 0) {
+		return p, errors.New("Item not found")
+	}
+	for key, value := range response {
+		if key == "_id" {
+			p.Id, err = uuid.Parse(*value.S)
+			if p.Id == uuid.Nil {
+				err = errors.New("Item not found")
+			}
+		}
+		if key == "name" {
+			p.Name = *value.S
+		}
+		if key == "createdAt" {
+			p.CreateAt, err = time.Parse(entities.GetTimeFormat(), *value.S)
+		}
+		if key == "updatedAt" {
+			p.UpdateAt, err = time.Parse(entities.GetTimeFormat(), *value.S)
+		}
+		if err != nil {
+			return p, err
+		}
+	}
+
+	return p, nil
 }
