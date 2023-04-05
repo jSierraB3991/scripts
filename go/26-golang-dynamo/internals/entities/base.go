@@ -34,5 +34,5 @@ func (b *Base) SetUpdateAt() {
 }
 
 func GetTimeFormat() string {
-	return "2023-04-04T09:29:24-0700"
+	return time.RFC3339
 }
