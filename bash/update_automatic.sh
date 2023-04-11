@@ -51,20 +51,19 @@ function downloading_brave {
 }
 
 function downloading_dbeaver {
-    url="https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64-nojdk.tar.gz"
+    version=$1
+    url="https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz"
      cd $HOME/Descargas/programs
     
     echo "Downloading new version of dbeaver $version"
     wget -nv $url
 
     echo "Descompress for file Dbeaver $version"
-    tar -xzf dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
+    tar -xzf dbeaver-ce-**-linux.gtk.x86_64.tar.gz
     rm dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
     echo "Moving version $version of dbeaver"
     sudo rm -rf /opt/dbeaver
     sudo mv dbeaver /opt/
-
-
 }
 
 function downloading_insomnia {
@@ -150,38 +149,71 @@ function downloading_vscode {
     sudo mv VSCode-linux-x64/ /opt/code
 }
 
-#brave
-echo "Verifing Brave"
-new_version=$(curl -s https://brave.com/latest/| grep "Release Notes <"  | head -1  | awk '{print $4}')
-new_version=$(echo $new_version | sed -e 's/<[^>]*>//g')
-update_program "brave" $new_version downloading_brave
+function checking_brave {
+    #brave
+    echo "Verifing Brave"
+    new_version=$(curl -s https://brave.com/latest/| grep "Release Notes <"  | head -1  | awk '{print $4}')
+    new_version=$(echo $new_version | sed -e 's/<[^>]*>//g')
+    update_program "brave" $new_version downloading_brave
+}
 
-#dbeaver
-echo "Verifing Dbeaver"
-new_version=$(curl -s https://dbeaver.io/download/ | grep ">DBeaver Community ")
-new_version=$(echo $new_version | sed -e 's/<[^>]*>//g')
-update_program "dbeaver" "$new_version" downloading_dbeaver
+function checking_dbeaver {
+    #dbeaver
+    echo "Verifing Dbeaver"
+    new_version=$(curl -s https://dbeaver.io/download/ | grep ">DBeaver Community ")
+    new_version=$(echo $new_version | sed -e 's/<[^>]*>//g')
+    update_program "dbeaver" "$new_version" downloading_dbeaver
+}
 
-#insomnia
-echo "Verifing Insomnia"
-new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
-
-if [ "$new_version" == ""  ]; then
-    new_version=$(curl -s https://github.com/Kong/insomnia/releases?page=2 | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
-fi
-update_program "insomnia" $new_version downloading_insomnia
+function checking_insomnia {
+    #insomnia
+    echo "Verifing Insomnia"
+    new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
+    if [ "$new_version" == ""  ]; then
+        new_version=$(curl -s https://github.com/Kong/insomnia/releases?page=2 | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
+    fi
+    update_program "insomnia" $new_version downloading_insomnia
+}
 
 #Linux notification Center
-echo "Verifing Linux Notification Center"
-new_version=$(curl -s https://github.com/phuhl/linux_notification_center/releases | grep tree | awk 'BEGIN{FS="\""}{print $2}' | head -1 | awk 'BEGIN{FS="/"}NF{print $NF}')
-update_program "linux_notification_center" "$new_version" downloading_linux_notification_center
+#echo "Verifing Linux Notification Center"
+#new_version=$(curl -s https://github.com/phuhl/linux_notification_center/releases | grep tree | awk 'BEGIN{FS="\""}{print $2}' | head -1 | awk 'BEGIN{FS="/"}NF{print $NF}')
+#update_program "linux_notification_center" "$new_version" downloading_linux_notification_center
 
-#dbeaver
-echo "Verifing $version_of_jdk GraalVM"
-new_version=$(curl -s https://github.com/graalvm/graalvm-ce-builds/releases | grep Edition | sed -e 's/<[^>]*>//g' | head -1 | awk '{print $4}')
-update_program "graalvm" "$new_version" downloading_graalvm
+function checking_graalvm_java {
+    #dbeaver
+    echo "Verifing $version_of_jdk GraalVM"
+    new_version=$(curl -s https://github.com/graalvm/graalvm-ce-builds/releases | grep Edition | sed -e 's/<[^>]*>//g' | head -1 | awk '{print $4}')
+    update_program "graalvm" "$new_version" downloading_graalvm
+}
 
-#VsCode
-echo "Verifing VsCode for Linux"
-new_version=$(curl -s 'https://code.visualstudio.com/#alt-downloads' | grep "Version" | sed -e 's/<[^>]*>//g' | head -1 | awk '{ print $2}')
-update_program "VsCode" $new_version downloading_vscode
+function checking_vscode {
+    #VsCode
+    echo "Verifing VsCode for Linux"
+    new_version=$(curl -s 'https://code.visualstudio.com/#alt-downloads' | grep "Version" | sed -e 's/<[^>]*>//g' | head -1 | awk '{ print $2}')
+    update_program "VsCode" $new_version downloading_vscode
+}
+
+if [ $# -eq 0 ]; then
+    checking_brave
+    checking_dbeaver
+    checking_insomnia
+    checking_graalvm_java
+    checking_vscode
+elif [ "$1" == "-u"  ]; then
+    if [ $# -eq 2 ]; then
+        if [ "$2" == "dbeaver" ]; then
+            checking_dbeaver
+        elif [ "$2" == "brave"  ]; then
+            checking_brave
+        elif [ "$2" == "insomnia" ]; then
+            checking_insomnia
+        elif [ "$2" == "java" ]; then
+            checking_graalvm_java
+        elif [ "$2"  == "vscode" ] || [ "$2" == "code" ]; then
+            checking_vscode
+        fi
+    else
+        cowsay "I need two data"
+    fi
+fi
