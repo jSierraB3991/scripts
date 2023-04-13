@@ -79,6 +79,6 @@ func main() {
 	}
 
 	log.Println("Message ID:     " + *msgResult.Messages[0].MessageId)
-
-	log.Println("Message Handle: " + *msgResult.Messages[0].Body)
+	log.Println("Message Handle: " + *msgResult.Messages[0].ReceiptHandle)
+	log.Println("Message Body:   " + *msgResult.Messages[0].Body)
 }
