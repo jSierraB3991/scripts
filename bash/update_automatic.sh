@@ -60,7 +60,7 @@ function downloading_dbeaver {
 
     echo "Descompress for file Dbeaver $version"
     tar -xzf dbeaver-ce-**-linux.gtk.x86_64.tar.gz
-    rm dbeaver-ce-**-linux.gtk.x86_64-nojdk.tar.gz
+    rm dbeaver-ce-**-linux.gtk.x86_64.tar.gz
     echo "Moving version $version of dbeaver"
     sudo rm -rf /opt/dbeaver
     sudo mv dbeaver /opt/
