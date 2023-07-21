@@ -1,0 +1,8 @@
+Create Cluster
+kind create cluster --config kind-multinode.yml
+
+Install Kubectl
+sudo pacman -Syu kubectl
+
+Delete cluster
+kind delete cluster

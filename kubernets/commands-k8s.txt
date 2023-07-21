@@ -1,0 +1,24 @@
+Get Nodes
+kubectl get nodes
+
+Apply In Nodes
+kubectl [-n {namespace}] apply -f [yml-configuration].yml               -n for specification of namespace, por default is namespace [default]
+                                                                           I have pre version, The kill this, and created new version
+
+kubectl scale --replicas=5 [service]    -- scale pods
+
+kubectl get [-n {namespace}] pods       -- get pods
+            ns                          -- get namespaces
+            svc                         -- get services
+            nodes                       -- get nodes
+            
+
+Get Pods with more information
+kubectl get pods -o wide
+
+kubectl get all                                                         -- Get All nodes, deploy and services
+
+kubectl describe pod [pod name]                                         -- Describe the Pod
+                 svc [service name]                                     -- Describe the service
+
+kubectl label pod [pod name] role=cuarentena --overwrite                -- Have pod in cuarentena, I not have the specificification umber pods, kunernets create other
