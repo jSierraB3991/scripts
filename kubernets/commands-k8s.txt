@@ -11,6 +11,7 @@ kubectl get [-n {namespace}] pods       -- get pods
             ns                          -- get namespaces
             svc                         -- get services
             nodes                       -- get nodes
+            ep                          -- get endpoints
             
 
 Get Pods with more information
@@ -22,3 +23,6 @@ kubectl describe pod [pod name]                                         -- Descr
                  svc [service name]                                     -- Describe the service
 
 kubectl label pod [pod name] role=cuarentena --overwrite                -- Have pod in cuarentena, I not have the specificification umber pods, kunernets create other
+
+kubectl port-forward [pod name] [port local]:[port pod]                 -- Do port forward, of the port pod to port in local machine
+kubectl port-forward svc/[service name] [port local]:[port service]          -- Do port forward, of the port service to port in local machine
