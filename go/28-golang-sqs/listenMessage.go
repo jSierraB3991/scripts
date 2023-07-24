@@ -24,6 +24,7 @@ func GetQueueURL(sess *session.Session, queue *string) (*sqs.GetQueueUrlOutput, 
 
 func GetMessages(sess *session.Session, queueURL *string, timeout *int64) (*sqs.ReceiveMessageOutput, error) {
 	svc := sqs.New(sess)
+	log.Println(*queueURL)
 
 	msgResult, err := svc.ReceiveMessage(&sqs.ReceiveMessageInput{
 		AttributeNames: []*string{
@@ -78,7 +79,12 @@ func main() {
 		return
 	}
 
-	log.Println("Message ID:     " + *msgResult.Messages[0].MessageId)
-	log.Println("Message Handle: " + *msgResult.Messages[0].ReceiptHandle)
-	log.Println("Message Body:   " + *msgResult.Messages[0].Body)
+	if len(msgResult.Messages) <= 0 {
+		log.Println("No message to recive")
+	}
+	for _, value := range msgResult.Messages {
+		log.Println("Message ID:     " + *value.MessageId)
+		log.Println("Message Handle: " + *value.ReceiptHandle)
+		log.Println("Message Body:   " + *value.Body)
+	}
 }
