@@ -183,7 +183,7 @@ function checking_insomnia {
 function checking_graalvm_java {
     #dbeaver
     echo "Verifing $version_of_jdk GraalVM"
-    new_version=$(curl -s https://github.com/graalvm/graalvm-ce-builds/releases | grep Edition | sed -e 's/<[^>]*>//g' | grep -v OpenJDK | head -1 | awk '{print $4}')
+    new_version=$(curl -s https://github.com/graalvm/graalvm-ce-builds/releases | grep Edition | sed -e 's/<[^>]*>//g' | grep -v OpenJDK | grep -v container | head -1 | awk '{print $4}')
     update_program "graalvm" "$new_version" downloading_graalvm
 }
 
