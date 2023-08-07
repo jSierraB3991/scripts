@@ -144,7 +144,7 @@ function zookeeper_kafka() {
     echo -e "\e[32mVerifing container zookeeper\e[0m"
     if [ "$id_container_of_zookeper" == "" ]; then
     echo -e "\e[32mRUN CONTAINER Zookeeper\e[0m"
-        sudo $container_provider run --rm --name zookeeper -d -p 2181:2181 wurstmeister/zookeeper
+        sudo $container_provider run --rm --name zookeeper -d -p 2181:2181 zookeeper:3.8.2-temurin
     else
         echo "The container of Zookeeper zookeeper is already exists"
     fi
