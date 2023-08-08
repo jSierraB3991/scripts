@@ -169,9 +169,12 @@ function checking_insomnia {
     #insomnia
     echo "Verifing Insomnia"
     new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
-    if [ "$new_version" == ""  ]; then
-        new_version=$(curl -s https://github.com/Kong/insomnia/releases?page=2 | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
-    fi
+    x=1
+    while [ "$new_version" == ""  ]; do
+        x=$((x+1))
+        echo "https://github.com/Kong/insomnia/releases?page=$x"
+        new_version=$(curl -s https://github.com/Kong/insomnia/releases?page=$x | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
+    done
     update_program "insomnia" $new_version downloading_insomnia
 }
 
