@@ -168,8 +168,8 @@ function checking_dbeaver {
 function checking_insomnia {
     #insomnia
     echo "Verifing Insomnia"
-    new_version=$(curl -s https://github.com/Kong/insomnia/releases | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
-    x=1
+    new_version=""
+    x=0
     while [ "$new_version" == ""  ]; do
         x=$((x+1))
         echo "https://github.com/Kong/insomnia/releases?page=$x"
