@@ -1,6 +1,6 @@
 #! /bin/bash
 
-FOLDER_DOWNLOADS=/home/juan-sierra/Downloads
+FOLDER_DOWNLOADS=$HOME/Descargas
 FOLDER_FONTS=$FOLDER_DOWNLOADS/fonts
 
 for file in $(ls $FOLDER_DOWNLOADS); do
