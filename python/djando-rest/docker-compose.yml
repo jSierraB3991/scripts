@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    container_name: django-0test
+    volumes:
+      - ./src:/usr/src/app
+    ports:
+      - "9000:8000"
