@@ -15,12 +15,13 @@ services:
 
   web:
     build: .
-    command: python main.py
     container_name: flask-api-test
+    depends_on:
+      - db
     volumes:
       - ./src:/usr/src/app
     ports:
-      - "9090:8000"
+      - "9090:5000"
     environment:
       MYSQL_USER: lelouch
       MYSQL_DB: flask-api
