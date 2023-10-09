@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: my-secret-pw
+      MARIADB_USER: lelouch
+      MARIADB_PASSWORD: code_geass
+      MARIADB_DATABASE: flask-api
+    volumes:
+      - ~/.local/data/mysql:/var/lib/mysql
+
+  web:
+    build: .
+    command: python main.py
+    container_name: flask-api-test
+    volumes:
+      - ./src:/usr/src/app
+    ports:
+      - "9090:8000"
+    environment:
+      MYSQL_USER: lelouch
+      MYSQL_DB: flask-api
+      MYSQL_PASSWORD: code_geass
+      MYSQL_URL: db
