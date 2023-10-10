@@ -1,29 +1,29 @@
 version: '3.1'
 
 services:
-  db:
-    image: mariadb
+  postgre_db:
+    image: postgres:12.9-alpine
+    container_name: postgre_zabud
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MARIADB_ROOT_PASSWORD: my-secret-pw
-      MARIADB_USER: lelouch
-      MARIADB_PASSWORD: code_geass
-      MARIADB_DATABASE: flask-api
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: root
     volumes:
-      - ~/.local/data/mysql:/var/lib/mysql
+      - ~/.local/data/pgsql:/var/lib/postgresql/data
 
   web:
     build: .
     container_name: flask-api-test
     depends_on:
-      - db
+      - postgre_db
     volumes:
       - ./src:/usr/src/app
     ports:
-      - "9090:5000"
+      - "5000:5000"
     environment:
-      MYSQL_USER: lelouch
-      MYSQL_DB: flask-api
-      MYSQL_PASSWORD: code_geass
-      MYSQL_URL: db
+      POSTGRES_USER: postgres
+      POSTGRES_DB: flask_db
+      POSTGRES_PASSWORD: root
+      POSTGRE_URL: postgre_db
