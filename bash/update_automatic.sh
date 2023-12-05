@@ -152,9 +152,19 @@ function downloading_vscode {
 function checking_brave {
     #brave
     echo "Verifing Brave"
-    new_version=$(curl -s https://brave.com/latest/| grep "Release Notes <"  | head -1  | awk '{print $4}')
-    new_version=$(echo $new_version | sed -e 's/<[^>]*>//g')
-    update_program "brave" $new_version downloading_brave
+    new_version=0
+
+        new_version=$(curl -s https://github.com/brave/brave-browser/releases?page=1 | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | head -1)
+        remove_v=$(echo $new_version | sed 's/v//g')
+        result=$(curl -s "https://github.com/brave/brave-browser/releases/download/$new_version/brave-browser-$remove_v-linux-amd64.zip")
+        if [ "$result" == "Not Found" ]; then
+            new_version=""
+        fi
+        echo "$new_version"
+
+        if [ "$new_version" != ""  ]; then
+            update_program "brave" $new_version downloading_brave
+        fi
 }
 
 function checking_dbeaver {
