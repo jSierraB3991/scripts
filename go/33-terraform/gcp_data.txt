@@ -1,0 +1,12 @@
+1) Habilite
+    -   CLOUD DNS API
+    -   COMPUTE ENGINE API
+    -   IAM API
+
+2) CREATED KEY FOR "Service Account"
+
+3) Install Terraform: https://developer.hashicorp.com/terraform/install?product_intent=terraform
+
+
+
+
