@@ -1,0 +1,4 @@
+go/33-terraform/infra/.terraform.lock.hcl
+go/33-terraform/infra/.terraform
+go/33-terraform/infra/terraform.tfstate.backup
+go/33-terraform/infra/terraform.tfstate

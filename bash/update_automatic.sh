@@ -134,13 +134,12 @@ function downloading_graalvm {
 }
 
 function downloading_vscode {
-    version=$1
-    name_file="code.tar.gz"
-    url=$(curl -s 'https://code.visualstudio.com/sha/download?build=stable&os=linux-x64' | awk '{print $4}')
+    url=$(curl -s 'https://code.visualstudio.com/sha/download?build=stable&os=linux-x64' | awk -F"/" '{print $NF}')
+    name_file="code.tar.gz"   
     cd $HOME/Descargas/programs
     
     echo "Downloading new version of Visual Studio Code $version"
-    wget -nv $url -O $name_file
+    wget -nv $(curl -s 'https://code.visualstudio.com/sha/download?build=stable&os=linux-x64' | awk '{print $NF}') -O $name_file
 
     echo "Descompress for file VS Code $version"
     tar -xzf $name_file
@@ -154,17 +153,14 @@ function checking_brave {
     echo "Verifing Brave"
     new_version=0
 
-        new_version=$(curl -s https://github.com/brave/brave-browser/releases?page=1 | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | head -1)
-        remove_v=$(echo $new_version | sed 's/v//g')
-        result=$(curl -s "https://github.com/brave/brave-browser/releases/download/$new_version/brave-browser-$remove_v-linux-amd64.zip")
-        if [ "$result" == "Not Found" ]; then
-            new_version=""
-        fi
-        echo "$new_version"
-
-        if [ "$new_version" != ""  ]; then
-            update_program "brave" $new_version downloading_brave
-        fi
+    new_version=""
+    x=0
+    while [ "$new_version" == ""  ]; do
+        x=$((x+1))
+        echo "https://github.com/brave/brave-browser/releases?page=$x"
+        new_version=$(curl -s https://github.com/brave/brave-browser/releases?page=$x | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | head -1)
+    done
+    update_program "brave" $new_version downloading_brave
 }
 
 function checking_dbeaver {
@@ -203,7 +199,7 @@ function checking_graalvm_java {
 function checking_vscode {
     #VsCode
     echo "Verifing VsCode for Linux"
-    new_version=$(curl -s 'https://code.visualstudio.com/#alt-downloads' | grep "Version" | sed -e 's/<[^>]*>//g' | head -1 | awk '{ print $2}')
+    new_version=$(curl -s 'https://code.visualstudio.com/sha/download?build=stable&os=linux-x64' | awk -F"/" '{print $NF}')
     update_program "VsCode" $new_version downloading_vscode
 }
 
