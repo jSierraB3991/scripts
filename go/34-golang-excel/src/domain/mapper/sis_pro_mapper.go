@@ -51,7 +51,7 @@ func isPublicPrivate(row []string, index int) *bool {
 func validateVoidData(rows []string, indexs []int) error {
 	for _, i := range indexs {
 		if len(rows) > i && rows[i] != "" {
-			return errorsrips.ValidataInMapperSisPro{rows[i]}
+			return errorsrips.ValidataInMapperSisPro{Data: rows[i]}
 		}
 	}
 	return nil
