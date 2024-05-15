@@ -1,12 +1,10 @@
 package mapper
 
 import (
-	"log"
 	"time"
 
 	errorsrips "github.com/jdsierrab3991/scripts/34-golang-excel/domain/errors_rips"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/libs"
-	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/models"
 )
 
 func GetDataSispro(row []string, code string) interface{} {
@@ -17,27 +15,19 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getDataCie10(row)
 	case libs.CIE10Clasificacion2036:
 		return getDataCie102036(row)
-
+	case libs.CUPSRips:
+		return getDataCupRips(row)
+	case libs.CondicionyDestinoUsuarioEgreso:
+		return getDataUserEgrese(row)
 	}
 	return nil
 }
-
-func getDatalogoCums(rows []string) *models.CumSispro {
-	for _, row := range rows {
-		log.Println(row)
-	}
-	return &models.CumSispro{}
-}
-
-func updateSisproFormat(date string) time.Time {
+func updateSisproFormat(date string) *time.Time {
 	updateFormat, err := time.Parse(libs.SISPRO_DATE_FORMAT, date)
 	if err != nil {
-		log.Println("ERROR FORMATING DATE")
-		log.Println(err)
-		log.Println(date)
-		return time.Now()
+		return nil
 	}
-	return updateFormat
+	return &updateFormat
 }
 
 func isPublicPrivate(row []string, index int) *bool {
@@ -50,9 +40,16 @@ func isPublicPrivate(row []string, index int) *bool {
 
 func validateVoidData(rows []string, indexs []int) error {
 	for _, i := range indexs {
-		if len(rows) > i && rows[i] != "" {
+		if len(rows) > i && rows[i] != "" && rows[i] != "NULL" {
 			return errorsrips.ValidataInMapperSisPro{Data: rows[i]}
 		}
 	}
 	return nil
+}
+
+func getPointerString(data string) *string {
+	if data == "NULL" {
+		return nil
+	}
+	return &data
 }

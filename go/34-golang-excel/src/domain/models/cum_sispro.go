@@ -20,7 +20,7 @@ type CumSispro struct {
 	ATC                   string    `gorm:"column:atc;not null;"`
 	HealthRegister        string    `gorm:"column:health_register;not null;"`
 	ActivePrinciple       string    `gorm:"column:active_principle;not null;"`
-	AmountActivePrinciple float32   `gorm:"column:amount_active_principle;not null;"`
+	AmountActivePrinciple string    `gorm:"column:amount_active_principle;not null;"`
 	ViaAdministratio      string    `gorm:"column:via_administration;not null;"`
 	AmountPresentation    uint      `gorm:"column:amount_presentation;not null;"`
 	UpdateDate            time.Time `gorm:"column:update_date;not null;"`

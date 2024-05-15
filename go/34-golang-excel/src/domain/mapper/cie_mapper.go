@@ -29,7 +29,7 @@ func getDataCie10(rows []string) *models.Cie {
 		Subgroup:        libs.GetUintForString(rows[15]),
 		Category:        libs.GetUintForString(rows[16]),
 		Sex:             rows[17],
-		UpdateDate:      updateSisproFormat(rows[20]),
+		UpdateDate:      *updateSisproFormat(rows[20]),
 		IsPublicPrivate: isPublicPrivate(rows, 21),
 	}
 }
@@ -46,7 +46,7 @@ func getDataCie102036(rows []string) *models.Cie2036 {
 		IsAvailable:     rows[4] == "SI",
 		IsStandartGel:   rows[6] == "True",
 		IsStandardMSPS:  rows[7] == "True",
-		UpdateDate:      updateSisproFormat(rows[20]),
+		UpdateDate:      *updateSisproFormat(rows[20]),
 		IsPublicPrivate: isPublicPrivate(rows, 21),
 	}
 }

@@ -2,7 +2,7 @@ package repository
 
 import "github.com/jdsierrab3991/scripts/34-golang-excel/domain/models"
 
-func (repo Repository) SaveCie2036SisPro(data *models.Cie2036) error {
+func (repo *Repository) SaveCie2036SisPro(data *models.Cie2036) error {
 	result, err := repo.existsCie2036(data.Code)
 	if err != nil {
 		return err
@@ -12,7 +12,7 @@ func (repo Repository) SaveCie2036SisPro(data *models.Cie2036) error {
 	}
 	return repo.db.Save(&data).Error
 }
-func (repo Repository) SaveCieSisPro(data *models.Cie) error {
+func (repo *Repository) SaveCieSisPro(data *models.Cie) error {
 	result, err := repo.existsCie(data.Code)
 	if err != nil {
 		return err

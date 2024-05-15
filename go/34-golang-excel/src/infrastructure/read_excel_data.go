@@ -35,7 +35,13 @@ func (read ReadExcelData) Run(homeFiles string, documents []string) error {
 }
 
 func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) error {
+
 	fmt.Println(document)
+	isValid := readDat.isForSave(document)
+	if !isValid {
+		return nil
+	}
+
 	f, err := excelize.OpenFile(homeFiles + document)
 	if err != nil {
 		return err
@@ -69,7 +75,15 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 			readDat.GetSisProService(code).SaveSisproData(mapper.GetDataSispro(row, code))
 		}
 	}
-	return nil
+	return readDat.repo.SaveScrapp(document)
+}
+
+func (readData *ReadExcelData) isForSave(code string) bool {
+	data, err := readData.repo.ExistsScrapp(code)
+	if err != nil {
+		return false
+	}
+	return data.Code != code
 }
 
 func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.SisproServiceInterface {
@@ -81,7 +95,9 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 	case libs.CIE10:
 		return service.NewCieService(readDat.repo)
 	case libs.CUPSRips:
-		return service.NewCumSisProService(readDat.repo)
+		return service.NewCupRipsService(readDat.repo)
+	case libs.CondicionyDestinoUsuarioEgreso:
+		return service.NewUserEgreseService(readDat.repo)
 	}
 	return nil
 }
