@@ -27,6 +27,7 @@ func AutoMigrate(repository *repository.Repository) {
 		&models.Cie2036{},
 		&models.CumSispro{},
 		&models.CupsRips{},
+		&models.Dci{},
 		&models.Scrapp{},
 		&models.UserEgrese{},
 	)

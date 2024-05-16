@@ -70,9 +70,17 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 			continue
 		} else if i == 1 {
 			code = row[0]
-			readDat.GetSisProService(code).SaveSisproData(mapper.GetDataSispro(row, code))
+			data := mapper.GetDataSispro(row, code)
+			service := readDat.GetSisProService(code)
+			if service != nil {
+				service.SaveSisproData(data)
+			}
 		} else {
-			readDat.GetSisProService(code).SaveSisproData(mapper.GetDataSispro(row, code))
+			data := mapper.GetDataSispro(row, code)
+			service := readDat.GetSisProService(code)
+			if service != nil {
+				service.SaveSisproData(data)
+			}
 		}
 	}
 	return readDat.repo.SaveScrapp(document)
@@ -98,6 +106,8 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewCupRipsService(readDat.repo)
 	case libs.CondicionyDestinoUsuarioEgreso:
 		return service.NewUserEgreseService(readDat.repo)
+	case libs.DCI:
+		return service.NewDciService(readDat.repo)
 	}
 	return nil
 }

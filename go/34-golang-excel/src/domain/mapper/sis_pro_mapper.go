@@ -19,6 +19,10 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getDataCupRips(row)
 	case libs.CondicionyDestinoUsuarioEgreso:
 		return getDataUserEgrese(row)
+	case libs.DCI:
+		return getDataDci(row)
+	case libs.FFM:
+		return getDataFfm(row)
 	}
 	return nil
 }

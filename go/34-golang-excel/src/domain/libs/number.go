@@ -15,3 +15,11 @@ func GetUintForString(number string) uint {
 	}
 	return uint(response)
 }
+
+func GetUintPoint(number string) *uint {
+	if number == "" {
+		return nil
+	}
+	result := GetUintForString(number)
+	return &result
+}
