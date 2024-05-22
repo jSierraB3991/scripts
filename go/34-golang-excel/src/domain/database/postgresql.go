@@ -28,6 +28,8 @@ func AutoMigrate(repository *repository.Repository) {
 		&models.CumSispro{},
 		&models.CupsRips{},
 		&models.Dci{},
+		&models.Ffm{},
+		&models.GroupService{},
 		&models.Scrapp{},
 		&models.UserEgrese{},
 	)

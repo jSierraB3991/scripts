@@ -6,13 +6,13 @@ import (
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/models"
 )
 
-func (repo *Repository) SaveCupRips(data *models.CupsRips) error {
-	resultData, err := repo.existsSisProByCode(&models.CupsRips{}, data.Code)
+func (repo *Repository) SaveFfm(data *models.Ffm) error {
+	resultData, err := repo.existsSisProByCode(&models.Ffm{}, data.Code)
 	if err != nil {
 		return err
 	}
 
-	result, isOk := resultData.(*models.CupsRips)
+	result, isOk := resultData.(*models.Ffm)
 	if !isOk {
 		log.Fatal("NO MAPPER TO GroupService")
 	}

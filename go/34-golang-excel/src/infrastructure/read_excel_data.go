@@ -108,6 +108,10 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewUserEgreseService(readDat.repo)
 	case libs.DCI:
 		return service.NewDciService(readDat.repo)
+	case libs.FFM:
+		return service.NewFfmService(readDat.repo)
+	case libs.GrupoServicios:
+		return service.NewGroupServiceService(readDat.repo)
 	}
 	return nil
 }
