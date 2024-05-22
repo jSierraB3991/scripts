@@ -31,6 +31,7 @@ func AutoMigrate(repository *repository.Repository) {
 		&models.Ffm{},
 		&models.GroupService{},
 		&models.IpsCpdeHabilitation{},
+		&models.IpsNoReps{},
 		&models.Scrapp{},
 		&models.UserEgrese{},
 	)

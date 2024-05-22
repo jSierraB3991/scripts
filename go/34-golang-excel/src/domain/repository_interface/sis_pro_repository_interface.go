@@ -34,3 +34,7 @@ type GroupServiceRepositoryInterface interface {
 type IPSCodHabilitacionRepositoryInterface interface {
 	SaveIPSCodHabilitacion(data *models.IpsCpdeHabilitation) error
 }
+
+type IpsNoRepsRepositoryInterface interface {
+	SaveIpsNoReps(data *models.IpsNoReps) error
+}

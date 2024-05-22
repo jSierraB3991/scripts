@@ -158,3 +158,26 @@ type IpsCpdeHabilitation struct {
 	NameClassPres         string    `gorm:"column:name_class_pres;not null;"`
 	UpdateDate            time.Time `gorm:"column:update_date;not null;"`
 }
+
+type IpsNoReps struct {
+	gorm.Model
+	IpsNoRepsId      uint      `gorm:"column:id;not null"`
+	Code             string    `gorm:"column:code;not null;"`
+	Name             string    `gorm:"column:name;not null;"`
+	Description      string    `gorm:"column:description;not null;"`
+	IsAvailable      bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel    bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS   bool      `gorm:"column:is_standart_msps;not null;"`
+	Telphone         string    `gorm:"column:telphone;not null;"`
+	Manager          string    `gorm:"column:manager;not null;"`
+	Regime           string    `gorm:"column:regime;not null;"`
+	CodeDepto        string    `gorm:"column:code_depto;not null;"`
+	Department       string    `gorm:"column:department;not null;"`
+	CodeMunicipality string    `gorm:"column:code_municipality;not null;"`
+	Municipality     string    `gorm:"column:municipality;not null;"`
+	IpsType          string    `gorm:"column:ips_type;not null;"`
+	AtentionLevel    uint      `gorm:"column:atention_level;not null;"`
+	Nit              string    `gorm:"column:nit;not null;"`
+	UpdateDate       time.Time `gorm:"column:update_date;not null;"`
+	IsPublicPrivate  *bool     `gorm:"column:is_public_private;"`
+}

@@ -29,6 +29,8 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getGroupService(row)
 	case libs.IPSCodHabilitacion:
 		return getIpsCpdeHabilitation(row)
+	case libs.IPSnoREPS:
+		return getIpsNoReps(row)
 	}
 	return nil
 }
@@ -62,6 +64,26 @@ func getPointerString(data string) *string {
 		return nil
 	}
 	return &data
+}
+
+func getDataUserEgrese(rows []string) *models.UserEgrese {
+	err := validateVoidData(rows, []int{3, 5, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.UserEgrese{
+		Code:            rows[1],
+		Name:            rows[2],
+		IsAvailable:     rows[4] == "SI",
+		IsStandartGel:   rows[6] == "True",
+		IsStandardMSPS:  rows[7] == "True",
+		Consulation:     rows[8],
+		Procedure:       rows[9],
+		Emergency:       rows[10] == "SI",
+		Hospitalization: rows[11] == "SI",
+		Born:            rows[12] == "SI",
+		UpdateDate:      *updateSisproFormat(rows[20]),
+	}
 }
 
 func getDataCie10(rows []string) *models.Cie {
@@ -233,5 +255,32 @@ func getIpsCpdeHabilitation(row []string) *models.IpsCpdeHabilitation {
 		ClassPres:      libs.GetUintForString(row[14]),
 		NameClassPres:  row[15],
 		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+
+func getIpsNoReps(row []string) *models.IpsNoReps {
+	err := validateVoidData(row, []int{5, 18, 19})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.IpsNoReps{
+		Code:             row[1],
+		Name:             row[2],
+		Description:      row[3],
+		IsAvailable:      row[4] == "SI",
+		IsStandartGel:    row[6] == "Verdadero",
+		IsStandardMSPS:   row[7] == "Verdadero",
+		Telphone:         row[8],
+		Manager:          row[9],
+		Regime:           row[10],
+		CodeDepto:        row[11],
+		Department:       row[12],
+		CodeMunicipality: row[13],
+		Municipality:     row[14],
+		IpsType:          row[15],
+		AtentionLevel:    libs.GetUintForString(row[16]),
+		Nit:              row[17],
+		UpdateDate:       *updateSisproFormat(row[20]),
+		IsPublicPrivate:  isPublicPrivate(row, 21),
 	}
 }
