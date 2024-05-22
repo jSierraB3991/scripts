@@ -181,3 +181,24 @@ type IpsNoReps struct {
 	UpdateDate       time.Time `gorm:"column:update_date;not null;"`
 	IsPublicPrivate  *bool     `gorm:"column:is_public_private;"`
 }
+
+type Ium struct {
+	gorm.Model
+	IumId                        uint      `gorm:"column:id;not null"`
+	Code                         string    `gorm:"column:code;not null;"`
+	Name                         string    `gorm:"column:name;not null;"`
+	IsAvailable                  bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel                bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS               bool      `gorm:"column:is_standart_msps;not null;"`
+	Nivel1                       string    `gorm:"column:level_one;not null;"`
+	ActivePrincipal              string    `gorm:"column:active_principal;not null;"`
+	CodeActivePrincipal          string    `gorm:"column:code_active_principal;not null;"`
+	PharmaceuticalForm           string    `gorm:"column:pharmaceutical_form;not null;"`
+	CodePharmaceuticalForm       string    `gorm:"column:code_pharmaceutical_form;not null;"`
+	Nivel2                       uint      `gorm:"column:level_two;not null;"`
+	CodeComercialitionForm       string    `gorm:"column:code_comercialization_form;not null;"`
+	Nivel3                       uint      `gorm:"column:level_three;not null;"`
+	ConditionResgiterMedicSample string    `gorm:"column:condition_register_medic_sample;not null;"`
+	PackegeUnique                string    `gorm:"column:package_uniq;not null;"`
+	UpdateDate                   time.Time `gorm:"column:update_date;not null;"`
+}

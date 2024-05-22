@@ -38,3 +38,7 @@ type IPSCodHabilitacionRepositoryInterface interface {
 type IpsNoRepsRepositoryInterface interface {
 	SaveIpsNoReps(data *models.IpsNoReps) error
 }
+
+type IumsRepositoryInterface interface {
+	SaveIum(data *models.Ium) error
+}

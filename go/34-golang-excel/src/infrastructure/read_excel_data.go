@@ -116,6 +116,8 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewIPSCodHabilitacionService(readDat.repo)
 	case libs.IPSnoREPS:
 		return service.NewIpsNoReps(readDat.repo)
+	case libs.IUM:
+		return service.NewIumService(readDat.repo)
 	}
 	return nil
 }

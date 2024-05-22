@@ -31,6 +31,8 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getIpsCpdeHabilitation(row)
 	case libs.IPSnoREPS:
 		return getIpsNoReps(row)
+	case libs.IUM:
+		return getIum(row)
 	}
 	return nil
 }
@@ -282,5 +284,30 @@ func getIpsNoReps(row []string) *models.IpsNoReps {
 		Nit:              row[17],
 		UpdateDate:       *updateSisproFormat(row[20]),
 		IsPublicPrivate:  isPublicPrivate(row, 21),
+	}
+}
+
+func getIum(row []string) *models.Ium {
+	err := validateVoidData(row, []int{3, 5, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.Ium{
+		Code:                         row[1],
+		Name:                         row[2],
+		IsAvailable:                  row[4] == "SI",
+		IsStandartGel:                row[6] == "Verdadero",
+		IsStandardMSPS:               row[7] == "Verdadero",
+		Nivel1:                       row[8],
+		ActivePrincipal:              row[9],
+		CodeActivePrincipal:          row[10],
+		PharmaceuticalForm:           row[11],
+		CodePharmaceuticalForm:       row[12],
+		Nivel2:                       libs.GetUintForString(row[13]),
+		CodeComercialitionForm:       row[14],
+		Nivel3:                       libs.GetUintForString(row[15]),
+		ConditionResgiterMedicSample: row[16],
+		PackegeUnique:                row[17],
+		UpdateDate:                   *updateSisproFormat(row[20]),
 	}
 }

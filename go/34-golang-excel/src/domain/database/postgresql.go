@@ -29,6 +29,7 @@ func AutoMigrate(repository *repository.Repository) {
 		&models.CupsRips{},
 		&models.Dci{},
 		&models.Ffm{},
+		&models.Ium{},
 		&models.GroupService{},
 		&models.IpsCpdeHabilitation{},
 		&models.IpsNoReps{},
