@@ -23,6 +23,7 @@ func New(pg_url string) *gorm.DB {
 
 func AutoMigrate(repository *repository.Repository) {
 	repository.GetDb().AutoMigrate(
+		&models.AtentionModality{},
 		&models.Cie{},
 		&models.Cie2036{},
 		&models.CumSispro{},
@@ -33,6 +34,7 @@ func AutoMigrate(repository *repository.Repository) {
 		&models.GroupService{},
 		&models.IpsCpdeHabilitation{},
 		&models.IpsNoReps{},
+		&models.Municipality{},
 		&models.Scrapp{},
 		&models.UserEgrese{},
 	)

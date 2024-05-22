@@ -33,6 +33,10 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getIpsNoReps(row)
 	case libs.IUM:
 		return getIum(row)
+	case libs.ModalidadAtencion:
+		return getAtentionModality(row)
+	case libs.Municipio:
+		return getMunicipality(row)
 	}
 	return nil
 }
@@ -309,5 +313,39 @@ func getIum(row []string) *models.Ium {
 		ConditionResgiterMedicSample: row[16],
 		PackegeUnique:                row[17],
 		UpdateDate:                   *updateSisproFormat(row[20]),
+	}
+}
+
+func getAtentionModality(row []string) *models.AtentionModality {
+
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.AtentionModality{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "Verdadero",
+		IsStandardMSPS: row[7] == "Verdadero",
+		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+
+func getMunicipality(row []string) *models.Municipality {
+
+	err := validateVoidData(row, []int{3, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.Municipality{
+		Code:            row[1],
+		Name:            row[2],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		Depto:           row[8],
+		UpdateDate:      *updateSisproFormat(row[20]),
+		IsPublicPrivate: isPublicPrivate(row, 21),
 	}
 }

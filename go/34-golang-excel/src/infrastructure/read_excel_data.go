@@ -118,6 +118,10 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewIpsNoReps(readDat.repo)
 	case libs.IUM:
 		return service.NewIumService(readDat.repo)
+	case libs.ModalidadAtencion:
+		return service.NewModalityAtentionService(readDat.repo)
+	case libs.Municipio:
+		return service.NewMunicipalityService(readDat.repo)
 	}
 	return nil
 }

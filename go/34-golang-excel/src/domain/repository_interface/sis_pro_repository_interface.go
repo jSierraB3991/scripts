@@ -42,3 +42,11 @@ type IpsNoRepsRepositoryInterface interface {
 type IumsRepositoryInterface interface {
 	SaveIum(data *models.Ium) error
 }
+
+type ModalityAtentionRepositoryInterface interface {
+	SaveAtentionModality(data *models.AtentionModality) error
+}
+
+type MunicipalityRepositoryInterface interface {
+	SaveMunicipality(data *models.Municipality) error
+}

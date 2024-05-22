@@ -202,3 +202,26 @@ type Ium struct {
 	PackegeUnique                string    `gorm:"column:package_uniq;not null;"`
 	UpdateDate                   time.Time `gorm:"column:update_date;not null;"`
 }
+
+type AtentionModality struct {
+	gorm.Model
+	AtentionModalityId uint      `gorm:"column:id;not null"`
+	Code               string    `gorm:"column:code;not null;"`
+	Name               string    `gorm:"column:name;not null;"`
+	IsAvailable        bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel      bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS     bool      `gorm:"column:is_standart_msps;not null;"`
+	UpdateDate         time.Time `gorm:"column:update_date;not null;"`
+}
+type Municipality struct {
+	gorm.Model
+	MunicipalityId  uint      `gorm:"column:id;not null"`
+	Code            string    `gorm:"column:code;not null;"`
+	Name            string    `gorm:"column:name;not null;"`
+	Depto           string    `gorm:"column:depto;not null;"`
+	IsAvailable     bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel   bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS  bool      `gorm:"column:is_standart_msps;not null;"`
+	UpdateDate      time.Time `gorm:"column:update_date;not null;"`
+	IsPublicPrivate *bool     `gorm:"column:is_public_private;"`
+}
