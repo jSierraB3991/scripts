@@ -13,7 +13,7 @@ func (repo *Repository) SaveCie2036SisPro(data *models.Cie2036) error {
 	}
 	result, isOk := resultData.(*models.Cie2036)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO Cie2036")
 	}
 	if result.Code == data.Code {
 		return nil
@@ -28,7 +28,7 @@ func (repo *Repository) SaveCieSisPro(data *models.Cie) error {
 	}
 	result, isOk := resultData.(*models.Cie)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO Cie")
 	}
 	if result.Code == data.Code {
 		return nil

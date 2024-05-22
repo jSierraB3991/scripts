@@ -14,7 +14,7 @@ func (repo *Repository) SaveDci(data *models.Dci) error {
 
 	result, isOk := resultData.(*models.Dci)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO Dci")
 	}
 	if result.Code == data.Code {
 		return nil

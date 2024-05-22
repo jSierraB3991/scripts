@@ -112,6 +112,8 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewFfmService(readDat.repo)
 	case libs.GrupoServicios:
 		return service.NewGroupServiceService(readDat.repo)
+	case libs.IPSCodHabilitacion:
+		return service.NewIPSCodHabilitacionService(readDat.repo)
 	}
 	return nil
 }

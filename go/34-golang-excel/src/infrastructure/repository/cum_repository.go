@@ -14,7 +14,7 @@ func (repo *Repository) SaveCumSisPro(data *models.CumSispro) error {
 
 	result, isOk := resultData.(*models.CumSispro)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO CumSispro")
 	}
 	if data.Code == result.Code {
 		return nil

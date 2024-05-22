@@ -14,7 +14,7 @@ func (repo *Repository) SaveUserEgrese(data *models.UserEgrese) error {
 
 	result, isOk := resultData.(*models.UserEgrese)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO UserEgrese")
 	}
 	if data.Code == result.Code {
 		return nil

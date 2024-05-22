@@ -14,7 +14,7 @@ func (repo *Repository) SaveCupRips(data *models.CupsRips) error {
 
 	result, isOk := resultData.(*models.CupsRips)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO CupsRips")
 	}
 	if result.Code == data.Code {
 		return nil

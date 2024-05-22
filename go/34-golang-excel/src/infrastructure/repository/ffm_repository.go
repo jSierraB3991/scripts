@@ -14,7 +14,7 @@ func (repo *Repository) SaveFfm(data *models.Ffm) error {
 
 	result, isOk := resultData.(*models.Ffm)
 	if !isOk {
-		log.Fatal("NO MAPPER TO GroupService")
+		log.Fatal("NO MAPPER TO Ffm")
 	}
 	if result.Code == data.Code {
 		return nil

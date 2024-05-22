@@ -27,6 +27,8 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getDataFfm(row)
 	case libs.GrupoServicios:
 		return getGroupService(row)
+	case libs.IPSCodHabilitacion:
+		return getIpsCpdeHabilitation(row)
 	}
 	return nil
 }
@@ -208,5 +210,28 @@ func getGroupService(rows []string) *models.GroupService {
 		IsStandartGel:  rows[6] == "SI",
 		IsStandardMSPS: rows[7] == "SI",
 		UpdateDate:     *updateSisproFormat(rows[20]),
+	}
+}
+
+func getIpsCpdeHabilitation(row []string) *models.IpsCpdeHabilitation {
+	err := validateVoidData(row, []int{3, 5, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.IpsCpdeHabilitation{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "SI",
+		IsStandardMSPS: row[7] == "SI",
+		TypeIdPres:     row[8],
+		NumIdPres:      row[9],
+		CodePres:       row[10],
+		CodeMpiSede:    row[11],
+		NameMpiSede:    row[12],
+		NameDeptoSede:  row[13],
+		ClassPres:      libs.GetUintForString(row[14]),
+		NameClassPres:  row[15],
+		UpdateDate:     *updateSisproFormat(row[20]),
 	}
 }

@@ -139,3 +139,22 @@ type GroupService struct {
 	IsStandardMSPS bool      `gorm:"column:is_standart_msps;not null;"`
 	UpdateDate     time.Time `gorm:"column:update_date;not null;"`
 }
+
+type IpsCpdeHabilitation struct {
+	gorm.Model
+	IpsCpdeHabilitationId uint      `gorm:"column:id;not null"`
+	Code                  string    `gorm:"column:code;not null;"`
+	Name                  string    `gorm:"column:name;not null;"`
+	IsAvailable           bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel         bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS        bool      `gorm:"column:is_standart_msps;not null;"`
+	TypeIdPres            string    `gorm:"column:type_id_pres;not null;"`
+	NumIdPres             string    `gorm:"column:num_id_pres;not null;"`
+	CodePres              string    `gorm:"column:code_pres;not null;"`
+	CodeMpiSede           string    `gorm:"column:code_mpi_sede;not null;"`
+	NameMpiSede           string    `gorm:"column:name_mpi_sede;not null;"`
+	NameDeptoSede         string    `gorm:"column:name_depto_sede;not null;"`
+	ClassPres             uint      `gorm:"column:class_pres;not null;"`
+	NameClassPres         string    `gorm:"column:name_class_pres;not null;"`
+	UpdateDate            time.Time `gorm:"column:update_date;not null;"`
+}

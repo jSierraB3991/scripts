@@ -30,3 +30,7 @@ type FfmRepositoryInterface interface {
 type GroupServiceRepositoryInterface interface {
 	SaveGroupService(data *models.GroupService) error
 }
+
+type IPSCodHabilitacionRepositoryInterface interface {
+	SaveIPSCodHabilitacion(data *models.IpsCpdeHabilitation) error
+}
