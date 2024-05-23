@@ -225,3 +225,44 @@ type Municipality struct {
 	UpdateDate      time.Time `gorm:"column:update_date;not null;"`
 	IsPublicPrivate *bool     `gorm:"column:is_public_private;"`
 }
+
+type RipsCausaExternaV2 struct {
+	gorm.Model
+	RipsCausaExternaV2Id uint      `gorm:"column:id;not null"`
+	Code                 string    `gorm:"column:code;not null;"`
+	Name                 string    `gorm:"column:name;not null;"`
+	IsAvailable          bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel        bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS       bool      `gorm:"column:is_standart_msps;not null;"`
+	Consults             string    `gorm:"column:consults;not null;"`
+	Procedure            string    `gorm:"column:procedure;not null;"`
+	Urgency              string    `gorm:"column:urgency;not null;"`
+	Hospitalization      string    `gorm:"column:hospitalization;not null;"`
+	RnBorn               string    `gorm:"column:rn_born;not null;"`
+	UpdateDate           time.Time `gorm:"column:update_date;not null;"`
+}
+type RipsConsultFinalV2 struct {
+	gorm.Model
+	RipsConsultFinalV2Id uint      `gorm:"column:id;not null"`
+	Code                 string    `gorm:"column:code;not null;"`
+	Name                 string    `gorm:"column:name;not null;"`
+	IsAvailable          bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel        bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS       bool      `gorm:"column:is_standart_msps;not null;"`
+	Consults             string    `gorm:"column:consults;not null;"`
+	Procedure            string    `gorm:"column:procedure;not null;"`
+	Urgency              string    `gorm:"column:urgency;not null;"`
+	Hospitalization      string    `gorm:"column:hospitalization;not null;"`
+	RnBorn               string    `gorm:"column:rn_born;not null;"`
+	UpdateDate           time.Time `gorm:"column:update_date;not null;"`
+}
+type RipsDiagnostictypePrincipalv2 struct {
+	gorm.Model
+	RipsDiagnostictypePrincipalv2Id uint      `gorm:"column:id;not null"`
+	Code                            string    `gorm:"column:code;not null;"`
+	Name                            string    `gorm:"column:name;not null;"`
+	IsAvailable                     bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel                   bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS                  bool      `gorm:"column:is_standart_msps;not null;"`
+	UpdateDate                      time.Time `gorm:"column:update_date;not null;"`
+}

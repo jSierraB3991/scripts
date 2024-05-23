@@ -8,10 +8,10 @@ import (
 )
 
 type IumService struct {
-	repo repositoryinterface.IumsRepositoryInterface
+	repo repositoryinterface.IpsNoRepsRepositoryInterface
 }
 
-func NewIumService(repo repositoryinterface.IumsRepositoryInterface) *IumService {
+func NewIumService(repo repositoryinterface.IpsNoRepsRepositoryInterface) *IumService {
 	return &IumService{
 		repo: repo,
 	}
@@ -22,9 +22,9 @@ func (IumService) GetCode() string {
 }
 
 func (service *IumService) SaveSisproData(data interface{}) error {
-	dataMapper, isOk := data.(*models.Ium)
+	dataMapper, isOk := data.(*models.IpsNoReps)
 	if !isOk {
 		return errorsrips.MapperError{Data: service.GetCode()}
 	}
-	return service.repo.SaveIum(dataMapper)
+	return service.repo.SaveIpsNoReps(dataMapper)
 }

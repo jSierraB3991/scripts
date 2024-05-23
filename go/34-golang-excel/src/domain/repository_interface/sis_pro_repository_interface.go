@@ -50,3 +50,15 @@ type ModalityAtentionRepositoryInterface interface {
 type MunicipalityRepositoryInterface interface {
 	SaveMunicipality(data *models.Municipality) error
 }
+
+type RipsExternCauseRepositoryInterface interface {
+	SaveRipsExternCauseV2(data *models.RipsCausaExternaV2) error
+}
+
+type RipsConsultFinalRepositoryInterface interface {
+	SaveRipsConsultFinalV2(data *models.RipsConsultFinalV2) error
+}
+
+type RipsDiagnosticTypePincipalRepositoryInterface interface {
+	SaveRipsDiagnostictypePrincipalv2(data *models.RipsDiagnostictypePrincipalv2) error
+}

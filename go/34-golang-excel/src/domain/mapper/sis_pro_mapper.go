@@ -37,6 +37,12 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getAtentionModality(row)
 	case libs.Municipio:
 		return getMunicipality(row)
+	case libs.RIPSCausaExternaVersion2:
+		return getRipsCausaExternaV2(row)
+	case libs.RIPSFinalidadConsultaVersion2:
+		return getRipsFinalidadConsultaV2(row)
+	case libs.RIPSTipoDiagnosticoPrincipalVersion2:
+		return getRipsDiagnostictypePrincipalv2(row)
 	}
 	return nil
 }
@@ -333,7 +339,6 @@ func getAtentionModality(row []string) *models.AtentionModality {
 }
 
 func getMunicipality(row []string) *models.Municipality {
-
 	err := validateVoidData(row, []int{3, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19})
 	if err != nil {
 		log.Panic(err)
@@ -347,5 +352,60 @@ func getMunicipality(row []string) *models.Municipality {
 		Depto:           row[8],
 		UpdateDate:      *updateSisproFormat(row[20]),
 		IsPublicPrivate: isPublicPrivate(row, 21),
+	}
+}
+
+func getRipsCausaExternaV2(row []string) *models.RipsCausaExternaV2 {
+	err := validateVoidData(row, []int{3, 5, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.RipsCausaExternaV2{
+		Code:            row[1],
+		Name:            row[2],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		Consults:        row[8],
+		Procedure:       row[9],
+		Urgency:         row[10],
+		Hospitalization: row[11],
+		RnBorn:          row[12],
+		UpdateDate:      *updateSisproFormat(row[20]),
+	}
+}
+
+func getRipsFinalidadConsultaV2(row []string) *models.RipsConsultFinalV2 {
+	err := validateVoidData(row, []int{3, 5, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.RipsConsultFinalV2{
+		Code:            row[1],
+		Name:            row[2],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		Consults:        row[8],
+		Procedure:       row[9],
+		Urgency:         row[10],
+		Hospitalization: row[11],
+		RnBorn:          row[12],
+		UpdateDate:      *updateSisproFormat(row[20]),
+	}
+}
+
+func getRipsDiagnostictypePrincipalv2(row []string) *models.RipsDiagnostictypePrincipalv2 {
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.RipsDiagnostictypePrincipalv2{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "Verdadero",
+		IsStandardMSPS: row[7] == "Verdadero",
+		UpdateDate:     *updateSisproFormat(row[20]),
 	}
 }

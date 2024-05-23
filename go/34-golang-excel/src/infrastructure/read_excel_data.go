@@ -122,6 +122,13 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewModalityAtentionService(readDat.repo)
 	case libs.Municipio:
 		return service.NewMunicipalityService(readDat.repo)
+	case libs.RIPSCausaExternaVersion2:
+		return service.NewRipsExternCauseV2Service(readDat.repo)
+	case libs.RIPSFinalidadConsultaVersion2:
+		return service.NewRipsConsultFinalService(readDat.repo)
+	case libs.RIPSTipoDiagnosticoPrincipalVersion2:
+		return service.NewRipsDiagnostictypePrincipalv2Service(readDat.repo)
+
 	}
 	return nil
 }
