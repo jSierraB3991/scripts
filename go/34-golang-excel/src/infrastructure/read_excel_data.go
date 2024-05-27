@@ -2,7 +2,6 @@ package infrastructure
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/libs"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/mapper"
@@ -59,16 +58,7 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 	}
 	var code string
 	for i, row := range rows {
-		if i == 0 {
-			for i := range row {
-				var valueData string
-				if len(rows[1]) > i {
-					valueData = rows[1][i]
-				}
-				log.Printf("i: %v , name: %s, value: %s ", i, row[i], valueData)
-			}
-			continue
-		} else if i == 1 {
+		if i == 1 {
 			code = row[0]
 			data := mapper.GetDataSispro(row, code)
 			service := readDat.GetSisProService(code)

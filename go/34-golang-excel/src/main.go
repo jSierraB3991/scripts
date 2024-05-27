@@ -14,7 +14,10 @@ import (
 func main() {
 	godotenv.Load()
 
-	db := database.New(os.Getenv("POSTGRE_URL"))
+	db, final := database.New(os.Getenv("POSTGRE_URL"), os.Getenv("GCP_DATABASE"))
+	if final != nil {
+		defer final()
+	}
 	repo := repository.InitiateRepo(db, context.Background())
 	database.AutoMigrate(repo)
 
