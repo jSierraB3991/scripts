@@ -2,6 +2,9 @@ package infrastructure
 
 import (
 	"fmt"
+	"log"
+	"sync"
+	"time"
 
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/libs"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/mapper"
@@ -57,23 +60,36 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 		return err
 	}
 	var code string
+	var service serviceinterface.SisproServiceInterface
+
+	var wg sync.WaitGroup
 	for i, row := range rows {
-		if i == 1 {
+		if i == 0 {
+			continue
+		} else if i == 1 {
 			code = row[0]
-			data := mapper.GetDataSispro(row, code)
-			service := readDat.GetSisProService(code)
-			if service != nil {
-				service.SaveSisproData(data)
-			}
-		} else {
-			data := mapper.GetDataSispro(row, code)
-			service := readDat.GetSisProService(code)
-			if service != nil {
-				service.SaveSisproData(data)
-			}
+			service = readDat.GetSisProService(code)
 		}
+
+		if service == nil {
+			log.Fatalf("el documento %s", document)
+		}
+		wg.Add(1)
+		go readDat.saveData(code, row, service, &wg)
+		time.Sleep(100 * time.Millisecond)
 	}
+	wg.Wait()
+	log.Printf("SAVE DOCUMENT %s", document)
 	return readDat.repo.SaveScrapp(document)
+}
+
+func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface, wg *sync.WaitGroup) {
+	defer wg.Done()
+	data := mapper.GetDataSispro(row, code)
+	err := service.SaveSisproData(data)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func (readData *ReadExcelData) isForSave(code string) bool {

@@ -1,11 +1,11 @@
 package libs
 
 const (
-	CIE10Clasificacion2036               = "CIE10Clasificacion2036"
-	CIE10                                = "CIE10"
-	CUPSRips                             = "CUPSRips"
 	CatalogoCUMs                         = "CatalogoCUMs"
+	CIE10                                = "CIE10"
+	CIE10Clasificacion2036               = "CIE10Clasificacion2036"
 	CondicionyDestinoUsuarioEgreso       = "CondicionyDestinoUsuarioEgreso"
+	CUPSRips                             = "CUPSRips"
 	DCI                                  = "DCI"
 	FFM                                  = "FFM"
 	GrupoServicios                       = "GrupoServicios"
