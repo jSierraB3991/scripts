@@ -62,3 +62,39 @@ type RipsConsultFinalRepositoryInterface interface {
 type RipsDiagnosticTypePincipalRepositoryInterface interface {
 	SaveRipsDiagnostictypePrincipalv2(data *models.RipsDiagnostictypePrincipalv2) error
 }
+
+type UserTypeRepositoryInterface interface {
+	SaveUserType(data *models.UserType) error
+}
+
+type ServiceRepositoryInterface interface {
+	SaveService(data *models.Service) error
+}
+
+type OtherServiceRepositoryInterface interface {
+	SaveOtherService(data *models.OtherService) error
+}
+
+type TypeIdPISISRepositoryInterface interface {
+	SaveTypeIdPISIS(data *models.TypeIdPISIS) error
+}
+
+type MedicTypePOSRepositoryInterface interface {
+	SaveMedicTypePOS(data *models.MedicTypePOS) error
+}
+
+type TypeNotePOSRepositoryInterface interface {
+	SaveTypeNote(data *models.TypeNote) error
+}
+
+type UMMRepositoryInterface interface {
+	SaveUMM(data *models.UMM) error
+}
+
+type UPRRepositoryInterface interface {
+	SaveUPR(data *models.UPR) error
+}
+
+type IngressUserRepositoryInterface interface {
+	SaveIngressUser(data *models.IngressUser) error
+}

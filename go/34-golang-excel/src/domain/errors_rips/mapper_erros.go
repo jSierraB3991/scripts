@@ -13,5 +13,5 @@ type ValidataInMapperSisPro struct {
 }
 
 func (mp ValidataInMapperSisPro) Error() string {
-	return "SISPRO_VALID_DATA" + mp.Data
+	return "SISPRO_VALID_DATA_" + mp.Data
 }

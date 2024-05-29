@@ -68,7 +68,12 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 			continue
 		} else if i == 1 {
 			code = row[0]
+			log.Println(row)
 			service = readDat.GetSisProService(code)
+
+			for j, v := range row {
+				log.Printf("j: %v name: %s v: %s ", j, rows[0][j], v)
+			}
 		}
 
 		if service == nil {
@@ -76,7 +81,7 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 		}
 		wg.Add(1)
 		go readDat.saveData(code, row, service, &wg)
-		time.Sleep(100 * time.Millisecond)
+		time.Sleep(150 * time.Millisecond)
 	}
 	wg.Wait()
 	log.Printf("SAVE DOCUMENT %s", document)
@@ -134,6 +139,25 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewRipsConsultFinalService(readDat.repo)
 	case libs.RIPSTipoDiagnosticoPrincipalVersion2:
 		return service.NewRipsDiagnostictypePrincipalv2Service(readDat.repo)
+
+	case libs.RIPSTipoUsuarioVersion2:
+		return service.NewUserTypeService(readDat.repo)
+	case libs.Servicios:
+		return service.NewServiceService(readDat.repo)
+	case libs.TipoIdPISIS:
+		return service.NewTypeIdPISISService(readDat.repo)
+	case libs.TipoMedicamentoPOSVersion2:
+		return service.NewMedicTypePOSService(readDat.repo)
+	case libs.TipoNota:
+		return service.NewTypeNoteService(readDat.repo)
+	case libs.TipoOtrosServicios:
+		return service.NewAnotherServiceService(readDat.repo)
+	case libs.UMM:
+		return service.NewUmmService(readDat.repo)
+	case libs.UPR:
+		return service.NewUprService(readDat.repo)
+	case libs.ViaIngresoUsuario:
+		return service.NewIngressUserService(readDat.repo)
 
 	}
 	return nil

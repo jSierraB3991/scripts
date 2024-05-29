@@ -7,24 +7,24 @@ import (
 	repositoryinterface "github.com/jdsierrab3991/scripts/34-golang-excel/domain/repository_interface"
 )
 
-type IumService struct {
-	repo repositoryinterface.IumsRepositoryInterface
+type TypeNoteService struct {
+	repo repositoryinterface.TypeNotePOSRepositoryInterface
 }
 
-func NewIumService(repo repositoryinterface.IumsRepositoryInterface) *IumService {
-	return &IumService{
+func NewTypeNoteService(repo repositoryinterface.TypeNotePOSRepositoryInterface) *TypeNoteService {
+	return &TypeNoteService{
 		repo: repo,
 	}
 }
 
-func (IumService) GetCode() string {
-	return libs.FFM
+func (TypeNoteService) GetCode() string {
+	return libs.TipoNota
 }
 
-func (service *IumService) SaveSisproData(data interface{}) error {
-	dataMapper, isOk := data.(*models.Ium)
+func (service *TypeNoteService) SaveSisproData(data interface{}) error {
+	dataMapper, isOk := data.(*models.TypeNote)
 	if !isOk {
 		return errorsrips.MapperError{Data: service.GetCode()}
 	}
-	return service.repo.SaveIum(dataMapper)
+	return service.repo.SaveTypeNote(dataMapper)
 }

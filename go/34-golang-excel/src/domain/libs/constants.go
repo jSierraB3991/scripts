@@ -18,5 +18,15 @@ const (
 	RIPSFinalidadConsultaVersion2        = "RIPSFinalidadConsultaVersion2"
 	RIPSTipoDiagnosticoPrincipalVersion2 = "RIPSTipoDiagnosticoPrincipalVersion2"
 
+	RIPSTipoUsuarioVersion2    = "RIPSTipoUsuarioVersion2"
+	Servicios                  = "Servicios"
+	TipoIdPISIS                = "TipoIdPISIS"
+	TipoMedicamentoPOSVersion2 = "TipoMedicamentoPOSVersion2"
+	TipoNota                   = "TipoNota"
+	TipoOtrosServicios         = "TipoOtrosServicios"
+	UMM                        = "UMM"
+	UPR                        = "UPR"
+	ViaIngresoUsuario          = "ViaIngresoUsuario"
+
 	SISPRO_DATE_FORMAT = "2006-01-02 3:04:05 PM"
 )

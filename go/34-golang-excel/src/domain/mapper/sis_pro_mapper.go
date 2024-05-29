@@ -43,9 +43,28 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getRipsFinalidadConsultaV2(row)
 	case libs.RIPSTipoDiagnosticoPrincipalVersion2:
 		return getRipsDiagnostictypePrincipalv2(row)
+	case libs.RIPSTipoUsuarioVersion2:
+		return getRIPSTipoUsuarioVersion2(row)
+	case libs.Servicios:
+		return getService(row)
+	case libs.TipoIdPISIS:
+		return getTypeIdPisis(row)
+	case libs.TipoMedicamentoPOSVersion2:
+		return getMedicTypePOS(row)
+	case libs.TipoNota:
+		return getTypeNote(row)
+	case libs.TipoOtrosServicios:
+		return getAnotherService(row)
+	case libs.UMM:
+		return getUmm(row)
+	case libs.UPR:
+		return getUpr(row)
+	case libs.ViaIngresoUsuario:
+		return getIngressUser(row)
 	}
 	return nil
 }
+
 func updateSisproFormat(date string) *time.Time {
 	updateFormat, err := time.Parse(libs.SISPRO_DATE_FORMAT, date)
 	if err != nil {
@@ -95,6 +114,23 @@ func getDataUserEgrese(rows []string) *models.UserEgrese {
 		Hospitalization: rows[11] == "SI",
 		Born:            rows[12] == "SI",
 		UpdateDate:      *updateSisproFormat(rows[20]),
+	}
+}
+
+func getRIPSTipoUsuarioVersion2(row []string) *models.UserType {
+
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19})
+	if err != nil {
+		log.Panic(err)
+	}
+
+	return &models.UserType{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "True",
+		IsStandardMSPS: row[7] == "True",
+		UpdateDate:     *updateSisproFormat(row[20]),
 	}
 }
 
@@ -407,5 +443,154 @@ func getRipsDiagnostictypePrincipalv2(row []string) *models.RipsDiagnostictypePr
 		IsStandartGel:  row[6] == "Verdadero",
 		IsStandardMSPS: row[7] == "Verdadero",
 		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+
+func getService(row []string) *models.Service {
+	err := validateVoidData(row, []int{5, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.Service{
+		Code:           row[1],
+		Name:           row[2],
+		Description:    row[3],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "Verdadero",
+		IsStandardMSPS: row[7] == "Verdadero",
+		Extra_I:        row[8],
+		Extra_II:       row[9],
+		Extra_III:      row[10],
+		Extra_IV:       row[11],
+		Extra_V:        row[12],
+		Extra_VI:       row[13],
+		Extra_VII:      row[14],
+		Extra_VIII:     row[15],
+		Extra_IX:       row[16],
+		Extra_X:        row[17],
+		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+
+func getTypeIdPisis(row []string) *models.TypeIdPISIS {
+	err := validateVoidData(row, []int{3, 5, 14, 15, 17, 18, 19})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.TypeIdPISIS{
+		Code:            row[1],
+		Name:            row[2],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		ExtraI:          row[8],
+		ExtraII:         row[9],
+		ExtraIII:        row[10],
+		ExtraIV:         row[11],
+		ExtraV:          row[12],
+		ExtraVI:         row[13],
+		ExtraIX:         row[16],
+		UpdateDate:      *updateSisproFormat(row[20]),
+		IsPublicPrivate: isPublicPrivate(row, 21),
+	}
+}
+
+func getMedicTypePOS(row []string) *models.MedicTypePOS {
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.MedicTypePOS{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "Verdadero",
+		IsStandardMSPS: row[7] == "Verdadero",
+		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+
+func getTypeNote(row []string) *models.TypeNote {
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.TypeNote{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "Verdadero",
+		IsStandardMSPS: row[7] == "Verdadero",
+		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+
+func getAnotherService(row []string) *models.OtherService {
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.OtherService{
+		Code:           row[1],
+		Name:           row[2],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "Verdadero",
+		IsStandardMSPS: row[7] == "Verdadero",
+		UpdateDate:     *updateSisproFormat(row[20]),
+	}
+}
+func getUmm(row []string) *models.UMM {
+	err := validateVoidData(row, []int{5, 11, 12, 13, 14, 15, 16, 17, 18, 19})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.UMM{
+		Code:            row[1],
+		Name:            row[2],
+		Description:     row[3],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		ExtraI:          row[8],
+		ExtraII:         row[9],
+		ExtraIII:        row[10],
+		UpdateDate:      *updateSisproFormat(row[20]),
+		IsPublicPrivate: isPublicPrivate(row, 21),
+	}
+}
+
+func getUpr(row []string) *models.UPR {
+	err := validateVoidData(row, []int{3, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.UPR{
+		Code:            row[1],
+		Name:            row[2],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		UpdateDate:      *updateSisproFormat(row[20]),
+		IsPublicPrivate: isPublicPrivate(row, 21),
+	}
+}
+
+func getIngressUser(row []string) *models.IngressUser {
+	err := validateVoidData(row, []int{3, 5, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.IngressUser{
+		Code:            row[1],
+		Name:            row[2],
+		IsAvailable:     row[4] == "SI",
+		IsStandartGel:   row[6] == "Verdadero",
+		IsStandardMSPS:  row[7] == "Verdadero",
+		Consult:         row[8],
+		Procedure:       row[9],
+		Emergency:       row[10],
+		Hospitalization: row[11],
+		RBorn:           row[12],
+		UpdateDate:      *updateSisproFormat(row[20]),
 	}
 }

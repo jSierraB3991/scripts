@@ -6,15 +6,16 @@ import (
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/models"
 )
 
-func (repo *Repository) SaveIum(data *models.Ium) error {
-	resultData, err := repo.existsSisProByCode(&models.Ium{}, data.Code)
+func (repo *Repository) SaveTypeNote(data *models.TypeNote) error {
+
+	resultData, err := repo.existsSisProByCode(&models.TypeNote{}, data.Code)
 	if err != nil {
 		return err
 	}
 
-	result, isOk := resultData.(*models.Ium)
+	result, isOk := resultData.(*models.TypeNote)
 	if !isOk {
-		log.Fatal("NO MAPPER TO Ium")
+		log.Fatal("NO MAPPER TO TypeNote")
 	}
 	if result.Code == data.Code {
 		return nil
