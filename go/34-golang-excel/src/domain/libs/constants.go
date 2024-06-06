@@ -13,7 +13,6 @@ const (
 	IPSnoREPS                            = "IPSnoREPS"
 	IUM                                  = "IUM"
 	ModalidadAtencion                    = "ModalidadAtencion"
-	Municipio                            = "Municipio"
 	RIPSCausaExternaVersion2             = "RIPSCausaExternaVersion2"
 	RIPSFinalidadConsultaVersion2        = "RIPSFinalidadConsultaVersion2"
 	RIPSTipoDiagnosticoPrincipalVersion2 = "RIPSTipoDiagnosticoPrincipalVersion2"

@@ -52,5 +52,30 @@ func New(pg_url, gcpCredentialDbbase64 string) (*gorm.DB, func() error) {
 func AutoMigrate(repository *repository.Repository) {
 	repository.GetDb().AutoMigrate(
 		&models.Scrapp{},
+		&models.AtentionModality{},
+		&models.Cie{},
+		&models.Cie2036{},
+		&models.CumSispro{},
+		&models.CupsRips{},
+		&models.Dci{},
+		&models.Ffm{},
+		&models.UserType{},
+		&models.UserEgrese{},
+		&models.IngressUser{},
+		&models.GroupService{},
+		&models.IpsCpdeHabilitation{},
+		&models.IpsNoReps{},
+		&models.Ium{},
+		&models.MedicTypePOS{},
+		&models.OtherService{},
+		&models.RipsCausaExternaV2{},
+		&models.RipsConsultFinalV2{},
+		&models.RipsDiagnostictypePrincipalv2{},
+		&models.Service{},
+
+		&models.UPR{},
+		&models.UMM{},
+		&models.TypeNote{},
+		&models.TypeIdPISIS{},
 	)
 }

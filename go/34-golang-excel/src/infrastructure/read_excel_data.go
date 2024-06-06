@@ -3,8 +3,6 @@ package infrastructure
 import (
 	"fmt"
 	"log"
-	"sync"
-	"time"
 
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/libs"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/mapper"
@@ -62,34 +60,25 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 	var code string
 	var service serviceinterface.SisproServiceInterface
 
-	var wg sync.WaitGroup
 	for i, row := range rows {
 		if i == 0 {
 			continue
 		} else if i == 1 {
 			code = row[0]
-			log.Println(row)
 			service = readDat.GetSisProService(code)
-
-			for j, v := range row {
-				log.Printf("j: %v name: %s v: %s ", j, rows[0][j], v)
-			}
 		}
 
 		if service == nil {
 			log.Fatalf("el documento %s", document)
 		}
-		wg.Add(1)
-		go readDat.saveData(code, row, service, &wg)
-		time.Sleep(150 * time.Millisecond)
+		readDat.saveData(code, row, service)
 	}
-	wg.Wait()
 	log.Printf("SAVE DOCUMENT %s", document)
 	return readDat.repo.SaveScrapp(document)
 }
 
-func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface, wg *sync.WaitGroup) {
-	defer wg.Done()
+func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface) {
+
 	data := mapper.GetDataSispro(row, code)
 	err := service.SaveSisproData(data)
 	if err != nil {
@@ -131,8 +120,6 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewIumService(readDat.repo)
 	case libs.ModalidadAtencion:
 		return service.NewModalityAtentionService(readDat.repo)
-	case libs.Municipio:
-		return service.NewMunicipalityService(readDat.repo)
 	case libs.RIPSCausaExternaVersion2:
 		return service.NewRipsExternCauseV2Service(readDat.repo)
 	case libs.RIPSFinalidadConsultaVersion2:

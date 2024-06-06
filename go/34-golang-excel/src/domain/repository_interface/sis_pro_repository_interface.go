@@ -47,10 +47,6 @@ type ModalityAtentionRepositoryInterface interface {
 	SaveAtentionModality(data *models.AtentionModality) error
 }
 
-type MunicipalityRepositoryInterface interface {
-	SaveMunicipality(data *models.Municipality) error
-}
-
 type RipsExternCauseRepositoryInterface interface {
 	SaveRipsExternCauseV2(data *models.RipsCausaExternaV2) error
 }

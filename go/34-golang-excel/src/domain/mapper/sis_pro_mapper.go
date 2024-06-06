@@ -35,8 +35,6 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getIum(row)
 	case libs.ModalidadAtencion:
 		return getAtentionModality(row)
-	case libs.Municipio:
-		return getMunicipality(row)
 	case libs.RIPSCausaExternaVersion2:
 		return getRipsCausaExternaV2(row)
 	case libs.RIPSFinalidadConsultaVersion2:
@@ -373,24 +371,6 @@ func getAtentionModality(row []string) *models.AtentionModality {
 		UpdateDate:     *updateSisproFormat(row[20]),
 	}
 }
-
-func getMunicipality(row []string) *models.Municipality {
-	err := validateVoidData(row, []int{3, 5, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19})
-	if err != nil {
-		log.Panic(err)
-	}
-	return &models.Municipality{
-		Code:            row[1],
-		Name:            row[2],
-		IsAvailable:     row[4] == "SI",
-		IsStandartGel:   row[6] == "Verdadero",
-		IsStandardMSPS:  row[7] == "Verdadero",
-		Depto:           row[8],
-		UpdateDate:      *updateSisproFormat(row[20]),
-		IsPublicPrivate: isPublicPrivate(row, 21),
-	}
-}
-
 func getRipsCausaExternaV2(row []string) *models.RipsCausaExternaV2 {
 	err := validateVoidData(row, []int{3, 5, 13, 14, 15, 16, 17, 18, 19, 21})
 	if err != nil {
