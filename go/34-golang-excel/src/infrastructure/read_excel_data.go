@@ -25,38 +25,24 @@ func NewReadExcelData(repo *repository.Repository) *ReadExcelData {
 func (read ReadExcelData) Run(homeFiles string, documents []string) error {
 
 	for _, document := range documents {
-		err := read.GetDataConfiguration(homeFiles, document)
+		rows, err := read.GetDataConfiguration(homeFiles, document)
 		if err != nil {
 			return err
+		}
+
+		if rows != nil {
+			err = read.SaveInDatabase(rows, document)
+			if err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
-func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) error {
+func (readDat *ReadExcelData) SaveInDatabase(rows [][]string, document string) error {
 
-	fmt.Println(document)
-	isValid := readDat.isForSave(document)
-	if !isValid {
-		return nil
-	}
-
-	f, err := excelize.OpenFile(homeFiles + document)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		//Close the spreadsheet.
-		if err := f.Close(); err != nil {
-			fmt.Println(err)
-		}
-	}()
-	//Get all the rows in the Sheet1.
-	rows, err := f.GetRows("Table")
-	if err != nil {
-		return err
-	}
 	var code string
 	var service serviceinterface.SisproServiceInterface
 
@@ -75,6 +61,33 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) e
 	}
 	log.Printf("SAVE DOCUMENT %s", document)
 	return readDat.repo.SaveScrapp(document)
+}
+
+func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) ([][]string, error) {
+
+	fmt.Println(document)
+	isValid := readDat.isForSave(document)
+	if !isValid {
+		log.Printf("DOCUMENT PRE SAVE %s", document)
+		return nil, nil
+	}
+
+	f, err := excelize.OpenFile(homeFiles + document)
+	if err != nil {
+		return nil, err
+	}
+	defer func() {
+		//Close the spreadsheet.
+		if err := f.Close(); err != nil {
+			fmt.Println(err)
+		}
+	}()
+	//Get all the rows in the Sheet1.
+	rows, err := f.GetRows("Table")
+	if err != nil {
+		return nil, err
+	}
+	return rows, nil
 }
 
 func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface) {
