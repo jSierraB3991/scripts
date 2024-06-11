@@ -59,6 +59,8 @@ func GetDataSispro(row []string, code string) interface{} {
 		return getUpr(row)
 	case libs.ViaIngresoUsuario:
 		return getIngressUser(row)
+	case libs.Pais:
+		return getCountry(row)
 	}
 	return nil
 }
@@ -572,5 +574,14 @@ func getIngressUser(row []string) *models.IngressUser {
 		Hospitalization: row[11],
 		RBorn:           row[12],
 		UpdateDate:      *updateSisproFormat(row[20]),
+	}
+}
+
+func getCountry(row []string) *models.Country {
+	return &models.Country{
+		Code:    row[1],
+		Name:    row[2],
+		ExtraI:  row[9],
+		ExtraII: row[10],
 	}
 }

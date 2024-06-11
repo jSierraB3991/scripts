@@ -26,6 +26,7 @@ const (
 	UMM                        = "UMM"
 	UPR                        = "UPR"
 	ViaIngresoUsuario          = "ViaIngresoUsuario"
+	Pais                       = "Pais"
 
 	SISPRO_DATE_FORMAT = "2006-01-02 3:04:05 PM"
 )

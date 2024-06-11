@@ -158,7 +158,8 @@ func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.Sisp
 		return service.NewUprService(readDat.repo)
 	case libs.ViaIngresoUsuario:
 		return service.NewIngressUserService(readDat.repo)
-
+	case libs.Pais:
+		return service.NewCountryService(readDat.repo)
 	}
 	return nil
 }

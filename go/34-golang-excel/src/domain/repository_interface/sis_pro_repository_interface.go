@@ -94,3 +94,6 @@ type UPRRepositoryInterface interface {
 type IngressUserRepositoryInterface interface {
 	SaveIngressUser(data *models.IngressUser) error
 }
+type CountryRepositoryInterface interface {
+	SaveCountry(data *models.Country) error
+}

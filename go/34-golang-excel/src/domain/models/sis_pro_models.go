@@ -376,3 +376,12 @@ type IngressUser struct {
 	RBorn           string    `gorm:"column:r_born;not null;"`
 	UpdateDate      time.Time `gorm:"column:update_date;not null;"`
 }
+
+type Country struct {
+	gorm.Model
+	Countryd uint   `gorm:"column:id;not null"`
+	Code     string `gorm:"column:code;not null;"`
+	Name     string `gorm:"column:name;not null;"`
+	ExtraI   string `gorm:"column:extra_i;not null;"`
+	ExtraII  string `gorm:"column:extra_ii;not null;"`
+}

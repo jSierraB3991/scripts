@@ -55,6 +55,7 @@ func AutoMigrate(repository *repository.Repository) {
 		&models.AtentionModality{},
 		&models.Cie{},
 		&models.Cie2036{},
+		&models.Country{},
 		&models.CumSispro{},
 		&models.CupsRips{},
 		&models.Dci{},
