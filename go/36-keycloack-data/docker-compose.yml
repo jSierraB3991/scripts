@@ -1,0 +1,45 @@
+version: '3'
+
+services:
+  keycloak-login:
+    image: quay.io/keycloak/keycloak:25.0.0
+    depends_on:
+      - postgres-db
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+    command:
+      - start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-db/test-keycloak
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: root
+      KC_HOSTNAME: localhost
+    volumes:
+      - /home/eliot/.local/data/keycloak_25_0_0:/opt/keycloak/conf
+  postgres-db:
+    image: postgres:15.7-alpine3.20
+    container_name: postgre-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - /home/eliot/.local/data/postgre_15.7-alpine3.20:/var/lib/postgresql/data
+  application:
+    depends_on:
+      - postgres-db
+    build: .
+    container_name: test-keycloack
+    ports:
+      - "8080:1323"
+    environment:
+      POSTGRE_URL: "host=localhost user=postgres password=root dbname=test-keycloak port=5432 sslmode=disable TimeZone=America/Bogota"
+      ENCRYPT_SECRET: key_for_encrypt_password_in_local
+      DATABASE_NAME: test-keycloak
+      SERVER_PORT: ":1323"
