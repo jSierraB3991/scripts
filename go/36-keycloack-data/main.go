@@ -7,14 +7,17 @@ import (
 
 	"github.com/jdsierrab3991/scripts/36-keycloack-data/src/model"
 	"github.com/jdsierrab3991/scripts/36-keycloack-data/src/service"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	log.Println("Start")
+	godotenv.Load()
 	authService := service.NewAuthService(getEnviroment())
 	ctx := context.Background()
-	userName := "EliotAnderson"
+	userName := "Trolencio"
 	password := "123456789"
-	email := "eliotandelon@gmail.com"
+	email := "judas3991@gmail.com"
 	err := authService.SaveUser(ctx, userName, password, email)
 	if err != nil {
 		log.Fatal(err)

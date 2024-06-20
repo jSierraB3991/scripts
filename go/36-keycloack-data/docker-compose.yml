@@ -32,12 +32,14 @@ services:
   application:
     depends_on:
       - postgres-db
+      - keycloak-login
     build: .
     container_name: test-keycloack
-    ports:
-      - "8080:1323"
     environment:
-      POSTGRE_URL: "host=localhost user=postgres password=root dbname=test-keycloak port=5432 sslmode=disable TimeZone=America/Bogota"
-      ENCRYPT_SECRET: key_for_encrypt_password_in_local
-      DATABASE_NAME: test-keycloak
-      SERVER_PORT: ":1323"
+      CLIENT_ID: rips-backend-credentials
+      CLIENT_SECRET: AwAbIXzg9P7XbWJBe3NeYJ2vG9up0dHK
+      REALM: rips-back-local
+      USER_ADMIN: admin
+      PWD_ADMIN: admin
+      REALM_ADMIN: master
+      KEYCLOAK_URL: http://keycloak-login:8080
