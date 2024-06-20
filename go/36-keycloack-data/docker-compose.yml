@@ -18,19 +18,17 @@ services:
       KC_DB_USERNAME: postgres
       KC_DB_PASSWORD: root
       KC_HOSTNAME: localhost
-    volumes:
-      - /home/eliot/.local/data/keycloak_25_0_0:/opt/keycloak/conf
   postgres-db:
-    image: postgres:15.7-alpine3.20
-    container_name: postgre-db
+    image: postgres:15.4-alpine3.18
+    container_name: postgres-db
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_DB: test-keycloak
       POSTGRES_USER: postgres
-      POSTGRES_DB: postgres
       POSTGRES_PASSWORD: root
     volumes:
-      - /home/eliot/.local/data/postgre_15.7-alpine3.20:/var/lib/postgresql/data
+      - ~/.local/data/pgsql_15.4-alpine3.18/:/var/lib/postgresql/data
   application:
     depends_on:
       - postgres-db
