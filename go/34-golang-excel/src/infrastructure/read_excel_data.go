@@ -3,6 +3,8 @@ package infrastructure
 import (
 	"fmt"
 	"log"
+	"sync"
+	"time"
 
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/libs"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/mapper"
@@ -46,6 +48,7 @@ func (readDat *ReadExcelData) SaveInDatabase(rows [][]string, document string) e
 	var code string
 	var service serviceinterface.SisproServiceInterface
 
+	var wg sync.WaitGroup
 	for i, row := range rows {
 		if i == 0 {
 			continue
@@ -57,8 +60,11 @@ func (readDat *ReadExcelData) SaveInDatabase(rows [][]string, document string) e
 		if service == nil {
 			log.Fatalf("el documento %s", document)
 		}
-		readDat.saveData(code, row, service)
+		go readDat.saveData(code, row, service, &wg)
+		time.Sleep(50 * time.Millisecond)
 	}
+
+	wg.Wait()
 	log.Printf("SAVE DOCUMENT %s", document)
 	return readDat.repo.SaveScrapp(document)
 }
@@ -90,8 +96,9 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) (
 	return rows, nil
 }
 
-func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface) {
-
+func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface, wg *sync.WaitGroup) {
+	wg.Add(1)
+	defer wg.Done()
 	data := mapper.GetDataSispro(row, code)
 	err := service.SaveSisproData(data)
 	if err != nil {

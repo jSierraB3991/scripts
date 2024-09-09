@@ -11,10 +11,7 @@ import (
 
 func main() {
 	godotenv.Load()
-	database, cleanup := database.New(os.Getenv("PG_URL"), os.Getenv("GCP_ACCOUNT"))
-	if cleanup != nil {
-		cleanup()
-	}
+	database := database.NewSqlServerConnection(os.Getenv("SQL_SERVER_URL"))
 	infrastructure.Run(database)
 	log.Println("HEllo")
 }

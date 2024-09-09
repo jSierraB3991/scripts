@@ -9,15 +9,14 @@ import (
 	"github.com/jdsierrab3991/scripts/34-golang-excel/infrastructure"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/infrastructure/repository"
 	"github.com/joho/godotenv"
+	"gorm.io/gorm"
 )
 
 func main() {
 	godotenv.Load()
 
-	db, final := database.New(os.Getenv("POSTGRE_URL"), os.Getenv("GCP_DATABASE"))
-	if final != nil {
-		defer final()
-	}
+	db := getDatabase(os.Getenv("POSTGRE_URL"), os.Getenv("SQL_SERVER_URL"))
+
 	repo := repository.InitiateRepo(db, context.Background())
 	database.AutoMigrate(repo)
 
@@ -28,6 +27,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func getDatabase(pgUrl, sqlServerUrl string) *gorm.DB {
+	if pgUrl != "" {
+		return database.NewPostgreSqlConnection(pgUrl)
+	}
+	return database.NewSqlServerConnection(sqlServerUrl)
 }
 
 func readDir(homeData string) []string {

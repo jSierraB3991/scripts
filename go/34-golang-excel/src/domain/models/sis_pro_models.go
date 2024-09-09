@@ -8,7 +8,7 @@ import (
 
 type Cie struct {
 	gorm.Model
-	CieId           uint      `gorm:"column:id;not null"`
+	//CieId           uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	Description     string    `gorm:"column:description;not null;"`
@@ -30,7 +30,7 @@ type Cie struct {
 
 type Cie2036 struct {
 	gorm.Model
-	Cie2036Id       uint      `gorm:"column:id;not null"`
+	//Cie2036Id       uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	Description     string    `gorm:"column:description;not null;"`
@@ -43,7 +43,7 @@ type Cie2036 struct {
 
 type CumSispro struct {
 	gorm.Model
-	CumSisProId           uint      `gorm:"column:id;not null"`
+	//CumSisProId           uint      `gorm:"column:id;not null"`
 	Code                  string    `gorm:"column:code;not null;"`
 	Name                  string    `gorm:"column:name;not null;"`
 	Description           string    `gorm:"column:description;not null;"`
@@ -63,7 +63,7 @@ type CumSispro struct {
 
 type CupsRips struct {
 	gorm.Model
-	CupsRipsId     uint    `gorm:"column:id;not null"`
+	//CupsRipsId     uint    `gorm:"column:id;not null"`
 	Code           string  `gorm:"column:code;not null;"`
 	Name           string  `gorm:"column:name;not null;"`
 	Description    string  `gorm:"column:description;not null;"`
@@ -84,7 +84,7 @@ type CupsRips struct {
 
 type Dci struct {
 	gorm.Model
-	DciId          uint      `gorm:"column:id;not null"`
+	//DciId          uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
 	Extra          *string   `gorm:"column:extra"`
@@ -97,7 +97,7 @@ type Dci struct {
 
 type UserEgrese struct {
 	gorm.Model
-	UserEgreseId    uint      `gorm:"column:id;not null"`
+	//UserEgreseId    uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	IsAvailable     bool      `gorm:"column:is_available;not null;"`
@@ -113,7 +113,7 @@ type UserEgrese struct {
 
 type Ffm struct {
 	gorm.Model
-	FfmId                 uint      `gorm:"column:id;not null"`
+	//FfmId                 uint      `gorm:"column:id;not null"`
 	Code                  string    `gorm:"column:code;not null;"`
 	Name                  string    `gorm:"column:name;not null;"`
 	Description           string    `gorm:"column:description;not null;"`
@@ -131,7 +131,7 @@ type Ffm struct {
 
 type GroupService struct {
 	gorm.Model
-	GroupServiceId uint      `gorm:"column:id;not null"`
+	//GroupServiceId uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
 	IsAvailable    bool      `gorm:"column:is_available;not null;"`
@@ -142,26 +142,26 @@ type GroupService struct {
 
 type IpsCpdeHabilitation struct {
 	gorm.Model
-	IpsCpdeHabilitationId uint      `gorm:"column:id;not null"`
-	Code                  string    `gorm:"column:code;not null;"`
-	Name                  string    `gorm:"column:name;not null;"`
-	IsAvailable           bool      `gorm:"column:is_available;not null;"`
-	IsStandartGel         bool      `gorm:"column:is_standart_gel;not null;"`
-	IsStandardMSPS        bool      `gorm:"column:is_standart_msps;not null;"`
-	TypeIdPres            string    `gorm:"column:type_id_pres;not null;"`
-	NumIdPres             string    `gorm:"column:num_id_pres;not null;"`
-	CodePres              string    `gorm:"column:code_pres;not null;"`
-	CodeMpiSede           string    `gorm:"column:code_mpi_sede;not null;"`
-	NameMpiSede           string    `gorm:"column:name_mpi_sede;not null;"`
-	NameDeptoSede         string    `gorm:"column:name_depto_sede;not null;"`
-	ClassPres             uint      `gorm:"column:class_pres;not null;"`
-	NameClassPres         string    `gorm:"column:name_class_pres;not null;"`
-	UpdateDate            time.Time `gorm:"column:update_date;not null;"`
+	//IpsCpdeHabilitationId uint      `gorm:"column:id;not null"`
+	Code           string    `gorm:"column:code;not null;"`
+	Name           string    `gorm:"column:name;not null;"`
+	IsAvailable    bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel  bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS bool      `gorm:"column:is_standart_msps;not null;"`
+	TypeIdPres     string    `gorm:"column:type_id_pres;not null;"`
+	NumIdPres      string    `gorm:"column:num_id_pres;not null;"`
+	CodePres       string    `gorm:"column:code_pres;not null;"`
+	CodeMpiSede    string    `gorm:"column:code_mpi_sede;not null;"`
+	NameMpiSede    string    `gorm:"column:name_mpi_sede;not null;"`
+	NameDeptoSede  string    `gorm:"column:name_depto_sede;not null;"`
+	ClassPres      uint      `gorm:"column:class_pres;not null;"`
+	NameClassPres  string    `gorm:"column:name_class_pres;not null;"`
+	UpdateDate     time.Time `gorm:"column:update_date;not null;"`
 }
 
 type IpsNoReps struct {
 	gorm.Model
-	IpsNoRepsId      uint      `gorm:"column:id;not null"`
+	//IpsNoRepsId      uint      `gorm:"column:id;not null"`
 	Code             string    `gorm:"column:code;not null;"`
 	Name             string    `gorm:"column:name;not null;"`
 	Description      string    `gorm:"column:description;not null;"`
@@ -184,7 +184,7 @@ type IpsNoReps struct {
 
 type Ium struct {
 	gorm.Model
-	IumId                        uint      `gorm:"column:id;not null"`
+	//IumId                        uint      `gorm:"column:id;not null"`
 	Code                         string    `gorm:"column:code;not null;"`
 	Name                         string    `gorm:"column:name;not null;"`
 	IsAvailable                  bool      `gorm:"column:is_available;not null;"`
@@ -205,59 +205,59 @@ type Ium struct {
 
 type AtentionModality struct {
 	gorm.Model
-	AtentionModalityId uint      `gorm:"column:id;not null"`
-	Code               string    `gorm:"column:code;not null;"`
-	Name               string    `gorm:"column:name;not null;"`
-	IsAvailable        bool      `gorm:"column:is_available;not null;"`
-	IsStandartGel      bool      `gorm:"column:is_standart_gel;not null;"`
-	IsStandardMSPS     bool      `gorm:"column:is_standart_msps;not null;"`
-	UpdateDate         time.Time `gorm:"column:update_date;not null;"`
+	//AtentionModalityId uint      `gorm:"column:id;not null"`
+	Code           string    `gorm:"column:code;not null;"`
+	Name           string    `gorm:"column:name;not null;"`
+	IsAvailable    bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel  bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS bool      `gorm:"column:is_standart_msps;not null;"`
+	UpdateDate     time.Time `gorm:"column:update_date;not null;"`
 }
 
 type RipsCausaExternaV2 struct {
 	gorm.Model
-	RipsCausaExternaV2Id uint      `gorm:"column:id;not null"`
-	Code                 string    `gorm:"column:code;not null;"`
-	Name                 string    `gorm:"column:name;not null;"`
-	IsAvailable          bool      `gorm:"column:is_available;not null;"`
-	IsStandartGel        bool      `gorm:"column:is_standart_gel;not null;"`
-	IsStandardMSPS       bool      `gorm:"column:is_standart_msps;not null;"`
-	Consults             string    `gorm:"column:consults;not null;"`
-	Procedure            string    `gorm:"column:procedure;not null;"`
-	Urgency              string    `gorm:"column:urgency;not null;"`
-	Hospitalization      string    `gorm:"column:hospitalization;not null;"`
-	RnBorn               string    `gorm:"column:rn_born;not null;"`
-	UpdateDate           time.Time `gorm:"column:update_date;not null;"`
+	//RipsCausaExternaV2Id uint      `gorm:"column:id;not null"`
+	Code            string    `gorm:"column:code;not null;"`
+	Name            string    `gorm:"column:name;not null;"`
+	IsAvailable     bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel   bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS  bool      `gorm:"column:is_standart_msps;not null;"`
+	Consults        string    `gorm:"column:consults;not null;"`
+	Procedure       string    `gorm:"column:procedure;not null;"`
+	Urgency         string    `gorm:"column:urgency;not null;"`
+	Hospitalization string    `gorm:"column:hospitalization;not null;"`
+	RnBorn          string    `gorm:"column:rn_born;not null;"`
+	UpdateDate      time.Time `gorm:"column:update_date;not null;"`
 }
 type RipsConsultFinalV2 struct {
 	gorm.Model
-	RipsConsultFinalV2Id uint      `gorm:"column:id;not null"`
-	Code                 string    `gorm:"column:code;not null;"`
-	Name                 string    `gorm:"column:name;not null;"`
-	IsAvailable          bool      `gorm:"column:is_available;not null;"`
-	IsStandartGel        bool      `gorm:"column:is_standart_gel;not null;"`
-	IsStandardMSPS       bool      `gorm:"column:is_standart_msps;not null;"`
-	Consults             string    `gorm:"column:consults;not null;"`
-	Procedure            string    `gorm:"column:procedure;not null;"`
-	Urgency              string    `gorm:"column:urgency;not null;"`
-	Hospitalization      string    `gorm:"column:hospitalization;not null;"`
-	RnBorn               string    `gorm:"column:rn_born;not null;"`
-	UpdateDate           time.Time `gorm:"column:update_date;not null;"`
+	//RipsConsultFinalV2Id uint      `gorm:"column:id;not null"`
+	Code            string    `gorm:"column:code;not null;"`
+	Name            string    `gorm:"column:name;not null;"`
+	IsAvailable     bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel   bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS  bool      `gorm:"column:is_standart_msps;not null;"`
+	Consults        string    `gorm:"column:consults;not null;"`
+	Procedure       string    `gorm:"column:procedure;not null;"`
+	Urgency         string    `gorm:"column:urgency;not null;"`
+	Hospitalization string    `gorm:"column:hospitalization;not null;"`
+	RnBorn          string    `gorm:"column:rn_born;not null;"`
+	UpdateDate      time.Time `gorm:"column:update_date;not null;"`
 }
 type RipsDiagnostictypePrincipalv2 struct {
 	gorm.Model
-	RipsDiagnostictypePrincipalv2Id uint      `gorm:"column:id;not null"`
-	Code                            string    `gorm:"column:code;not null;"`
-	Name                            string    `gorm:"column:name;not null;"`
-	IsAvailable                     bool      `gorm:"column:is_available;not null;"`
-	IsStandartGel                   bool      `gorm:"column:is_standart_gel;not null;"`
-	IsStandardMSPS                  bool      `gorm:"column:is_standart_msps;not null;"`
-	UpdateDate                      time.Time `gorm:"column:update_date;not null;"`
+	//RipsDiagnostictypePrincipalv2Id uint      `gorm:"column:id;not null"`
+	Code           string    `gorm:"column:code;not null;"`
+	Name           string    `gorm:"column:name;not null;"`
+	IsAvailable    bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel  bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS bool      `gorm:"column:is_standart_msps;not null;"`
+	UpdateDate     time.Time `gorm:"column:update_date;not null;"`
 }
 
 type UserType struct {
 	gorm.Model
-	UserTypeId     uint      `gorm:"column:id;not null"`
+	//UserTypeId     uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
 	IsAvailable    bool      `gorm:"column:is_available;not null;"`
@@ -267,7 +267,7 @@ type UserType struct {
 }
 type Service struct {
 	gorm.Model
-	ServiceId      uint      `gorm:"column:id;not null"`
+	//ServiceId      uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Description    string    `gorm:"column:description;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
@@ -289,7 +289,7 @@ type Service struct {
 }
 type OtherService struct {
 	gorm.Model
-	OtherServiceId uint      `gorm:"column:id;not null"`
+	//OtherServiceId uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
 	IsAvailable    bool      `gorm:"column:is_available;not null;"`
@@ -299,7 +299,7 @@ type OtherService struct {
 }
 type TypeIdPISIS struct {
 	gorm.Model
-	TypeIdPISISId   uint      `gorm:"column:id;not null"`
+	//TypeIdPISISId   uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	IsAvailable     bool      `gorm:"column:is_available;not null;"`
@@ -317,7 +317,7 @@ type TypeIdPISIS struct {
 }
 type MedicTypePOS struct {
 	gorm.Model
-	MedicTypePOSId uint      `gorm:"column:id;not null"`
+	//MedicTypePOSId uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
 	IsAvailable    bool      `gorm:"column:is_available;not null;"`
@@ -327,7 +327,7 @@ type MedicTypePOS struct {
 }
 type TypeNote struct {
 	gorm.Model
-	TypeNoteId     uint      `gorm:"column:id;not null"`
+	//TypeNoteId     uint      `gorm:"column:id;not null"`
 	Code           string    `gorm:"column:code;not null;"`
 	Name           string    `gorm:"column:name;not null;"`
 	IsAvailable    bool      `gorm:"column:is_available;not null;"`
@@ -337,7 +337,7 @@ type TypeNote struct {
 }
 type UMM struct {
 	gorm.Model
-	UMMId           uint      `gorm:"column:id;not null"`
+	//UMMId           uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	Description     string    `gorm:"column:description;not null;"`
@@ -352,7 +352,7 @@ type UMM struct {
 }
 type UPR struct {
 	gorm.Model
-	UPRId           uint      `gorm:"column:id;not null"`
+	//UPRId           uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	IsAvailable     bool      `gorm:"column:is_available;not null;"`
@@ -363,7 +363,7 @@ type UPR struct {
 }
 type IngressUser struct {
 	gorm.Model
-	IngressUserId   uint      `gorm:"column:id;not null"`
+	//IngressUserId   uint      `gorm:"column:id;not null"`
 	Code            string    `gorm:"column:code;not null;"`
 	Name            string    `gorm:"column:name;not null;"`
 	IsAvailable     bool      `gorm:"column:is_available;not null;"`
@@ -379,9 +379,9 @@ type IngressUser struct {
 
 type Country struct {
 	gorm.Model
-	Countryd uint   `gorm:"column:id;not null"`
-	Code     string `gorm:"column:code;not null;"`
-	Name     string `gorm:"column:name;not null;"`
-	ExtraI   string `gorm:"column:extra_i;not null;"`
-	ExtraII  string `gorm:"column:extra_ii;not null;"`
+	//Countryd uint   `gorm:"column:id;not null"`
+	Code    string `gorm:"column:code;not null;"`
+	Name    string `gorm:"column:name;not null;"`
+	ExtraI  string `gorm:"column:extra_i;not null;"`
+	ExtraII string `gorm:"column:extra_ii;not null;"`
 }
