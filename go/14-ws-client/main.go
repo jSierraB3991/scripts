@@ -13,6 +13,7 @@ import (
 )
 
 var addr = flag.String("addr", "localhost:8080", "http service address")
+var path = flag.String("path", "/ws", "path of service, default https")
 var auth = flag.String("token", "", "token for authentication")
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 	interrupt := make(chan os.Signal, 1)
 	signal.Notify(interrupt, os.Interrupt)
 
-	u := url.URL{Scheme: "ws", Host: *addr, Path: "/ws"}
+	u := url.URL{Scheme: "ws", Host: *addr, Path: *path}
 	log.Printf("connecting to %s", u.String())
 
 	var header = http.Header{}
