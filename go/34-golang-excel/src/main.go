@@ -18,7 +18,7 @@ func main() {
 	db := getDatabase(os.Getenv("POSTGRE_URL"), os.Getenv("SQL_SERVER_URL"))
 
 	repo := repository.InitiateRepo(db, context.Background())
-	database.AutoMigrate(repo)
+	// database.AutoMigrate(repo)
 
 	read := infrastructure.NewReadExcelData(repo)
 	homeData := os.Getenv("HOME_DATA")

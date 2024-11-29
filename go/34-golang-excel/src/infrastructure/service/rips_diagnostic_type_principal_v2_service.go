@@ -28,3 +28,7 @@ func (service *RipsDiagnostictypePrincipalv2Service) SaveSisproData(data interfa
 	}
 	return service.repo.SaveRipsDiagnostictypePrincipalv2(dataMapper)
 }
+
+func (s *RipsDiagnostictypePrincipalv2Service) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForRipsDiagnosticPPalV2()
+}

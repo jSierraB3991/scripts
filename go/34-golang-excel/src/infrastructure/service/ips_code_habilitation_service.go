@@ -28,3 +28,7 @@ func (service *IPSCodHabilitacionService) SaveSisproData(data interface{}) error
 	}
 	return service.repo.SaveIPSCodHabilitacion(dataMapper)
 }
+
+func (s *IPSCodHabilitacionService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForIpsCodeNoHabilitation()
+}

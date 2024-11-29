@@ -21,3 +21,12 @@ func (repo *Repository) SaveDci(data *models.Dci) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForDci() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Dci{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

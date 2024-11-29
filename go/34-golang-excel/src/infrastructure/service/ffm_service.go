@@ -28,3 +28,7 @@ func (service *FfmService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveFfm(dataMapper)
 }
+
+func (s *FfmService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForFfm()
+}

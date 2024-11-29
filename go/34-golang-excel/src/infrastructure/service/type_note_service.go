@@ -28,3 +28,7 @@ func (service *TypeNoteService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveTypeNote(dataMapper)
 }
+
+func (s *TypeNoteService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForTypeNote()
+}

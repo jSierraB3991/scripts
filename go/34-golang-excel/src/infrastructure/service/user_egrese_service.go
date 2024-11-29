@@ -28,3 +28,7 @@ func (service *UserEgreseService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveUserEgrese(dataMapper)
 }
+
+func (s *UserEgreseService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForUserEgrese()
+}

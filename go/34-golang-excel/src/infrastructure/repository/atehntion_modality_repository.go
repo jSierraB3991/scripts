@@ -20,3 +20,12 @@ func (repo *Repository) SaveAtentionModality(data *models.AtentionModality) erro
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForAtentionModality() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.AtentionModality{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

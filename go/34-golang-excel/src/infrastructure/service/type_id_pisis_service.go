@@ -28,3 +28,7 @@ func (service *TypeIdPISISService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveTypeIdPISIS(dataMapper)
 }
+
+func (s *TypeIdPISISService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForTypeIdPisis()
+}

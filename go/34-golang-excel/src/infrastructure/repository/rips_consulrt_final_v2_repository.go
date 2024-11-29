@@ -21,3 +21,12 @@ func (repo *Repository) SaveRipsConsultFinalV2(data *models.RipsConsultFinalV2) 
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForConsultFinalV2() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.RipsConsultFinalV2{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

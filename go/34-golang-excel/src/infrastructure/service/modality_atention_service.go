@@ -28,3 +28,6 @@ func (service *ModalityAtentionService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveAtentionModality(dataMapper)
 }
+func (s ModalityAtentionService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForAtentionModality()
+}

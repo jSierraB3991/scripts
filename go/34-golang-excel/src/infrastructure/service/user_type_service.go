@@ -28,3 +28,7 @@ func (service *UserTypeService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveUserType(dataMapper)
 }
+
+func (s *UserTypeService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDataUserType()
+}

@@ -11,6 +11,8 @@ import (
 
 func GetDataSispro(row []string, code string) interface{} {
 	switch code {
+	case libs.ConceptoRecaudo:
+		return getConceptoRecaudo(row)
 	case libs.CatalogoCUMs:
 		return getDatalogoCums(row)
 	case libs.CIE10:
@@ -199,6 +201,26 @@ func getDatalogoCums(rows []string) *models.CumSispro {
 		ViaAdministratio:      rows[15],
 		AmountPresentation:    libs.GetUintForString(rows[16]),
 		UpdateDate:            *updateSisproFormat(rows[20]),
+	}
+}
+
+func getConceptoRecaudo(row []string) *models.CollectionConcept {
+	err := validateVoidData(row, []int{5, 12, 13, 14, 15, 16, 17, 18, 19, 21})
+	if err != nil {
+		log.Panic(err)
+	}
+	return &models.CollectionConcept{
+		Code:           row[1],
+		Name:           row[2],
+		Description:    row[3],
+		IsAvailable:    row[4] == "SI",
+		IsStandartGel:  row[6] == "True",
+		IsStandardMSPS: row[7] == "True",
+		ExtraI:         row[8],
+		ExtraII:        row[9],
+		ExtraIII:       row[10],
+		ExtraIV:        row[11],
+		UpdateDate:     *updateSisproFormat(row[20]),
 	}
 }
 

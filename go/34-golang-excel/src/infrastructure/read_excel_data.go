@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"sync"
-	"time"
 
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/libs"
 	"github.com/jdsierrab3991/scripts/34-golang-excel/domain/mapper"
@@ -43,30 +42,64 @@ func (read ReadExcelData) Run(homeFiles string, documents []string) error {
 	return nil
 }
 
+const MAX_QUEE_DATA int = 20
+
 func (readDat *ReadExcelData) SaveInDatabase(rows [][]string, document string) error {
 
 	var code string
 	var service serviceinterface.SisproServiceInterface
 
 	var wg sync.WaitGroup
+	var preData []string
+
+	saveInQueue := 0
 	for i, row := range rows {
 		if i == 0 {
 			continue
 		} else if i == 1 {
 			code = row[0]
-			service = readDat.GetSisProService(code)
 		}
-
+		if service == nil {
+			service = readDat.GetSisProService(code)
+			data, err := service.GetCodesForData()
+			if err != nil {
+				log.Fatal(err)
+			}
+			preData = data
+		}
 		if service == nil {
 			log.Fatalf("el documento %s", document)
 		}
-		go readDat.saveData(code, row, service, &wg)
-		time.Sleep(50 * time.Millisecond)
+
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			if len(preData) > 0 {
+				if isPreSave(preData, row[1]) {
+					return
+				}
+			}
+			readDat.saveData(code, row, service)
+		}()
+		saveInQueue++
+		if saveInQueue == MAX_QUEE_DATA {
+			wg.Wait()
+			saveInQueue = 0
+		}
 	}
 
 	wg.Wait()
 	log.Printf("SAVE DOCUMENT %s", document)
 	return readDat.repo.SaveScrapp(document)
+}
+
+func isPreSave(predata []string, codedForNowSave string) bool {
+	for _, v := range predata {
+		if v == codedForNowSave {
+			return true
+		}
+	}
+	return false
 }
 
 func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) ([][]string, error) {
@@ -96,9 +129,7 @@ func (readDat *ReadExcelData) GetDataConfiguration(homeFiles, document string) (
 	return rows, nil
 }
 
-func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface, wg *sync.WaitGroup) {
-	wg.Add(1)
-	defer wg.Done()
+func (readDat *ReadExcelData) saveData(code string, row []string, service serviceinterface.SisproServiceInterface) {
 	data := mapper.GetDataSispro(row, code)
 	err := service.SaveSisproData(data)
 	if err != nil {
@@ -116,6 +147,8 @@ func (readData *ReadExcelData) isForSave(code string) bool {
 
 func (readDat ReadExcelData) GetSisProService(code string) serviceinterface.SisproServiceInterface {
 	switch code {
+	case libs.ConceptoRecaudo:
+		return service.NewCollectionConceptService(readDat.repo)
 	case libs.CatalogoCUMs:
 		return service.NewCumSisProService(readDat.repo)
 	case libs.CIE10Clasificacion2036:

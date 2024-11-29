@@ -385,3 +385,18 @@ type Country struct {
 	ExtraI  string `gorm:"column:extra_i;not null;"`
 	ExtraII string `gorm:"column:extra_ii;not null;"`
 }
+
+type CollectionConcept struct {
+	gorm.Model
+	Code           string    `gorm:"column:code;not null;"`
+	Name           string    `gorm:"column:name;not null;"`
+	Description    string    `gorm:"column:description;not null;"`
+	IsAvailable    bool      `gorm:"column:is_available;not null;"`
+	IsStandartGel  bool      `gorm:"column:is_standart_gel;not null;"`
+	IsStandardMSPS bool      `gorm:"column:is_standart_msps;not null;"`
+	ExtraI         string    `gorm:"column:extra_i;not null;"`
+	ExtraII        string    `gorm:"column:extra_ii;not null;"`
+	ExtraIII       string    `gorm:"column:extra_iii;not null;"`
+	ExtraIV        string    `gorm:"column:extra_iv;not null;"`
+	UpdateDate     time.Time `gorm:"column:update_date;not null;"`
+}

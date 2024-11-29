@@ -21,3 +21,12 @@ func (repo *Repository) SaveUPR(data *models.UPR) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForDataUpr() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.UPR{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

@@ -28,3 +28,7 @@ func (service *MedicTypePOSService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveMedicTypePOS(dataMapper)
 }
+
+func (s *MedicTypePOSService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForMedicTypeOs()
+}

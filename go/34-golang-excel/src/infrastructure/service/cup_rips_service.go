@@ -28,3 +28,7 @@ func (service *CupRipsService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveCupRips(dataMapper)
 }
+
+func (s *CupRipsService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForCupsRips()
+}

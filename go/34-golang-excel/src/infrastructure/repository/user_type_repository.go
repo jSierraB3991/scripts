@@ -21,3 +21,12 @@ func (repo *Repository) SaveUserType(data *models.UserType) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForDataUserType() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.UserType{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

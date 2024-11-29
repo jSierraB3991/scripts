@@ -44,3 +44,7 @@ func (service *CieService) SaveSisproData2036(data interface{}) error {
 	}
 	return nil
 }
+
+func (s *CieService) GetCodesForData() ([]string, error) {
+	return s.repository.GetCodesForCie()
+}

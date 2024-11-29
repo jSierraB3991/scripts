@@ -21,3 +21,12 @@ func (repo *Repository) SaveCupRips(data *models.CupsRips) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForCupsRips() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.CupsRips{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

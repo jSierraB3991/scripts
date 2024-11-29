@@ -28,3 +28,7 @@ func (service *CountryService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveCountry(dataMapper)
 }
+
+func (s *CountryService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForCountry()
+}

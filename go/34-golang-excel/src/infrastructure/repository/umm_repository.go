@@ -21,3 +21,12 @@ func (repo *Repository) SaveUMM(data *models.UMM) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForDataUmm() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.UMM{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

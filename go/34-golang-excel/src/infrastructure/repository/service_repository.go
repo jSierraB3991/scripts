@@ -21,3 +21,12 @@ func (repo *Repository) SaveService(data *models.Service) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForService() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Service{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

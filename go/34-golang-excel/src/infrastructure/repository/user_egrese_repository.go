@@ -21,3 +21,12 @@ func (repo *Repository) SaveUserEgrese(data *models.UserEgrese) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForUserEgrese() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.UserEgrese{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

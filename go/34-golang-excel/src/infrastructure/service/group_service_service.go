@@ -28,3 +28,7 @@ func (service *GroupServiceService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveGroupService(dataMapper)
 }
+
+func (s *GroupServiceService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDataGroupService()
+}

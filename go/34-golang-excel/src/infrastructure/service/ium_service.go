@@ -28,3 +28,6 @@ func (service *IumService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveIum(dataMapper)
 }
+func (s *IumService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForIum()
+}

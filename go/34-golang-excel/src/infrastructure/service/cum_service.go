@@ -26,9 +26,9 @@ func (service *CumSisProService) SaveSisproData(data interface{}) error {
 	if !isOk {
 		return errorsrips.MapperError{Data: service.GetCode()}
 	}
-	err := service.repo.SaveCumSisPro(dataMapper)
-	if err != nil {
-		return err
-	}
-	return nil
+	return service.repo.SaveCumSisPro(dataMapper)
+}
+
+func (s *CumSisProService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDataSispro()
 }

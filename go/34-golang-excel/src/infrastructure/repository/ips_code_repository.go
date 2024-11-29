@@ -21,3 +21,12 @@ func (repo *Repository) SaveIPSCodHabilitacion(data *models.IpsCpdeHabilitation)
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForIpsCodeNoHabilitation() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.IpsCpdeHabilitation{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

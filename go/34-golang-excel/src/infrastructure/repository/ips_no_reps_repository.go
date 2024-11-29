@@ -21,3 +21,12 @@ func (repo *Repository) SaveIpsNoReps(data *models.IpsNoReps) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForIpsNoReps() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.IpsNoReps{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

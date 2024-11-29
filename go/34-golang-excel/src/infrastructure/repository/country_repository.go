@@ -20,3 +20,12 @@ func (repo *Repository) SaveCountry(data *models.Country) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForCountry() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Country{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

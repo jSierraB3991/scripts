@@ -28,3 +28,7 @@ func (service *RipsConsultFinalService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveRipsConsultFinalV2(dataMapper)
 }
+
+func (s *RipsConsultFinalService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForConsultFinalV2()
+}

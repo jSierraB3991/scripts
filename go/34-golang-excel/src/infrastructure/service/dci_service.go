@@ -28,3 +28,7 @@ func (service *DciService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveDci(dataMapper)
 }
+
+func (s *DciService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDci()
+}

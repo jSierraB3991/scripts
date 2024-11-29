@@ -21,3 +21,12 @@ func (repo *Repository) SaveMedicTypePOS(data *models.MedicTypePOS) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForMedicTypeOs() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.MedicTypePOS{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

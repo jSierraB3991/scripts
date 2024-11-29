@@ -28,3 +28,7 @@ func (service *UmmService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveUMM(dataMapper)
 }
+
+func (s *UmmService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDataUmm()
+}

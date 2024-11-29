@@ -28,3 +28,7 @@ func (service *UprService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveUPR(dataMapper)
 }
+
+func (s *UprService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDataUpr()
+}

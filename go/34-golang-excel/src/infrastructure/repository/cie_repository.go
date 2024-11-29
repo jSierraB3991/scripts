@@ -35,3 +35,21 @@ func (repo *Repository) SaveCieSisPro(data *models.Cie) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForCie() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Cie{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}
+
+func (repo *Repository) GetCodesForCie2036() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Cie2036{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

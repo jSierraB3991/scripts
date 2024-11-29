@@ -28,3 +28,7 @@ func (service *IngressUserService) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveIngressUser(dataMapper)
 }
+
+func (s *IngressUserService) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForDataIngresUser()
+}

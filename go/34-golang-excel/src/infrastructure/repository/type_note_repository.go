@@ -22,3 +22,12 @@ func (repo *Repository) SaveTypeNote(data *models.TypeNote) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForTypeNote() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.TypeNote{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

@@ -21,3 +21,12 @@ func (repo *Repository) SaveTypeIdPISIS(data *models.TypeIdPISIS) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForTypeIdPisis() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.TypeIdPISIS{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

@@ -28,3 +28,7 @@ func (service *RipsExternCauseV2Service) SaveSisproData(data interface{}) error 
 	}
 	return service.repo.SaveRipsExternCauseV2(dataMapper)
 }
+
+func (s *RipsExternCauseV2Service) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForRipsExternCauseV2()
+}

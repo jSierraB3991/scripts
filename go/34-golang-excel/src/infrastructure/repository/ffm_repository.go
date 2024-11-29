@@ -21,3 +21,12 @@ func (repo *Repository) SaveFfm(data *models.Ffm) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForFfm() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Ffm{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

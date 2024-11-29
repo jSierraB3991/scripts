@@ -21,3 +21,12 @@ func (repo *Repository) SaveRipsDiagnostictypePrincipalv2(data *models.RipsDiagn
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForRipsDiagnosticPPalV2() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.RipsDiagnostictypePrincipalv2{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

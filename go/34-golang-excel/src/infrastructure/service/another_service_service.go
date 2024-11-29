@@ -28,3 +28,7 @@ func (service *AnotherServiceService) SaveSisproData(data interface{}) error {
 	}
 	return service.repository.SaveOtherService(dataMapper)
 }
+
+func (s *AnotherServiceService) GetCodesForData() ([]string, error) {
+	return s.repository.GetCodesForDataOtherService()
+}

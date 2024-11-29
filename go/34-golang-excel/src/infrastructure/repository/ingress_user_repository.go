@@ -21,3 +21,12 @@ func (repo *Repository) SaveIngressUser(data *models.IngressUser) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForDataIngresUser() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.IngressUser{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

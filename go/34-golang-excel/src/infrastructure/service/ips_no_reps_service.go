@@ -28,3 +28,7 @@ func (service *IpsNoReps) SaveSisproData(data interface{}) error {
 	}
 	return service.repo.SaveIpsNoReps(dataMapper)
 }
+
+func (s *IpsNoReps) GetCodesForData() ([]string, error) {
+	return s.repo.GetCodesForIpsNoReps()
+}

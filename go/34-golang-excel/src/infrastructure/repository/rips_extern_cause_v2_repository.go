@@ -21,3 +21,12 @@ func (repo *Repository) SaveRipsExternCauseV2(data *models.RipsCausaExternaV2) e
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForRipsExternCauseV2() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.RipsCausaExternaV2{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}

@@ -21,3 +21,12 @@ func (repo *Repository) SaveIum(data *models.Ium) error {
 	}
 	return repo.db.Save(&data).Error
 }
+
+func (repo *Repository) GetCodesForIum() ([]string, error) {
+	var result []string
+	err := repo.GetCodesForData(&models.Ium{}, &result)
+	if err != nil {
+		return nil, err
+	}
+	return result, err
+}
