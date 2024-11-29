@@ -158,7 +158,16 @@ function checking_brave {
     while [ "$new_version" == ""  ]; do
         x=$((x+1))
         echo "https://github.com/brave/brave-browser/releases?page=$x"
-        new_version=$(curl -s https://github.com/brave/brave-browser/releases?page=$x | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | head -1)
+        relese_version=$(curl -s https://github.com/brave/brave-browser/releases?page=$x | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | head -1)
+       
+        if [ "$relese_version" != "" ]; then
+            remove_v=$(echo $relese_version | sed 's/v//g')      
+    
+            is_success=$(curl -s -I https://github.com/brave/brave-browser/releases/download/$relese_version/brave-browser-$remove_v-linux-amd64.zip | grep 404)
+            if [ "$is_success" == "" ]; then
+                new_version=$relese_version
+            fi
+        fi
     done
     update_program "brave" $new_version downloading_brave
 }
