@@ -1,5 +1,8 @@
 #! /bin/bash
 
+mkdir -p $HOME/.local/data
+mkdir -p $HOME/Descargas
+
 #Verify table
 echo "CREATE TABLE IF NOT EXISTS programs(name varchar(100), version varchar(50), date varchar(40))" | sqlite3 ~/.local/data/ejemplo.db 1>/dev/null 2>/dev/null
 
@@ -158,15 +161,20 @@ function checking_brave {
     while [ "$new_version" == ""  ]; do
         x=$((x+1))
         echo "https://github.com/brave/brave-browser/releases?page=$x"
-        relese_version=$(curl -s https://github.com/brave/brave-browser/releases?page=$x | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | head -1)
-       
-        if [ "$relese_version" != "" ]; then
-            remove_v=$(echo $relese_version | sed 's/v//g')      
-    
-            is_success=$(curl -s -I https://github.com/brave/brave-browser/releases/download/$relese_version/brave-browser-$remove_v-linux-amd64.zip | grep 404)
-            if [ "$is_success" == "" ]; then
-                new_version=$relese_version
+        count_release=$(curl -s https://github.com/brave/brave-browser/releases?page=$x | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | wc -l)
+        if [[ "$count_release" -ge 0 ]]; then
+            #for i in {1..$count_release}; do
+            for i in $(seq 1 1 $count_release); do
+                relese_version=$(curl -s https://github.com/brave/brave-browser/releases?page=$x | grep /tag/ | awk -F '>' '{print $3}' | grep Release | awk '{print $2}' | sed -n "$i"p)
+                echo "$i" 
+                if [ "$relese_version" != "" ]; then
+                    remove_v=$(echo $relese_version | sed 's/v//g')      
+                    is_success=$(curl -s -I https://github.com/brave/brave-browser/releases/download/$relese_version/brave-browser-$remove_v-linux-amd64.zip | grep 404)
+                if [ "$is_success" == "" ]; then
+                    new_version=$relese_version
+                fi
             fi
+            done
         fi
     done
     update_program "brave" $new_version downloading_brave
@@ -184,12 +192,7 @@ function checking_insomnia {
     #insomnia
     echo "Verifing Insomnia"
     new_version=""
-    x=0
-    while [ "$new_version" == ""  ]; do
-        x=$((x+1))
-        echo "https://github.com/Kong/insomnia/releases?page=$x"
-        new_version=$(curl -s https://github.com/Kong/insomnia/releases?page=$x | grep Insomnia | grep -v "beta" | grep -v "Fixed" | head -1 | sed -e 's/<[^>]*>//g' | awk '{print $2}')
-    done
+    new_version=$(curl -s -L github.com/Kong/insomnia/releases/latest/ | grep "/Kong/insomnia/releases/tag/core" | head -1 | grep -oP 'core@\K[0-9.]+')
     update_program "insomnia" $new_version downloading_insomnia
 }
 
