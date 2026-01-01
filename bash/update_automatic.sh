@@ -18,7 +18,7 @@ function update_program {
     date_now=$(date)
     function_download=$3
     if [ "$version" != "$new_version" ]; then
-
+        echo "Update version $version to $new_version"
 
         notify-send "New Version of $program $new_version" "update notifier" -u CRITICAL 
 
@@ -136,6 +136,28 @@ function downloading_graalvm {
 
 }
 
+function download_libre_sprite {
+    version=$1
+    url="https://github.com/LibreSprite/LibreSprite/releases/download/$version/libresprite-development-linux-x86_64.zip"
+    
+    echo "change folder to download"
+    cd $HOME/Descargas/programs
+
+    echo "Downloading LibreSprite Version $version"
+    wget -nv $url -O libre_sprite.zip
+    unzip libre_sprite.zip
+    rm -rf libre_sprite.zip
+    mkdir libre_sprite
+
+    sudo rm -rf /opt/libre_sprite
+    mv **.AppImage libre_sprite/libre_sprite.AppImage
+    chmod +x libre_sprite/libre_sprite.AppImage
+    sudo mv libre_sprite /opt/libre_sprite
+
+
+    
+}
+
 function downloading_vscode {
     url=$(curl -s 'https://code.visualstudio.com/sha/download?build=stable&os=linux-x64' | awk -F"/" '{print $NF}')
     name_file="code.tar.gz"   
@@ -149,6 +171,12 @@ function downloading_vscode {
     rm $name_file
     sudo rm -rf /opt/code
     sudo mv VSCode-linux-x64/ /opt/code
+}
+
+function checking_libre_sprite {
+    echo "Get last version of libre sprite"
+    last_release=$(curl -s -I https://github.com/LibreSprite/LibreSprite/releases/latest | grep location | awk '{print $2}' | awk -F"/" '{print $NF}' | tr -d '\r')
+    update_program "libre_sprite" $last_release download_libre_sprite
 }
 
 function checking_brave {
@@ -216,11 +244,9 @@ function checking_vscode {
 }
 
 if [ $# -eq 0 ]; then
-    checking_brave
     checking_dbeaver
     checking_insomnia
-    checking_graalvm_java
-    checking_vscode
+    checking_libre_sprite
 elif [ "$1" == "-u"  ]; then
     if [ $# -eq 2 ]; then
         if [ "$2" == "dbeaver" ]; then
@@ -231,6 +257,8 @@ elif [ "$1" == "-u"  ]; then
             checking_insomnia
         elif [ "$2" == "java" ]; then
             checking_graalvm_java
+        elif [ "$2" == "sprite" ]; then
+            checking_libre_sprite
         elif [ "$2"  == "vscode" ] || [ "$2" == "code" ]; then
             checking_vscode
         fi

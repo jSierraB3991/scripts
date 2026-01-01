@@ -6,7 +6,7 @@ echo "-----------------------------------------------"
 # Obtiene todas las claves gpg instaladas
 for key in $(rpm -q gpg-pubkey); do
     echo "🔑 $key"
-    rpm -qi "$key" | grep -E "Summary|Build Date"
+    rpm -qi "$key" | grep -E "Summary|Build Date|Install Date|Build Host|Group"
     echo "-----------------------------------------------"
 done
 
