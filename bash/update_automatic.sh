@@ -262,7 +262,7 @@ show_help() {
     echo -e "${DIM}Descarga software fuera de dnf.${RESET}\n"
 
     echo -e "${BOLD}Uso:${RESET}"
-    echo -e "  ./update_automatic.sh ${CYAN}[programas...]${RESET}\n"
+    echo -e "  ./update_automatic.sh -u ${CYAN}[programas...]${RESET}\n"
 
     echo -e "${BOLD}Programas disponibles:${RESET}"
     for entry in "${PROGRAMS[@]}"; do
@@ -272,6 +272,8 @@ show_help() {
 
     echo -e "\n${BOLD}Opciones:${RESET}"
     echo -e "  ${YELLOW}-h, --help${RESET}  Mostrar esta ayuda"
+    
+    echo -e "  ${YELLOW}-u ${CYAN}{program}${RESET}  para descargar/actualizar el programa"
 }
 
 
@@ -297,6 +299,8 @@ elif [ "$1" == "-u"  ]; then
     else
         cowsay "I need two data"
     fi
-elif [ "$1" == "-h" ]; then
+elif [[ "$1" == "-h" || "$1" == "--help" ]]; then
     show_help
+    exit 0
 fi
+
