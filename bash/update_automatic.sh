@@ -243,6 +243,38 @@ function checking_vscode {
     update_program "VsCode" $new_version downloading_vscode
 }
 
+BOLD="\e[1m"
+DIM="\e[2m"
+GREEN="\e[32m"
+CYAN="\e[36m"
+YELLOW="\e[33m"
+RESET="\e[0m"
+
+PROGRAMS=(
+  "dbeaver|DBeaver (DB Manager)"
+  "insomnia|Insomnia (API Client)"
+  "java|Java GraalVM"
+  "sprite|LibreSprite"
+)
+
+show_help() {
+    echo -e "${BOLD}update_automatic.sh${RESET}"
+    echo -e "${DIM}Descarga software fuera de dnf.${RESET}\n"
+
+    echo -e "${BOLD}Uso:${RESET}"
+    echo -e "  ./update_automatic.sh ${CYAN}[programas...]${RESET}\n"
+
+    echo -e "${BOLD}Programas disponibles:${RESET}"
+    for entry in "${PROGRAMS[@]}"; do
+        IFS="|" read -r name desc <<< "$entry"
+        printf "  ${GREEN}%-10s${RESET} %s\n" "$name" "$desc"
+    done
+
+    echo -e "\n${BOLD}Opciones:${RESET}"
+    echo -e "  ${YELLOW}-h, --help${RESET}  Mostrar esta ayuda"
+}
+
+
 if [ $# -eq 0 ]; then
     checking_dbeaver
     checking_insomnia
@@ -265,4 +297,6 @@ elif [ "$1" == "-u"  ]; then
     else
         cowsay "I need two data"
     fi
+elif [ "$1" == "-h" ]; then
+    show_help
 fi
