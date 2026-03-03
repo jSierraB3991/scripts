@@ -54,8 +54,7 @@ function downloading_brave {
 }
 
 function downloading_dbeaver {
-    version=$1
-    url="https://dbeaver.io/files/dbeaver-ce-latest-linux.gtk.x86_64.tar.gz"
+    url=$1
      cd $HOME/Descargas/programs
     
     echo "Downloading new version of dbeaver $version"
@@ -211,8 +210,8 @@ function checking_brave {
 function checking_dbeaver {
     #dbeaver
     echo "Verifing Dbeaver"
-    new_version=$(curl -s https://dbeaver.io/download/ | grep ">DBeaver Community ")
-    new_version=$(echo $new_version | sed -e 's/<[^>]*>//g')
+    new_version=$(curl -s -I https://dbeaver.io/files/dbeaver-ce-latest-linux-x86_64.tar.gz | grep Location)
+    new_version=$(echo $new_version | awk '{print $2}' | tr -d '\r')
     update_program "dbeaver" "$new_version" downloading_dbeaver
 }
 
