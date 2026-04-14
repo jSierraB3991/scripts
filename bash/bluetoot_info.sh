@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Dirección MAC del dispositivo (ajusta con la tuya)
-MAC="00:76:45:33:C7:63"
+MAC=$(bluetoothctl devices | fzf | awk '{print $2}')
 
-# Obtener la salida cruda de bluetoothctl info
+# Obtener la salida cruda de bluetoothctl info 
 info=$(bluetoothctl info "$MAC")
 
 # Función para extraer campos simples
