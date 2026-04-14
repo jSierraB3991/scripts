@@ -55,14 +55,19 @@ function downloading_brave {
 
 function downloading_dbeaver {
     url=$1
-     cd $HOME/Descargas/programs
-    
+    out="dbeaver.tar.gz"
+
+    cd $HOME/Descargas/programs
     echo "Downloading new version of dbeaver $version"
-    wget -nv $url
+    while true; do
+        wget -c -nv "$url" -O "$out" && break
+        echo "Fallo, reintentando en 3s..."
+        sleep 3
+    done  
 
     echo "Descompress for file Dbeaver $version"
-    tar -xzf dbeaver-ce-**-linux.gtk.x86_64.tar.gz
-    rm dbeaver-ce-**-linux.gtk.x86_64.tar.gz
+    tar -xzf $out
+    rm $out
     echo "Moving version $version of dbeaver"
     sudo rm -rf /opt/dbeaver
     sudo mv dbeaver /opt/
