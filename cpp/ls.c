@@ -5,7 +5,7 @@
 int show_all = 0;
 
 int main(int argc, char *argv[]) {
-    int opt;
+    int opt = 0;
 
     while((opt = getopt(argc, argv, "a")) != -1) {
         switch(opt) {
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    const char *path = (optind > argc) ? argv[optind] : ".";
+    const char *path = argv[optind] != NULL ? argv[optind] : ".";
     DIR *dir = opendir(path);
     if(!dir) {
         perror("Error to open dir");
