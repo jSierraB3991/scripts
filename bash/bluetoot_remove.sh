@@ -1,6 +1,6 @@
 #!/bin/bash
 
-bluetoothctl disconnect
+#bluetoothctl disconnect
 
 # Selección
 connect_bluetooth() {
