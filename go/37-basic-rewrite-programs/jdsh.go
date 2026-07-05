@@ -8,6 +8,14 @@ import (
 	"strings"
 )
 
+func printHelp() {
+	fmt.Println(`Comandos disponibles:
+	cd [dir]    - Cambiar el directorio (sin argumento va al home)
+	exit	    - Salir de la shell
+	help	    - Mostrar la ayuda
+	`)
+}
+
 func handleCd(args []string) {
 	dir := ""
 	if len(args) == 0 {
@@ -42,7 +50,7 @@ func main() {
 
 	for {
 		cwd, _ := os.Getwd()
-		fmt.Printf("%s %s %s $ ", colorCwd, cwd, resetColor)
+		fmt.Printf("%s %s %s > ", colorCwd, cwd, resetColor)
 		line, err := reader.ReadString('\n')
 		if err != nil {
 			break
@@ -60,6 +68,8 @@ func main() {
 			os.Exit(0)
 		case "cd":
 			handleCd(args)
+		case "help":
+			printHelp()
 		default:
 			runExternal(cmd, args)
 		}
