@@ -11,38 +11,38 @@ import (
 
 func printHelp() {
 	fmt.Println(`
-=========================================
-             GOPSQL HELP
-=========================================
+			=========================================
+						GOPSQL HELP
+			=========================================
 
-Comandos
----------
-help              Muestra esta ayuda.
-exit              Sale del programa.
-quit              Sale del programa.
-\q                Sale del programa.
+			Comandos
+			---------
+			help              Muestra esta ayuda.
+			exit              Sale del programa.
+			quit              Sale del programa.
+			\q                Sale del programa.
 
-SQL soportado
--------------
-CREATE TABLE      Crea una tabla.
-INSERT INTO       Inserta una fila.
-SELECT *          Consulta todas las columnas.
-SELECT col1,...   Consulta columnas específicas.
-WHERE             Filtra resultados.
+			SQL soportado
+			-------------
+			CREATE TABLE      Crea una tabla.
+			INSERT INTO       Inserta una fila.
+			SELECT *          Consulta todas las columnas.
+			SELECT col1,...   Consulta columnas específicas.
+			WHERE             Filtra resultados.
 
-Tipos soportados
-----------------
-INT
-TEXT
+			Tipos soportados
+			----------------
+			INT
+			TEXT
 
-Ejemplos de sentencias
-----------------------
-CREATE TABLE users (...);
-INSERT INTO users VALUES (...);
-SELECT * FROM users;
-SELECT id, name FROM users;
-SELECT * FROM users WHERE id = 1;
-`)
+			Ejemplos de sentencias
+			----------------------
+			CREATE TABLE users (...);
+			INSERT INTO users VALUES (...);
+			SELECT * FROM users;
+			SELECT id, name FROM users;
+			SELECT * FROM users WHERE id = 1;
+			`)
 }
 func main() {
 	mb := gosql.NewMemoryBackend()
@@ -60,7 +60,7 @@ func main() {
 			printHelp()
 			continue
 		}
-		text = strings.Replace(text, "\n", "", -1)
+		text = strings.ReplaceAll(text, "\n", "")
 
 		parser := gosql.Parser{}
 
