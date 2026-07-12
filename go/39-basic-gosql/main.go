@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -67,8 +66,8 @@ func main() {
 
 		ast, err := parser.Parse(text)
 		if err != nil {
-			log.Println(err)
-			os.Exit(1)
+			fmt.Println(err)
+			continue
 		}
 
 		for _, stmt := range ast.Statements {
@@ -79,18 +78,26 @@ func main() {
 					fmt.Println(err)
 					continue
 				}
+				fmt.Println("ok")
 			case gosql.InsertKind:
 				err = mb.Insert(stmt.InsertStatement)
 				if err != nil {
 					fmt.Println(err)
 					continue
 				}
+				fmt.Println("ok")
 			case gosql.SelectKind:
 				results, err := mb.Select(stmt.SelectStatement)
 				if err != nil {
-					log.Println(err)
+					fmt.Println(err)
 					continue
 				}
+
+				if len(results.Rows) == 0 {
+					fmt.Println("No rows found.")
+					continue
+				}
+
 				for _, col := range results.Columns {
 					fmt.Printf("| %s ", col.Name)
 				}
@@ -118,9 +125,9 @@ func main() {
 
 					fmt.Println()
 				}
-
+			default:
+				fmt.Printf("Unsupported statement: %v\n", stmt.Kind)
 			}
 		}
-		fmt.Println("ok")
 	}
 }
