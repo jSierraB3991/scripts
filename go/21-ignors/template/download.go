@@ -23,7 +23,11 @@ func DownloadIgnor(language string) {
 
 	definitiveUrl := fmt.Sprintf("%s/%s.gitignore", url, language)
 	req, _ := http.NewRequest("GET", definitiveUrl, nil)
-	resp, _ := http.DefaultClient.Do(req)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	defer resp.Body.Close()
 
 	bar := progressbar.DefaultBytes(
