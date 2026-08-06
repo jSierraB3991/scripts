@@ -3,3 +3,6 @@ go/33-terraform/infra/.terraform
 go/33-terraform/infra/terraform.tfstate.backup
 go/33-terraform/infra/terraform.tfstate
 cpp/lsbtw
+
+**__pycache__**
+**/.env
