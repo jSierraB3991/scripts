@@ -11,7 +11,7 @@ class TextApp(App):
     def on_mount(self):
         self.static.styles.background = "blue"
         self.static.styles.border = ("solid", "white")
-        self.static.styles.text_aling = "center"
+        self.static.styles.text_align = "center"
         self.static.styles.padding = 1,1
         self.static.styles.margin = 4,4
         
