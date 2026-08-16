@@ -1,14 +1,16 @@
 #! /bin/bash
 
-mkdir -p $HOME/.local/data
+FOLDER_DB=/mnt/videogames/docker_data
+
+mkdir -p $FOLDER_DB
 mkdir -p $HOME/Descargas
 
 #Verify table
-echo "CREATE TABLE IF NOT EXISTS programs(name varchar(100), version varchar(50), date varchar(40))" | sqlite3 ~/.local/data/ejemplo.db 1>/dev/null 2>/dev/null
+echo "CREATE TABLE IF NOT EXISTS programs(name varchar(100), version varchar(50), date varchar(40))" | sqlite3 $FOLDER_DB/ejemplo.db 1>/dev/null 2>/dev/null
 
 
 function get_actual_version {
-    echo "SELECT version FROM programs WHERE name = '$1'" | sqlite3 ~/.local/data/ejemplo.db
+    echo "SELECT version FROM programs WHERE name = '$1'" | sqlite3 $FOLDER_DB/ejemplo.db
 }
 
 function update_program {
@@ -20,12 +22,12 @@ function update_program {
     if [ "$version" != "$new_version" ]; then
         echo "Update version $version to $new_version"
 
-        notify-send "New Version of $program $new_version" "update notifier" -u CRITICAL 
+        notify-send "New Version of $program $new_version" "update notifier" -u NORMAL
 
         if [ "$version" != "" ]; then
-            echo "UPDATE programs SET version='$new_version', date='$date_now' WHERE name='$program'" | sqlite3 ~/.local/data/ejemplo.db
+            echo "UPDATE programs SET version='$new_version', date='$date_now' WHERE name='$program'" | sqlite3 $FOLDER_DB/ejemplo.db
         else
-            echo "INSERT INTO programs VALUES('$program', '$new_version', '$date_now')" | sqlite3 ~/.local/data/ejemplo.db
+            echo "INSERT INTO programs VALUES('$program', '$new_version', '$date_now')" | sqlite3 $FOLDER_DB/ejemplo.db
         fi
         $function_download $new_version
     fi
