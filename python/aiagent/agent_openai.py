@@ -12,8 +12,10 @@ class Agent:
             # user: cosas que ha pedido el usuario
             # assistant: ehjemplos del modelo del lenguaje
             # developer: mensajes del desarrollador (también pueden ser de OpenAI) 
-            "role": "system",
-            "content": "Eres un asistente útil que habla español y eres muy conciso con tus respuestas"
+            {
+                "role": "system",
+                "content": "Eres un asistente útil que habla español y eres muy conciso con tus respuestas"
+            }
         ]
 
 
@@ -51,7 +53,7 @@ class Agent:
                     os.makedirs(dir_name, exist_ok=True)
                 conten = new_text
             
-            with open(path, "w", encoding="utf-8" as f:
+            with open(path, "w", encoding="utf-8") as f:
                       f.write(content)
             action = "editado" if existed and prev_text else "creado"
             return f"Archivo {action} exitosamente"
@@ -91,8 +93,7 @@ class Agent:
                   },{
                       "type" : "function",
                       "name": "edit_file",
-                      "description": "Edita un archivo, reemplazando prev_text por new_text, Crea el archivo en caso que
-                      no exista",
+                      "description": "Edita un archivo, reemplazando prev_text por new_text, Crea el archivo en caso que no exista",
                       "parameters" : {
                           "type": "object",
                           "properties": {
@@ -141,7 +142,7 @@ class Agent:
 
             elif output.type == "message":
                 #print(f"Asistente: {output.content}")
-                reply = "\n".join(part.text for part output.content)
+                reply = "\n".join(part.text for part in output.content)
                 print(f"Asistente: {reply}")
         return False
         
@@ -162,23 +163,27 @@ def main():
 
         if not user_input:
             continue
-        if user_input.lower() in ("salir", "exit", "bye", "sayonara", "q", "\q"):
+        if user_input.lower() in ("salir", "exit", "bye", "sayonara", "q"):
             print("Hasta luego!")
             break
     
         agent.messages.append({"role": "user", "content": user_input})
 
         while True:
-            response = client.responses.create(
-                            model="gpt-4o-mini",
-                            input=agent.messages,
-                            tools=agent.tools,
-                        )
-            #assistant_reply = response.output_text
-            #messages.append({"role": "assistant", "content": assistant_reply})
-            #print(f"Asistente: {assistant_reply}")
-            called_tools = agent.process_response(response)
-            if not called_tools:
+            try:
+                response = client.responses.create(
+                                model="gpt-4o-mini",
+                                input=agent.messages,
+                                tools=agent.tools,
+                            )
+                #assistant_reply = response.output_text
+                #messages.append({"role": "assistant", "content": assistant_reply})
+                #print(f"Asistente: {assistant_reply}")
+                called_tools = agent.process_response(response)
+                if not called_tools:
+                    break
+            except Exception as e:
+                print(e)
                 break
             
 
