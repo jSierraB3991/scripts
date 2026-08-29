@@ -248,20 +248,28 @@ func (a *App) connectTo(conn *Connection) {
 	if a.activeDb != nil {
 		a.activeDb.Close()
 		a.activeDb = nil
+
+		a.schemaTree.SetRoot(nil)
+		a.tableView.Clear()
+
+	}
+	if conn.Type != DBPostgres {
+		a.setStatus(fmt.Sprintf("[red]Error No se puedo conectar a '%s': Aún no se tiene soporte para: %s[-]", conn.Name, conn.Type))
+		return
 	}
 	db, err := sql.Open("postgres", conn.DSN())
 	if err != nil {
-		a.setStatus(fmt.Sprintf("[red]Error: %v[-]", err))
+		a.setStatus(fmt.Sprintf("[red]Error No se puedo conectar a '%s': %v[-]", conn.Name, err))
 		return
 	}
 	if err := db.Ping(); err != nil {
-		a.setStatus(fmt.Sprintf("[red]No se pudo conectar %v[-]", err))
+		a.setStatus(fmt.Sprintf("[red]No se pudo conectar a '%s': %v[-]", conn.Name, err))
 		db.Close()
 		return
 	}
 	a.activeDb = db
 	a.activeConn = conn
-	a.setStatus(fmt.Sprintf("[green]Conectado a: %s[-]", conn.DisplayName()))
+	a.setStatus(fmt.Sprintf("[green]Conectado a: '%s'[-]", conn.Name))
 	a.loadSchemas()
 
 	a.focusIndex = 1
@@ -398,6 +406,8 @@ func (a *App) BuildUI() {
 	a.tableView = a.buildTableView()
 	a.statusBar = a.buildStatusBar()
 
+	a.setStatus("Welcome To LazyDb TUI!")
+
 	a.leftFlex = tview.NewFlex().SetDirection(tview.FlexRow).
 		AddItem(a.connList, 0, 1, true).
 		AddItem(a.schemaTree, 0, 2, false)
@@ -406,7 +416,7 @@ func (a *App) BuildUI() {
 		AddItem(a.leftFlex, 0, 1, true).
 		AddItem(a.tableView, 0, 3, false)
 
-	rootFlex := tview.NewFlex().
+	rootFlex := tview.NewFlex().SetDirection(tview.FlexRow).
 		AddItem(mainFlex, 0, 1, true).
 		AddItem(a.statusBar, 1, 0, false)
 
@@ -427,5 +437,6 @@ func (a *App) BuildUI() {
 
 func (a *App) Run() error {
 	a.updateBorders()
+	a.tviewApp.EnableMouse(true)
 	return a.tviewApp.Run()
 }
