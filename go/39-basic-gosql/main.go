@@ -17,18 +17,19 @@ func printHelp() {
 
 			Comandos
 			---------
-			help              Muestra esta ayuda.
-			exit              Sale del programa.
-			quit              Sale del programa.
-			\q                Sale del programa.
+			help				Muestra esta ayuda.
+			exit				Sale del programa.
+			quit				Sale del programa.
+			\q					Sale del programa.
+			\l					Lis
 
 			SQL soportado
 			-------------
-			CREATE TABLE      Crea una tabla.
-			INSERT INTO       Inserta una fila.
-			SELECT *          Consulta todas las columnas.
-			SELECT col1,...   Consulta columnas específicas.
-			WHERE             Filtra resultados.
+			CREATE TABLE		Crea una tabla.
+			INSERT INTO			Inserta una fila.
+			SELECT *			Consulta todas las columnas.
+			SELECT col1,...		Consulta columnas específicas.
+			WHERE				Filtra resultados.
 
 			Tipos soportados
 			----------------
