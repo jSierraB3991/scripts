@@ -6,7 +6,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/eatonphil/gosql"
+	"github.com/jsierrab3991/scripts/basic-gosql/gosql"
 )
 
 func printHelp() {
@@ -44,6 +44,67 @@ func printHelp() {
 			SELECT * FROM users WHERE id = 1;
 			`)
 }
+func printTableMetadata(tables []gosql.TableMetadata) {
+	for _, table := range tables {
+		fmt.Printf("\n Table: %s\n", table.Name)
+
+		// Calcular ancho de cada columna
+		nameWidth := len("Name")
+		typeWidth := len("Type")
+		notNullWidth := len("Not Null")
+
+		for _, column := range table.Columns {
+			if len(column.Name) > nameWidth {
+				nameWidth = len(column.Name)
+			}
+
+			typeName := fmt.Sprintf("%v", column.Type)
+			if len(typeName) > typeWidth {
+				typeWidth = len(typeName)
+			}
+
+			notNull := fmt.Sprintf("%t", column.NotNull)
+			if len(notNull) > notNullWidth {
+				notNullWidth = len(notNull)
+			}
+		}
+
+		// Separador
+		fmt.Print(" ")
+		fmt.Print(strings.Repeat("-", nameWidth+2))
+		fmt.Print("+")
+		fmt.Print(strings.Repeat("-", typeWidth+2))
+		fmt.Print("+")
+		fmt.Print(strings.Repeat("-", notNullWidth+2))
+		fmt.Println()
+
+		// Header
+		fmt.Printf(
+			" %-*s | %-*s | %-*s\n",
+			nameWidth, "Name",
+			typeWidth, "Type",
+			notNullWidth, "Not Null",
+		)
+
+		// Separador
+		fmt.Print(" ")
+		fmt.Print(strings.Repeat("-", nameWidth+2))
+		fmt.Print("+")
+		fmt.Print(strings.Repeat("-", typeWidth+2))
+		fmt.Print("+")
+		fmt.Println(strings.Repeat("-", notNullWidth+2))
+
+		// Filas
+		for _, column := range table.Columns {
+			fmt.Printf(
+				" %-*s | %-*v | %-*t\n",
+				nameWidth, column.Name,
+				typeWidth, column.Type,
+				notNullWidth, column.NotNull,
+			)
+		}
+	}
+}
 func main() {
 	mb := gosql.NewMemoryBackend()
 	reader := bufio.NewReader(os.Stdin)
@@ -53,12 +114,20 @@ func main() {
 		text, err := reader.ReadString('\n')
 		textHelp := strings.TrimSpace(text)
 		switch strings.ToLower(textHelp) {
-		case "exit", "quit":
+		case "exit", "quit", "\\q":
 			fmt.Println("Bye")
 			os.Exit(0)
 		case "help":
 			printHelp()
 			continue
+		case "\\l":
+			tables := mb.GetTables()
+			if len(tables) <= 0 {
+				fmt.Println("No tables found.")
+				continue
+			}
+			printTableMetadata(tables)
+			fmt.Println("ok")
 		}
 		text = strings.ReplaceAll(text, "\n", "")
 
