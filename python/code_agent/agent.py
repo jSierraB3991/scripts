@@ -2,6 +2,7 @@ import ollama
 import json
 import libs
 from tools_descript import my_tools, available_tools
+from barra_carga import  BarraCarga
 
 class Agent:
     def __init__(self):
@@ -52,7 +53,10 @@ class Agent:
         })
 
         while True:
+            chargeBar = BarraCarga()
+            chargeBar.iniciar()
             response = ollama.chat(model=libs.MODEL, messages=self.messages, tools=my_tools)
+            chargeBar.finalizar()
             asistant_messages = response.message
             self.messages.append(asistant_messages)
 
