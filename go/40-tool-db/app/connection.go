@@ -18,7 +18,7 @@ type Connection struct {
 
 func (c Connection) DSN() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		c.Host, c.Port, c.User, c.Password, c.DatabaseName)
+		c.Host, c.Port, c.User, "root", c.DatabaseName)
 }
 
 func (c Connection) DisplayName() string {
