@@ -55,10 +55,28 @@ my_tools = [
             }
         }
     },
+    {
+        "type": "function",
+        "function":{
+            "name": "create_folder",
+            "description": "Crea una carpeta en la ruta especificada.",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Ruta de la carpeta a crear"
+                    }
+                },
+                "required": ["path"]
+            }
+        }
+    },
 ]
 
 available_tools = {
     "list_directory": list_directory,
     "read_file": read_file,
     "write_file": write_file,
+    "create_folder": create_folder,
 }
