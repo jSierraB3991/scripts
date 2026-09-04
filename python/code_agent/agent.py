@@ -1,9 +1,9 @@
 import ollama
 import json
 import libs
-from tools_descript import my_tools, available_tools,tools_with_question
-from barra_carga import  BarraCarga
-from tools.tool_db import get_all_memories
+from tools.tools_descript import my_tools, available_tools,tools_with_question
+from progress_bar import  BarraCarga
+from tools.database.get_all_memories import get_all_memories
 
 class Agent:
     def __init__(self):
@@ -21,8 +21,9 @@ class Agent:
                 Antesde modificar un archivo, léelo primero cuando sea necesario para comprender su contenido.
                 No inventes  el contenido de archivos que no hayas leído.
                 Trabaja únicamente con las herramientas disponibles.
-                Siempre que necesites un archivo/carpeta, siempre empieza a buscar por la raiz del proyecto o '.'
                 A menos que te diga lo contrario, solo búsca archivos dentro de la carpeta raíz del proyecto, nunca fuera.
+                No listes archivos porque sí, si ya lso tienes en memoria, están bien.
+                En python no crees archivo __init__.py, en ninguna parte del código.
             """
         }]
 
@@ -69,16 +70,14 @@ class Agent:
                     result = function(**arguments)
                 except Exception as e:
                     result = f"Error ejecutando tool {e}"
-            print("[RESULTADO]")
-            print(result)
             self.messages.append({
-                "role": "tool",
+                "role": libs.ROL_TOOL,
                 "content": result
             })
 
     def run_agent(self, user_input:str):
         self.messages.append({
-            "role": "user",
+            "role": libs.ROL_USER,
             "content": user_input,
         })
 
@@ -89,15 +88,20 @@ class Agent:
             chargeBar.finalizar()
             asistant_messages = response.message
             self.messages.append(asistant_messages)
-            if asistant_messages.thinking.strip() != "":
-                print(f"pensando: {asistant_messages.thinking.strip()}")
+            
+            if asistant_messages.get("tool_calls"):
+                self.run_tools(asistant_messages.tool_calls)
+                continue
 
-            if not asistant_messages.get("tool_calls"):
-                print("\nAgent:")
-                print(asistant_messages.get("content", ""))
-                break
 
-            self.run_tools(asistant_messages.tool_calls)
+            if  asistant_messages.content == "":
+                print(asistant_messages.role, asistant_messages.thinking if asistant_messages.thinking == None else asistant_messages.thinking.strip())
+                continue
+
+            print("\nAgent:")
+            print(asistant_messages.content if asistant_messages != "" else asistant_messages)
+            break
+
 
     def print_bye(self, message="adiós", tipo_color=libs.RED):
         emoji = "👋"
@@ -105,18 +109,17 @@ class Agent:
         pass
 
     def prepare(self, name_user: str):
-        if name_user != "":
-            print(f"Hola {name_user} como puedo ayudarlo hoy?")
-        else:
-            name_user = 'unknow'
-        
         memories = get_all_memories()
         for mem in memories:
             self.messages.append({
                 "role": mem.role_agent,
                 "content": mem.content,
                 "key": mem.key,
+                "description": mem.description,
             })
+
+        self.run_agent("Hola, soy un desarollador (tú sabes mi nombre) y quiero que sepas la estructura del proyecto que vamos a contruir, así que busca las carpetas, para que sepas como moverte. Despúes de esto, presentate y saludame")
+        print("Escribe 'exit' para salir.")
         while True:
             try:
                 user_input = input(f"{name_user} - {libs.MODEL} > ")

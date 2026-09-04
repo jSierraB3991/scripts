@@ -1,5 +1,5 @@
-from tools.tool_files import *
-from tools.tool_db import *
+from tools.database import save_memory_tool, update_memory_tool
+from tools.file_system import create_folder_tool, list_directory_tool, move_file_or_folder_tool, read_file_tool, write_file_tool, remove_file_tool, remove_folder_tool, search_files_tool
 my_tools = [
     {
         "type": "function",
@@ -138,7 +138,7 @@ my_tools = [
                 "properties": {
                     "key": {
                         "type": "string",
-                        "description": "llave generica para poder identificar el dato guardado, no debe repetirse, siempre debe iniciar con 'key_'"
+                        "description": "llave generica para poder identificar el dato guardado, si das uno repetido dará error, siempre debe iniciar con 'key_'"
                     },
                     "role_agent": {
                         "type": "string",
@@ -146,24 +146,79 @@ my_tools = [
                     },
                     "content": {
                         "type": "string",
-                        "description": "dato que el agente considere importante para guardar"
+                        "description": "dato que el agente considere importante para guardar, tratar de que sean bastante fáciles de leer, como un string, o un json"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "valor que hace que el agente pueda tener un poco de contexto del valor guardado, por lo tanto es importante, aunque no requerido"
+                    }
+                },
+                "required": ["key", "content", "role_agent"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function":{
+            "name": "update_memory",
+            "description": "Actualiza el contenido de una memoria en la base de datos por la key",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "Llave necesaria para poder actualizar la memoria"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "contenido que va a sobreescribir el anterior, tratar de que sean bastante fáciles de leer, como un string, o un json"
                     }
                 },
                 "required": ["key", "content"]
             }
         }
     },
+    {
+        "type": "function",
+        "function": {
+            "name": "search_files",
+            "description": "Busca archivos dentro de un directorio. Puede bcasr por: nombre del archivo, extensión, contenido del archivo. Se puden combinar filtros",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Directorio donde realizará la búsqueda"
+                    },
+                    "pattern": {
+                        "type": "string",
+                        "description": "Texto que debe aparecer en el nombre del archivo"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Texto que debe aparecer dentro del archivo"
+                    },
+                    "extension": {
+                        "type": "string",
+                        "description": "Extensión del archivo, por eje: .go o.py"
+                    }
+                }
+            }
+        }
+    }
 ]
 
 available_tools = {
-    "list_directory": list_directory,
-    "read_file": read_file,
-    "write_file": write_file,
-    "create_folder": create_folder,
-    "move_file_or_folder": move_file_or_folder,
-    "remove_file": remove_file,
-    "remove_folder": remove_folder,
-    "save_memory": save_memory,
+    "list_directory": list_directory_tool.list_directory,
+    "read_file": read_file_tool.read_file,
+    "write_file": write_file_tool.write_file,
+    "create_folder": create_folder_tool.create_folder,
+    "move_file_or_folder": move_file_or_folder_tool.move_file_or_folder,
+    "remove_file": remove_file_tool.remove_file,
+    "remove_folder": remove_folder_tool.remove_folder,
+    "save_memory": save_memory_tool.save_memory,
+    "update_memory": update_memory_tool.update_memory,
+    "search_files": search_files_tool.search_files,
 }
 
-tools_with_question = ["write_file", "remove_file", "remove_folder"]
+tools_with_question = ["write_file", "remove_file", "remove_folder", "update_memory"]

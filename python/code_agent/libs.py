@@ -17,7 +17,12 @@ KEY_SYSTEM_PROMPT = "maximun_prompt"
 
 ROL_USER = "user"
 ROL_TOOL = "tool"
+ROL_AGENT = "agent"
 ROL_SYSTEM = "system"
+
+
+dir_no_list = ["__pycache__", ".venv", "venv", ".git", ".vscode", "node_modules", "build", "dist"]
+files_no_list = [".env", ".gitignore", "**.db"]
 
 def random_string() ->str:
     caracteres = string.ascii_letters + string.digits 

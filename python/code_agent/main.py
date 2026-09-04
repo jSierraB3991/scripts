@@ -1,21 +1,11 @@
-from ollama import chat, Client,ChatResponse
+from ollama import chat, ChatResponse
 import libs 
 import agent
-from tools.tool_db import save_memory, get_memory_by_key
-
-def no_use():
-    response: ChatResponse = chat(model="qwen2.5-coder:3b", messages=[
-        {
-            'role': 'user',
-            'content': ''
-       },
-    ])
-    print(response['message']['content'])
-    print(response.message.content)
+from tools.database.get_memory_by_key import get_memory_by_key
+from tools.database.save_memory_tool import save_memory
 
 def main():
     print(f"Code Agent - {libs.MODEL}")
-    print("Escribe 'exit' para salir.\n")
 
     key_name = get_memory_by_key(libs.KEY_NAME)
     if not key_name:
