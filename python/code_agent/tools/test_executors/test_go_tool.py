@@ -7,14 +7,20 @@ import os
 import subprocess
 
 
-def run_go_tests():
-    """Ejecutar tests de Go."""
-    print("\n🐹 Ejecutando tests de Go...")
+def run_go_tests(path: str) -> str:
+    """Ejecutar tests de Go.
     
-    test_dir = os.path.join(os.path.dirname(__file__), '..', 'tests', 'go_tests')
+    Args:
+        path (str): Ruta del directorio donde se encuentran los tests de Go
+        
+    Returns:
+        str: Mensaje con el resultado de la ejecución de los tests
+    """
+    print(f"\n🐹 Ejecutando tests de Go en: {path}")
+    
+    test_dir = os.path.join(path)
     if not os.path.exists(test_dir):
-        print("⚠️  Directorio de tests Go no encontrado.")
-        return
+        return f"⚠️  Directorio de tests Go no encontrado: {test_dir}"
     
     count = subprocess.run(
         ['go', 'test', '.', '-v'],
@@ -23,4 +29,7 @@ def run_go_tests():
     )
     print(count.stdout)
     
-    return count.returncode == 0
+    if count.returncode == 0:
+        return "✅ Todos los tests de Go pasaron correctamente"
+    else:
+        return f"❌ Algunos tests de Go fallaron. Retorno: {count.returncode}"

@@ -7,25 +7,47 @@ from tools.database.get_all_memories import get_all_memories
 
 class Agent:
     def __init__(self):
+        self.loop = 0
+        self.init_memory()
+        
+    def init_memory(self):
         self.messages = [{
-            "role": "system",
-            "content": """
-                Eres un agente de código.
-                Tu trabajo es ayudar al usuario a modificar y crear proyectos.
+                "role": "system",
+                "content": """
+                    Eres un agente de código.
+                    Tu trabajo es ayudar al usuario a modificar y crear proyectos.
 
-                Tu tienes acceso a herramientas para:
-                - listar directorios
-                - leer archivos
-                - escribir archivos
+                    Tu tienes acceso a herramientas para:
+                    - listar directorios
+                    - leer archivos
+                    - escribir archivos
 
-                Antesde modificar un archivo, léelo primero cuando sea necesario para comprender su contenido.
-                No inventes  el contenido de archivos que no hayas leído.
-                Trabaja únicamente con las herramientas disponibles.
-                A menos que te diga lo contrario, solo búsca archivos dentro de la carpeta raíz del proyecto, nunca fuera.
-                No listes archivos porque sí, si ya lso tienes en memoria, están bien.
-                En python no crees archivo __init__.py, en ninguna parte del código.
-            """
-        }]
+                    Antes de modificar un archivo, léelo primero cuando sea necesario para comprender su contenido.
+                    No inventes  el contenido de archivos que no hayas leído.
+                    Trabaja únicamente con las herramientas disponibles.
+                    A menos que te diga lo contrario, solo búsca archivos dentro de la carpeta raíz del proyecto, nunca fuera.
+                    No listes archivos porque sí, si ya lso tienes en memoria, están bien.
+                    En python no crees archivo __init__.py, en ninguna parte del código.
+                    Tú memoria se vacea varias veces, guarda lo que necesites y creas que puedes necesitar después
+                """
+            }]
+        memories = get_all_memories()
+        for mem in memories:
+            self.messages.append({
+                "role": mem.role_agent,
+                "content": mem.content,
+                "key": mem.key,
+                "description": mem.description,
+            })
+    def restart_memory(self, user_input: str):
+        print("Limpiando la memoria")
+        self.loop = 0
+        self.init_memory()
+        print(f"Reiniciando consulta del usuario {user_input}")
+        self.messages.append({
+            "role": libs.ROL_USER,
+            "content": user_input,
+        })
 
     def validate_tool(self, function_name: str, arguments: any) -> bool:
         if function_name not in tools_with_question:
@@ -82,12 +104,15 @@ class Agent:
         })
 
         while True:
+            if self.loop > libs.MAX_LOOP_AGENT:
+                self.restart_memory(user_input)
             chargeBar = BarraCarga()
             chargeBar.iniciar()
             response = ollama.chat(model=libs.MODEL, messages=self.messages, tools=my_tools)
             chargeBar.finalizar()
             asistant_messages = response.message
             self.messages.append(asistant_messages)
+            self.loop +=1
             
             if asistant_messages.get("tool_calls"):
                 self.run_tools(asistant_messages.tool_calls)
@@ -98,6 +123,7 @@ class Agent:
                 print(asistant_messages.role, asistant_messages.thinking if asistant_messages.thinking == None else asistant_messages.thinking.strip())
                 continue
 
+            self.loop = 0
             print("\nAgent:")
             print(asistant_messages.content if asistant_messages != "" else asistant_messages)
             break
@@ -109,16 +135,8 @@ class Agent:
         pass
 
     def prepare(self, name_user: str):
-        memories = get_all_memories()
-        for mem in memories:
-            self.messages.append({
-                "role": mem.role_agent,
-                "content": mem.content,
-                "key": mem.key,
-                "description": mem.description,
-            })
 
-        self.run_agent("Hola, soy un desarollador (tú sabes mi nombre) y quiero que sepas la estructura del proyecto que vamos a contruir, así que busca las carpetas, para que sepas como moverte. Despúes de esto, presentate y saludame")
+        self.run_agent("Hola, soy un desarollador (tú sabes mi nombre) y quiero que sepas la estructura del proyecto que vamos a contruir, la estructura del proyecto esta con la key 'key_structure_proyecto' de no encontrarla, buscala en la base de datos, y si tampoco la encuentras, lista todos los archivos y agregala con los archivos y carpetas del proyecto. Despúes de esto, presentate y saludame")
         print("Escribe 'exit' para salir.")
         while True:
             try:

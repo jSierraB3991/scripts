@@ -1,4 +1,4 @@
-from tools.database import save_memory_tool, update_memory_tool
+from tools.database import save_memory_tool, update_memory_tool, get_memory_by_key_tool
 from tools.file_system import create_folder_tool, list_directory_tool, move_file_or_folder_tool, read_file_tool, write_file_tool, remove_file_tool, remove_folder_tool, search_files_tool
 my_tools = [
     {
@@ -202,6 +202,23 @@ my_tools = [
                         "type": "string",
                         "description": "Extensión del archivo, por eje: .go o.py"
                     }
+                },
+                "required": ["path"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "get_memory_by_key_tool",
+            "description": "Busca en la base de datos, por la key, si esa memoria ya está guardada",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "key de la base de datos, para acceder rapidamente a un dato de la memoria"
+                    },
                 }
             }
         }
@@ -219,6 +236,7 @@ available_tools = {
     "save_memory": save_memory_tool.save_memory,
     "update_memory": update_memory_tool.update_memory,
     "search_files": search_files_tool.search_files,
+    "get_memory_by_key_tool": get_memory_by_key_tool.get_memory_by_key_tool
 }
 
 tools_with_question = ["write_file", "remove_file", "remove_folder", "update_memory"]

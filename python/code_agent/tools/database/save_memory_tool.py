@@ -18,7 +18,6 @@ def save_memory(key: str, role_agent: str, content: str,description:str = "") ->
     try:
         cursor.execute(
             "INSERT INTO memories (key, content, role_agent, program_key,description) VALUES (?,?,?,?,?)",
-            "INSERT INTO memories (key, content, role_agent, program_key,description) VALUES (?,?,?,?,?)",
             (key, content,role_agent, PROGRAM_KEY,description,)
         )
         memory_id = cursor.lastrowid

@@ -4,6 +4,7 @@ import sys
 import subprocess
 
 MODEL = "qwen3.5:9b"
+MAX_LOOP_AGENT  = 15
 
 RESET = "\033[0m"       # Volver al color normal
 RED = "\033[91m"        # Rojo brillante

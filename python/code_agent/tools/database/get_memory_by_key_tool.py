@@ -24,4 +24,8 @@ def get_memory_by_key(key: str) -> Memory | None:
     conn.close()
     return memory
 
-
+def get_memory_by_key_tool(key: str) -> str:
+    memory = get_memory_by_key(key=key)
+    if memory == None:
+        return f"Error no se encontro valor para la key{key}"
+    return memory.content

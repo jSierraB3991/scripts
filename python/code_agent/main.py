@@ -1,7 +1,7 @@
 from ollama import chat, ChatResponse
 import libs 
 import agent
-from tools.database.get_memory_by_key import get_memory_by_key
+from tools.database.get_memory_by_key_tool import get_memory_by_key
 from tools.database.save_memory_tool import save_memory
 
 def main():
