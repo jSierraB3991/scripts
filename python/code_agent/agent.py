@@ -77,7 +77,6 @@ class Agent:
             })
 
     def run_agent(self, user_input:str):
-        #memories = get_all_memories()
         self.messages.append({
             "role": "user",
             "content": user_input,
@@ -110,6 +109,14 @@ class Agent:
             print(f"Hola {name_user} como puedo ayudarlo hoy?")
         else:
             name_user = 'unknow'
+        
+        memories = get_all_memories()
+        for mem in memories:
+            self.messages.append({
+                "role": mem.role_agent,
+                "content": mem.content,
+                "key": mem.key,
+            })
         while True:
             try:
                 user_input = input(f"{name_user} - {libs.MODEL} > ")

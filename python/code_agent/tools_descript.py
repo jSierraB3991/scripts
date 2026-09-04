@@ -138,7 +138,7 @@ my_tools = [
                 "properties": {
                     "key": {
                         "type": "string",
-                        "description": "llave generica para poder identificar el dato guardado, no debe repetirse, es mejor si inicia con 'key'"
+                        "description": "llave generica para poder identificar el dato guardado, no debe repetirse, siempre debe iniciar con 'key_'"
                     },
                     "role_agent": {
                         "type": "string",

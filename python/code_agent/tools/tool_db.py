@@ -1,5 +1,6 @@
 import sqlite3
 from pathlib import Path
+from libs import PROGRAM_KEY
 
 # Importar funciones de db.py
 DB_PATH = Path(__file__).parent.parent / "memories.db"
@@ -17,6 +18,7 @@ def initialize_database():
             key TEXT UNIQUE NOT NULL,
             content TEXT NOT NULL,
             role_agent TEXT NOT NULL,
+            program_key TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -25,20 +27,8 @@ def initialize_database():
     conn.close()
 
 
-def save_memory(key: str, role_agent: str, content: str) -> int:
-    """
-    Guarda un valor (contenido) en la tabla 'memories' de la base de datos SQLite.
-    
-    Parámetros:
-        key (str): La clave única para identificar el registro.
-        content (str): El contenido/texto que se quiere guardar en la tabla memories.
-    
-    Retorna:
-        int: El ID de la memoria guardada.
-    
-    Excepciones:
-        sqlite3.IntegrityError: Si el key ya existe en la base de datos.
-    """
+def save_memory(key: str, role_agent: str, content: str) -> str:
+    """ Guarda un valor (contenido) en la tabla 'memories' de la base de datos SQLite. """
     initialize_database()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -46,31 +36,28 @@ def save_memory(key: str, role_agent: str, content: str) -> int:
     # Insertar el contenido en la tabla 'memories'
     try:
         cursor.execute(
-            "INSERT INTO memories (key, content, role_agent) VALUES (?,?,?)",
-            (key, content,role_agent,)
+            "INSERT INTO memories (key, content, role_agent, program_key) VALUES (?,?,?)",
+            (key, content,role_agent, PROGRAM_KEY)
         )
         memory_id = cursor.lastrowid
     except sqlite3.IntegrityError:
-        raise ValueError(f"La clave '{key}' ya existe en la base de datos.")
+        return f"La clave '{key}' ya existe en la base de datos."
+    except Exception as e:
+        return f"Error guardado {key} en la db: error: {e}"
     
     conn.commit()
     conn.close()
     
-    return memory_id
+    return f"memoria {key} guardada con el id: {memory_id}"
 
 
 def get_all_memories() -> list["Memory"]:
-    """
-    Obtiene todas las memorias guardadas en la base de datos.
-    
-    Retorna:
-        list: Una lista de objetos Memory con los registros de la tabla 'memories'.
-    """
+    """ Obtiene todas las memorias guardadas en la base de datos. """
     initialize_database()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
-    cursor.execute("SELECT id, key, content, role_agent, created_at FROM memories")
+    cursor.execute("SELECT id, key, content, role_agent, created_at FROM memories WHERE program_key = ?", (PROGRAM_KEY,))
     rows = cursor.fetchall()
 
     # Convertir a lista de objetos Memory
@@ -81,22 +68,14 @@ def get_all_memories() -> list["Memory"]:
 
 
 def get_memory_by_id(memory_id: int) -> Memory | None:
-    """
-    Obtiene una memoria por su ID.
-    
-    Parámetros:
-        memory_id (int): El ID de la memoria a buscar.
-    
-    Retorna:
-        dict: Un diccionario con la memoria encontrada o None si no existe.
-    """
+    """ Obtiene una memoria por su ID. """
     initialize_database()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
     cursor.execute(
-        "SELECT id, key, content, role_agent, created_at FROM memories WHERE id = ?",
-        (memory_id,)
+        "SELECT id, key, content, role_agent, created_at FROM memories WHERE id = ? and program_key = ?",
+        (memory_id,PROGRAM_KEY,)
     )
     row = cursor.fetchone()
     
@@ -110,22 +89,14 @@ def get_memory_by_id(memory_id: int) -> Memory | None:
 
 
 def get_memory_by_key(key: str) -> Memory | None:
-    """
-    Obtiene una memoria por su clave (key).
-    
-    Parámetros:
-        key (str): La clave única para buscar la memoria.
-    
-    Retorna:
-        dict: Un diccionario con la memoria encontrada o None si no existe.
-    """
+    """ Obtiene una memoria por su clave (key). """
     initialize_database()
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     
     cursor.execute(
-        "SELECT id, key, content, role_agent, created_at FROM memories WHERE key = ?",
-        (key,)
+        "SELECT id, key, content, role_agent, created_at FROM memories WHERE key = ? and program_key = ?",
+        (key,PROGRAM_KEY,)
     )
     row = cursor.fetchone()
     
