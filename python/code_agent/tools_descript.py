@@ -1,4 +1,5 @@
 from tools.tool_files import *
+from tools.tool_db import *
 my_tools = [
     {
         "type": "function",
@@ -114,7 +115,7 @@ my_tools = [
         "type": "function",
         "function":{
             "name": "remove_folder",
-            "description": "Elimina una carpeta que no requiera.",
+            "description": "Elimina una carpeta vacía que no se esté usando. antes de eliminar la carpeta, elimina los archivos dentro de está",
             "parameters":{
                 "type": "object",
                 "properties": {
@@ -127,6 +128,27 @@ my_tools = [
             }
         }
     },
+    {
+        "type": "function",
+        "function":{
+            "name": "save_memory",
+            "description": "Guarda en memoria los datos que debe recordar el agente",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "key": {
+                        "type": "string",
+                        "description": "llave generica para poder identificar el dato guardado, no debe repetirse"
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "dato que el agente considere importante para guardar"
+                    }
+                },
+                "required": ["key", "content"]
+            }
+        }
+    },
 ]
 
 available_tools = {
@@ -136,7 +158,8 @@ available_tools = {
     "create_folder": create_folder,
     "move_file_or_folder": move_file_or_folder,
     "remove_file": remove_file,
-    #"remove_folder": remove_folder
+    "remove_folder": remove_folder,
+    "save_memory": save_memory,
 }
 
 tools_with_question = ["write_file", "remove_file", "remove_folder"]

@@ -4,8 +4,15 @@ from pathlib import Path
 # Importar funciones de db.py
 DB_PATH = Path(__file__).parent.parent / "memories.db"
 
+class Memory:
+    def __init__(self, id, key, content, created):
+        self.id = id
+        self.key= key
+        self.content = content
+        self.created = created
 
-def save_memory(key:str,content: str) -> int:
+
+def save_memory(key:str, content: str) -> int:
     """
     Guarda un valor (contenido) en la tabla 'memories' de la base de datos SQLite.
     
@@ -33,7 +40,7 @@ def save_memory(key:str,content: str) -> int:
     return memory_id
 
 
-def get_all_memories() -> list:
+def get_all_memories() -> list[Memory]:
     """
     Obtiene todas las memorias guardadas en la base de datos.
     
@@ -45,12 +52,11 @@ def get_all_memories() -> list:
     
     cursor.execute("SELECT id, key, content, created_at FROM memories")
     rows = cursor.fetchall()
-    
+
+    memories: list[Memory]
     # Convertir a lista de diccionarios
-    memories = [
-        {"id": row[0], "key": row[1],"content": row[2], "created_at": row[3]}
-        for row in rows
-    ]
+    for row in rows:
+        pass
     
     conn.close()
     return memories

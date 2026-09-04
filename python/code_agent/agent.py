@@ -3,6 +3,7 @@ import json
 import libs
 from tools_descript import my_tools, available_tools,tools_with_question
 from barra_carga import  BarraCarga
+from tools.tool_db import get_all_memories
 
 class Agent:
     def __init__(self):
@@ -20,7 +21,8 @@ class Agent:
                 Antesde modificar un archivo, léelo primero cuando sea necesario para comprender su contenido.
                 No inventes  el contenido de archivos que no hayas leído.
                 Trabaja únicamente con las herramientas disponibles.
-                Solo búsca archivos dentro de la carpeta donde estás, nunca busques fuera.
+                Siempre que necesites un archivo/carpeta, siempre empieza a buscar por la raiz del proyecto o '.'
+                A menos que te diga lo contrario, solo búsca archivos dentro de la carpeta raíz del proyecto, nunca fuera.
             """
         }]
 
@@ -75,6 +77,7 @@ class Agent:
             })
 
     def run_agent(self, user_input:str):
+        memories = get_all_memories()
         self.messages.append({
             "role": "user",
             "content": user_input,
@@ -113,7 +116,7 @@ class Agent:
                 break
 
             if user_input.lower() in ("exit", "quit"):
-                self.print_bye()
+                self.print_bye(f"adiós {name_user}")
                 break
             if not user_input.strip():
                 continue
