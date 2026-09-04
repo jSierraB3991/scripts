@@ -1,4 +1,4 @@
-from tools import *
+from tools.tool_files import *
 my_tools = [
     {
         "type": "function",
@@ -72,6 +72,61 @@ my_tools = [
             }
         }
     },
+    {
+        "type": "function",
+        "function":{
+            "name": "move_file_or_folder",
+            "description": "Mueve un archivo o carpeta de una ubicación a otra.",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "string",
+                        "description": "archivo origien"
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "carpeta de destino a donde mover el archivo, no la ruta completa con el nombre del archivo"
+                    }
+                },
+                "required": ["source", "destination"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function":{
+            "name": "remove_file",
+            "description": "Elimina un archivo innecesaio.",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "description": "archivo a eliminar"
+                    }
+                },
+                "required": ["file"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function":{
+            "name": "remove_folder",
+            "description": "Elimina una carpeta que no requiera.",
+            "parameters":{
+                "type": "object",
+                "properties": {
+                    "folder": {
+                        "type": "string",
+                        "description": "carpeta a eliminar"
+                    }
+                },
+                "required": ["folder"]
+            }
+        }
+    },
 ]
 
 available_tools = {
@@ -79,4 +134,9 @@ available_tools = {
     "read_file": read_file,
     "write_file": write_file,
     "create_folder": create_folder,
+    "move_file_or_folder": move_file_or_folder,
+    "remove_file": remove_file,
+    #"remove_folder": remove_folder
 }
+
+tools_with_question = ["write_file", "remove_file", "remove_folder"]
