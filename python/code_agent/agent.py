@@ -45,7 +45,7 @@ class Agent:
                     if why_user.strip() != "":
                         self.messages.append({
                             "role": "user",
-                            "content": f"El usuario no permitio la ejecución de la por: {why_user}"
+                            "content": f"Error: El usuario no permitio la ejecución de la tool {function_name} por: '{why_user}'"
                         })
                         break
                 break

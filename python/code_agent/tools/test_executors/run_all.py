@@ -6,7 +6,6 @@ Este script coordinará la ejecución de tests en Python y Go.
 
 import os
 import subprocess
-import sys
 
 
 def run_python_tests():
@@ -47,24 +46,5 @@ def run_go_tests():
     return count.returncode == 0
 
 
-def main():
-    """Ejecutar todos los tests."""
-    print("=" * 60)
-    print("🚀 Iniciando ejecución de tests...")
-    print("=" * 60)
-    
-    python_success = run_python_tests()
-    go_success = run_go_tests()
-    
-    print("\n" + "=" * 60)
-    if python_success and go_success:
-        print("✅ ¡Todos los tests pasaron!")
-    else:
-        print("❌ Algunos tests fallaron.")
-    print("=" * 60)
-    
-    return 0 if (python_success and go_success) else 1
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+# La lógica de ejecución principal ha sido eliminada.
+# Este archivo ahora solo contiene funciones utilitarias para ejecutar tests.
