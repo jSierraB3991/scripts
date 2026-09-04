@@ -97,15 +97,23 @@ class Agent:
 
             self.run_tools(asistant_messages.tool_calls)
 
-    def prepare(self):
+    def print_bye(self, message="adiós", tipo_color=libs.RED):
+        emoji = "👋"
+        print(f"{tipo_color}{libs.YELLOW} {emoji} {message} {libs.RESET}")
+        pass
+
+    def prepare(self, name_user: str):
+        if name_user != "":
+            print(f"Hola {name_user} como puedo ayudarlo hoy?")
         while True:
             try:
-                user_input = input("> ")
+                user_input = input(f"{name_user} > ")
             except KeyboardInterrupt:
-                print()
+                self.print_bye("Saliendo por interrupción")
                 break
 
             if user_input.lower() in ("exit", "quit"):
+                self.print_bye()
                 break
             if not user_input.strip():
                 continue
