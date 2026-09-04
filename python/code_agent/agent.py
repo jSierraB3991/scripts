@@ -77,7 +77,7 @@ class Agent:
             })
 
     def run_agent(self, user_input:str):
-        memories = get_all_memories()
+        #memories = get_all_memories()
         self.messages.append({
             "role": "user",
             "content": user_input,
@@ -108,9 +108,11 @@ class Agent:
     def prepare(self, name_user: str):
         if name_user != "":
             print(f"Hola {name_user} como puedo ayudarlo hoy?")
+        else:
+            name_user = 'unknow'
         while True:
             try:
-                user_input = input(f"{name_user} > ")
+                user_input = input(f"{name_user} - {libs.MODEL} > ")
             except KeyboardInterrupt:
                 self.print_bye("Saliendo por interrupción")
                 break
@@ -118,6 +120,9 @@ class Agent:
             if user_input.lower() in ("exit", "quit"):
                 self.print_bye(f"adiós {name_user}")
                 break
+            if user_input.lower() in ("clear", "cls"):
+                libs.clear_screen()
+                continue
             if not user_input.strip():
                 continue
             self.run_agent(user_input.strip())

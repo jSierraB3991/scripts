@@ -132,13 +132,17 @@ my_tools = [
         "type": "function",
         "function":{
             "name": "save_memory",
-            "description": "Guarda en memoria los datos que debe recordar el agente",
+            "description": "Guarda en memoria los datos que debe recordar el agente, trata de guardar cuando necesites usar una tool, para no perder el flujo",
             "parameters":{
                 "type": "object",
                 "properties": {
                     "key": {
                         "type": "string",
-                        "description": "llave generica para poder identificar el dato guardado, no debe repetirse"
+                        "description": "llave generica para poder identificar el dato guardado, no debe repetirse, es mejor si inicia con 'key'"
+                    },
+                    "role_agent": {
+                        "type": "string",
+                        "description": "tú siempre deberias llamar a este parametro con el valor 'agent'",
                     },
                     "content": {
                         "type": "string",
