@@ -18,3 +18,5 @@ class Memory:
             "created_at": self.created_at,
             "role_agent": self.role_agent,
         }
+    def to_model(self) -> str:
+        return f"{self.content} es el valor para: {self.description}, si quieres modificarlo puedes hacer con la 'key' {self.key}"

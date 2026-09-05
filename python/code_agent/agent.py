@@ -32,13 +32,7 @@ class Agent:
                 """
             }]
         memories = get_all_memories()
-        for mem in memories:
-            self.messages.append({
-                "role": mem.role_agent,
-                "content": mem.content,
-                "key": mem.key,
-                "description": mem.description,
-            })
+        self.run_agent(f"Estos datos debes tenerlos en memoria, pero no es necesario guardalos, ya están guardados: {'\n'.join(mem.to_model() for mem in memories)}")
     def restart_memory(self, user_input: str):
         print("Limpiando la memoria")
         self.loop = 0
@@ -111,8 +105,13 @@ class Agent:
             response = ollama.chat(model=libs.MODEL, messages=self.messages, tools=my_tools)
             chargeBar.finalizar()
             asistant_messages = response.message
-            self.messages.append(asistant_messages)
+            
             self.loop +=1
+            if  asistant_messages.thinking:
+                self.messages.append({
+                    "role": libs.ROL_AGENT,
+                    "content": asistant_messages.thinking
+                })
             
             if asistant_messages.get("tool_calls"):
                 self.run_tools(asistant_messages.tool_calls)
@@ -135,8 +134,7 @@ class Agent:
         pass
 
     def prepare(self, name_user: str):
-
-        self.run_agent("Hola, soy un desarollador (tú sabes mi nombre) y quiero que sepas la estructura del proyecto que vamos a contruir, la estructura del proyecto esta con la key 'key_structure_proyecto' de no encontrarla, buscala en la base de datos, y si tampoco la encuentras, lista todos los archivos y agregala con los archivos y carpetas del proyecto. Despúes de esto, presentate y saludame")
+        #self.run_agent("Hola, soy un desarollador (tú sabes mi nombre) y quiero que sepas la estructura del proyecto que vamos a contruir, Si no sabe cuál es la estructura del proyecto estructura completa del proyecto con archivos y carpetas en cada nivel, puedes buscarla el la database con la key 'key_structure_proyecto' de no encontrarla, y si tampoco la encuentras, lista todos los archivos y agregala con los archivos y carpetas del proyecto. Despúes de esto, presentate y saludame")
         print("Escribe 'exit' para salir.")
         while True:
             try:
