@@ -12,8 +12,8 @@ def list_directory(path: str = ".") -> str:
     for item in sorted(directory.iterdir()):
         if item.is_dir():
             if item.name not in dir_no_list:
-                result.append(f"[DIR] {item.name}")
+                result.append(f"[CARPETA] {item.name}")
         else:
             if item.name not in files_no_list:
-                result.append(f"[FILE] {item.name}")
-    return "\t".join(result)
+                result.append(f"[ARCHIVO] {item.name}")
+    return ",".join(result)

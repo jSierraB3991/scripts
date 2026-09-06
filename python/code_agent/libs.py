@@ -3,27 +3,26 @@ import random
 import sys
 import subprocess
 
-MODEL = "qwen3.5:9b"
+MODEL = "gemma4:e4b"#"qwen3.5:9b"
 MAX_LOOP_AGENT  = 15
 
 RESET = "\033[0m"       # Volver al color normal
 RED = "\033[91m"        # Rojo brillante
 YELLOW = "\033[93m"     # Amarillo/Amarillo
 BOLD = "\033[1m"        # Texto en negrita
-PROGRAM_KEY = "python_code_agent_test"
+PROGRAM_KEY = "python_tui_chat_llm"
 
 
 KEY_NAME = "key_name_user"
-KEY_SYSTEM_PROMPT = "maximun_prompt"
+KEY_STRUCTURE_PROJECT = "key_structure_proyecto"
 
 ROL_USER = "user"
 ROL_TOOL = "tool"
-ROL_AGENT = "agent"
 ROL_SYSTEM = "system"
-
+DESCRIPT_USER_APP = "Nombre del usuario de la aplicación"
 
 dir_no_list = ["__pycache__", ".venv", "venv", ".git", ".vscode", "node_modules", "build", "dist"]
-files_no_list = [".env", ".gitignore", "**.db"]
+files_no_list = [".env", ".gitignore", "memories.db"]
 
 def random_string() ->str:
     caracteres = string.ascii_letters + string.digits 

@@ -3,7 +3,7 @@ from pathlib import Path
 from libs import PROGRAM_KEY
 
 # Importar funciones de db.py
-DB_PATH = Path(__file__).parent.parent.parent / "memories.db"
+DB_PATH = Path("/mnt/videogames/docker_data/data/ejemplo.db")
 
 
 def initialize_database():
@@ -15,7 +15,7 @@ def initialize_database():
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS memories (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            key TEXT UNIQUE NOT NULL,
+            key TEXT NOT NULL,
             content TEXT NOT NULL,
             description TEXT  NOT NULL,
             role_agent TEXT NOT NULL,

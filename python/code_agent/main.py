@@ -11,7 +11,9 @@ def main():
     if not key_name:
         name = input("Buenas, como te llamas? ")
         if name.strip() != "":
-            save_memory(key=libs.KEY_NAME,content=name.strip(), role_agent=libs.ROL_USER)
+            result = save_memory(key=libs.KEY_NAME,content=name.strip(), role_agent=libs.ROL_USER, description=libs.DESCRIPT_USER_APP)
+            if result.startswith("Error"):
+                print(f"{result}")
     else:
         name = key_name.content
 

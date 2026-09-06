@@ -19,4 +19,4 @@ class Memory:
             "role_agent": self.role_agent,
         }
     def to_model(self) -> str:
-        return f"{self.content} es el valor para: {self.description}, si quieres modificarlo puedes hacer con la 'key' {self.key}"
+        return f"{self.content} es el valor para: {self.description}, no tienes que guardarlo en base de datos, ya que este dato viene de allí, si quieres modificarlo puedes hacer con la 'key' {self.key}"
