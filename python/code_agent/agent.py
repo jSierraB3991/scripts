@@ -19,6 +19,7 @@ class Agent:
 
         memories = get_all_memories()
         self.run_agent(user_input=f"Hola, soy un desarollador. Estos datos debes tenerlos en memoria, pero no es necesario guardalos, ya están guardados: {'\n'.join(mem.to_model() for mem in memories)} \n, después presentate saludandome (dando mi nombre) y presentate (con tu nobre también), en está ocasión no llames ninguna tool, ya que llenas la memoria innecesariamente",show_message_final=True)
+        self.backup = self.messages
 
     def init_memory(self):
         self.messages = [{
@@ -43,15 +44,10 @@ class Agent:
             }]
         self.get_data_proyect(savePRoyectStructure=False)
 
-    def restart_memory(self, user_input: str):
+    def restart_memory(self):
         print("Limpiando la memoria")
         self.loop = 0
-        self.init_memory()
-        print(f"Reiniciando consulta del usuario {user_input}")
-        self.messages.append({
-            "role": libs.ROL_USER,
-            "content": user_input,
-        })
+        self.messages = self.backup
 
     def validate_tool(self, function_name: str, arguments: any) -> bool:
         if function_name not in tools_with_question:
@@ -109,7 +105,12 @@ class Agent:
 
         while True:
             if self.loop > libs.MAX_LOOP_AGENT:
-                self.restart_memory(user_input)
+                self.restart_memory()
+                print(f"Reiniciando consulta del usuario {user_input}")
+                self.messages.append({
+                    "role": libs.ROL_USER,
+                    "content": user_input,
+                })
             chargeBar = BarraCarga()
             chargeBar.iniciar()
             response = ollama.chat(model=libs.MODEL, messages=self.messages, tools=my_tools)
@@ -137,9 +138,11 @@ class Agent:
                 print(asistant_messages.content if asistant_messages != "" else asistant_messages)
                 break
 
-            if not asistant_messages.thinking or asistant_messages.thinking == "":
-                break
-
+            if asistant_messages.thinking == None or asistant_messages.thinking == "":
+                self.messages.append({
+                    "role": libs.ROL_USER,
+                    "content": "no hiciste ni una verga",
+                })
             print(asistant_messages.role, ": ", asistant_messages.thinking if asistant_messages.thinking == None else asistant_messages.thinking.strip())
 
 
@@ -165,8 +168,12 @@ class Agent:
                 libs.clear_screen()
                 continue
             if user_input.lower() in ("refresh"):
-                self.init_memory()
+                self.restart_memory()
                 continue
             if not user_input.strip():
                 continue
-            self.run_agent(user_input.strip())
+            try:
+                self.run_agent(user_input.strip())
+            except KeyboardInterrupt:
+                self.print_bye("Saliendo por interrupción")
+                continue

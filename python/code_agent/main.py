@@ -1,4 +1,3 @@
-from ollama import chat, ChatResponse
 import libs 
 import agent
 from tools.database.get_memory_by_key_tool import get_memory_by_key
