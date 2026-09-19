@@ -1,10 +1,16 @@
-import libs 
+import libs
+import sys
 import agent
 from tools.database.get_memory_by_key_tool import get_memory_by_key
 from tools.database.save_memory_tool import save_memory
+from pathlib import Path
 
 def main():
     print(f"Code Agent - {libs.MODEL}")
+
+    if len(sys.argv) == 2:
+        print(sys.argv)
+        Path(sys.argv[1]).resolve()
 
     key_name = get_memory_by_key(libs.KEY_NAME)
     if not key_name:

@@ -19,7 +19,7 @@ class Agent:
 
         memories = get_all_memories()
         self.run_agent(user_input=f"Hola, soy un desarollador. Estos datos debes tenerlos en memoria, pero no es necesario guardalos, ya están guardados: {'\n'.join(mem.to_model() for mem in memories)} \n, después presentate saludandome (dando mi nombre) y presentate (con tu nobre también), en está ocasión no llames ninguna tool, ya que llenas la memoria innecesariamente",show_message_final=True)
-        self.backup = self.messages
+        self.backup = self.messages.copy()
 
     def init_memory(self):
         self.messages = [{
@@ -45,7 +45,8 @@ class Agent:
         self.get_data_proyect(savePRoyectStructure=False)
 
     def restart_memory(self):
-        print("Limpiando la memoria")
+
+        print("\033[91mLimpiando la memoria\033[0m")
         self.loop = 0
         self.messages = self.backup
 
@@ -106,7 +107,7 @@ class Agent:
         while True:
             if self.loop > libs.MAX_LOOP_AGENT:
                 self.restart_memory()
-                print(f"Reiniciando consulta del usuario {user_input}")
+                print(f"Reiniciando consulta del usuario: '{user_input}'")
                 self.messages.append({
                     "role": libs.ROL_USER,
                     "content": user_input,
@@ -118,7 +119,7 @@ class Agent:
             asistant_messages = response.message
             
             if  asistant_messages.thinking and asistant_messages.thinking != "":
-                self.messages.append({
+                print({
                     "role": asistant_messages.role,
                     "content": asistant_messages.thinking
                 })
@@ -139,11 +140,11 @@ class Agent:
                 break
 
             if asistant_messages.thinking == None or asistant_messages.thinking == "":
+                print("\033[91mRegañando al asistente XD\033[0m")
                 self.messages.append({
                     "role": libs.ROL_USER,
                     "content": "no hiciste ni una verga",
                 })
-            print(asistant_messages.role, ": ", asistant_messages.thinking if asistant_messages.thinking == None else asistant_messages.thinking.strip())
 
 
 

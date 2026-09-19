@@ -3,7 +3,7 @@ import random
 import sys
 import subprocess
 
-MODEL = "cogito:8b"#"qwen3.5:9b"
+MODEL = "qwen3.5:9b"
 MAX_LOOP_AGENT  = 15
 
 RESET = "\033[0m"       # Volver al color normal
