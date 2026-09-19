@@ -1,0 +1,17 @@
+Tras analizar el texto extraído de CNN, he identificado varias noticias que tienen potencial impacto directo o indirecto en diferentes sectores de la bolsa. A continuación, clasifico las noticias por sectores para facilitar tu análisis:
+
+### 1. Sector de Defensa y Aeroespacial (Impacto Directo)
+*   **Venta de aviones de combate F-35 a Arabia Saudita:** Esta es una noticia clave para las empresas del complejo industrial-militar (específicamente **Lockheed Martin**). Las ventas de armamento a aliados estratégicos suelen impulsar las acciones de contratistas de defensa.
+*   **Costo de la guerra con Irán ($45.1 mil millones):** El aumento del gasto militar y la tensión en Medio Oriente afectan no solo a las empresas de defensa, sino también a las **materias primas (petróleo y gas)**, ya que la inestabilidad en la región suele disparar los precios de la energía.
+
+### 2. Sector de Tecnología y Semiconductores (Impacto en Sentimiento y Crecimiento)
+*   **Brecha de seguridad en la IA de Google (Gemini):** El hecho de que la IA de Google haya hackeado tres empresas puede generar volatilidad en las acciones tecnológicas y en empresas de ciberseguridad, mientras el mercado evalúa los riesgos de seguridad de las herramientas de IA.
+*   **Bloqueo del proyecto de ley sobre centros de datos para IA:** Este es un punto crítico para las empresas de infraestructura tecnológica y energía. Si los centros de datos no reciben apoyo legislativo, podría afectar a las empresas que construyen la infraestructura para la IA.
+*   **Acercamiento EE. UU.-China en IA:** Cualquier movimiento hacia la cooperación en IA es vital para el sector tecnológico global, ya que afecta a la cadena de suministro de semiconductores y a las regulaciones comerciales.
+
+### 3. Sector de Consumo y Retail (Impacto Corporativo)
+*   **Confiscación de activos de Nestlé en Rusia:** Esta noticia afecta directamente a **Nestlé**. Aunque es un mercado específico, las acciones de grandes multinacionales suelen reaccionar a la pérdida de activos por motivos geopolíticos.
+*   **Retirada de los aviones A380 por Qantas:** Esto tiene impacto en el sector de aviación y en los fabricantes de aviones (**Airbus / Boeing**), aunque es una decisión de flota específica.
+
+### 4. Geopolítica y Recursos Naturales (Impacto en Commodities)
+*   **Acuerdo de Groenlandia con Dinamarca:** Groenlandia es rica en minerales estratégicos (como tierras raras). Un acuerdo de "anexión" o asociación con EE. UU. podría tener repercusiones en
