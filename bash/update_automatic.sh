@@ -217,7 +217,8 @@ function checking_brave {
 function checking_dbeaver {
     #dbeaver
     echo "Verifing Dbeaver"
-    new_version=$(curl -s -I https://dbeaver.io/files/dbeaver-ce-latest-linux-x86_64.tar.gz | grep Location)
+    curl_data=$(curl -s -I https://dbeaver.io/files/dbeaver-ce-latest-linux-x86_64.tar.gz)
+    new_version=$(echo $curl_data | awk -F \\r '{print $6}')
     new_version=$(echo $new_version | awk '{print $2}' | tr -d '\r')
     update_program "dbeaver" "$new_version" downloading_dbeaver
 }
