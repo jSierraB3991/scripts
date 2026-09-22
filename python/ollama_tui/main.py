@@ -3,10 +3,9 @@ from textual.containers import Horizontal
 from textual.widgets import Header, Footer, Input, RichLog, Select
 from textual.worker import  get_current_worker
 
+from simple_memory import SimpleMemory, DEFAULT_MODEL
+
 import ollama
-
-DEFAULT_MODEL = "qwen2.5-coder:7b"
-
 
 class OllamaTUI(App):
     CSS = """
@@ -34,6 +33,7 @@ class OllamaTUI(App):
         super().__init__()
         self.current_model = DEFAULT_MODEL
         self.history: list[dict] = []
+        self.simple_memory = SimpleMemory()
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -89,7 +89,7 @@ class OllamaTUI(App):
         log = self.query_one("#chat_log", RichLog)
         log.write(f"[bold cyan]Tú:[/] {texto}")
 
-        self.history.append({"role": "user", "content": texto})
+        self.simple_memory.add("user", texto)
         self.run_worker(self.consultar_ollama, thread=True)
 
     def consultar_ollama(self) -> None:
@@ -104,7 +104,7 @@ class OllamaTUI(App):
             respuesta_completa = ""
             stream = ollama.chat(
                 model=self.current_model,
-                messages=self.history,
+                messages=self.simple_memory.messages(),
                 stream=True,
             )
             for chunk in stream:
@@ -113,7 +113,7 @@ class OllamaTUI(App):
                 contenido = chunk["message"]["content"]
                 respuesta_completa += contenido
 
-            self.history.append({"role": "assistant", "content": respuesta_completa})
+            self.simple_memory.add("assistant", respuesta_completa)
             self.call_from_thread(
                 log.write, f"[bold green]{self.current_model}:[/] {respuesta_completa}"
             )
