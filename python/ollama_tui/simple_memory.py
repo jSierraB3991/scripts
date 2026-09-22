@@ -3,7 +3,7 @@ import ollama
 DEFAULT_MODEL = "lfm2.5:8b"
 
 class SimpleMemory:
-    def __init__(self, max_msg = 12, num_summarize=8):
+    def __init__(self, max_msg = 12, num_summarize=10):
         self.memory = []
         self.max_msg = max_msg
         self.num_summarize = num_summarize
