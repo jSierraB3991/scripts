@@ -89,17 +89,18 @@ class OllamaTUI(App):
         log = self.query_one("#chat_log", RichLog)
         log.write(f"[bold cyan]Tú:[/] {texto}")
 
-        self.simple_memory.add("user", texto)
-        self.run_worker(self.consultar_ollama, thread=True)
-
-    def consultar_ollama(self) -> None:
-        worker = get_current_worker()
         log = self.query_one("#chat_log", RichLog)
 
         self.call_from_thread(
             log.write, f"[dim]({self.current_model} pensando...)[/dim]"
         )
 
+        self.simple_memory.add("user", texto)
+        self.run_worker(self.consultar_ollama, thread=True)
+
+    def consultar_ollama(self) -> None:
+
+        worker = get_current_worker()
         try:
             respuesta_completa = ""
             stream = ollama.chat(
