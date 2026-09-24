@@ -1,0 +1,8 @@
+#Ollama example
+pip install 'strands-agents[ollama]'
+ollama serve
+ollama pull llama3.1
+
+#GOOGLE AI
+pip install 'strands-agents[gemini]'
+export GEMINI_API_KEY=<your key>
