@@ -24,7 +24,7 @@ def mostrar_historial(thread_id: str, db_path: str = "checkpoints.sqlite"):
 
 THREAD_ID="conversacion-1"
 def main():
-    chat = ChatOllama(model="gemma4:12b")
+    chat = ChatOllama(model="qwen3.5:9b")
 
     prompt = """Eres *orion*, un agente conversacional en español, con memoria y capacidad de razonar.\n
                         Respondes de forma clara, cercana y didáctica.\n

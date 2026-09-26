@@ -21,7 +21,7 @@ def write_file(path: str, content: str) -> str:
         return f"Error escribiendfo en el archivo {path}"
 
 def main():
-    llm = ChatOllama(model="gemma4:12b")
+    llm = ChatOllama(model="qwen3.5:9b")
     url = "https://edition.cnn.com"
     html_text = extract_text_of_url(url=url)
     print("search data of cnn in llm")

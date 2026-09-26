@@ -8,3 +8,4 @@ cpp/lsbtw
 **/.env
 go/38-basic-term/build
 python/code_agent/memories.db
+python/ollama_agent/buy_data.db

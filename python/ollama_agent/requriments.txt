@@ -3,3 +3,4 @@ langgraph-checkpoint-sqlite
 langchain-ollama
 langchain
 streamlit
+strands-agents[ollama]

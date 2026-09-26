@@ -23,7 +23,7 @@ def create_file_tool(filename: str, content: str) -> str:
 
 # --- PASO 2: Configurar el Modelo ---
 # Usamos llama3 (o el modelo que tengas en Ollama)
-llm = ChatOllama(model="gemma4:12b")
+llm = ChatOllama(model="qwen3.5:9b")
 
 # --- PASO 3: Configurar el Prompt del Agente ---
 # El prompt debe indicar al modelo que tiene herramientas disponibles.
