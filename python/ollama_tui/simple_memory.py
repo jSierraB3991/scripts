@@ -1,6 +1,6 @@
 import json
 import ollama
-DEFAULT_MODEL = "lfm2.5:8b"
+DEFAULT_MODEL = "qwen3.5:9b"
 
 class SimpleMemory:
     def __init__(self, max_msg = 12, num_summarize=10):

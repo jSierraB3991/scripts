@@ -4,7 +4,7 @@ from libs import PROGRAM_KEY
 from sqlite3 import OperationalError
 
 # Importar funciones de db.py
-DB_PATH = Path("/mnt/videogames/docker_data/data/ejemplo.db")
+DB_PATH = Path("./ejemplo.db")
 
 
 def initialize_database():
