@@ -35,7 +35,7 @@ store = TestMemoryStore(name="notes")
 # Reads GEMINI_API_KEY from the environment.
 #model = GeminiModel(model_id="gemini-3.8-flash")
 
-model = OllamaModel(host="http://localhost:11434", model_id="lfm2.5:8b")
+model = OllamaModel(host="http://localhost:11434", model_id="qwen3.5:9b")
 agent = Agent(model=model, tools=[letter_counter, file_editor],memory_manager=MemoryManager(stores=[store]))
 agent_result = agent('How many letter R\'s are in the word "strawberry"? Write the answer to answer.txt.')
 print(agent_result)

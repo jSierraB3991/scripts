@@ -37,7 +37,7 @@ def websearch(
         return f"Exception: {e}"
 
 
-model = OllamaModel(host="http://localhost:11434", model_id="lfm2.5:8b")
+model = OllamaModel(host="http://localhost:11434", model_id="qwen3.5:9b")
 # Create a recipe assistant agent
 recipe_agent = Agent(
     model=model,  # Optional: Specify the model ID

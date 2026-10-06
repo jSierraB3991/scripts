@@ -1,0 +1,5 @@
+import secrets
+import base64
+
+key = base64.b64encode(secrets.token_bytes(32)).decode("utf-8")
+print(f"Encoded string: {key}")
