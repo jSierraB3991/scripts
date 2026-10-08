@@ -33,7 +33,7 @@ class Agent:
         print("⚙️ Herramienta llamada: read_file")
         try:
             with open(path, encoding="utf-8") as f:
-                return f.read
+                return f.read()
         except Exception as e:
             return { "error": str(e) }
 
@@ -51,7 +51,7 @@ class Agent:
                 dir_name = os.path.dirname(path)
                 if dir_name:
                     os.makedirs(dir_name, exist_ok=True)
-                conten = new_text
+                content = new_text
             
             with open(path, "w", encoding="utf-8") as f:
                       f.write(content)
@@ -99,10 +99,10 @@ class Agent:
                           "properties": {
                               "path": {
                                   "type": "string",
-                                  "description": "La ruta de larchivo",
+                                  "description": "La ruta del archivo",
                                 },"prev_text": {
                                   "type": "string",
-                                  "description": "El texto a reemplzar (que puede ser vacio)",
+                                  "description": "El texto a reemplazar (que puede ser vacio)",
                                 },"new_text": {
                                   "type": "string",
                                   "description": "El texto que reemplazara a prev text, o el texto para el archivo nuevo",
@@ -114,11 +114,9 @@ class Agent:
           ]
 
     def process_response(self, response):
-        self.messages += response.output
-
         for output in response.output:
             if output.type == "function_call":
-                fn_nam = output.name
+                fn_name = output.name
                 args = json.loads(output.arguments)
 
                 print(f"El modelo considera llamar a la herramient {fn_name}")
@@ -141,7 +139,6 @@ class Agent:
                 return True
 
             elif output.type == "message":
-                #print(f"Asistente: {output.content}")
                 reply = "\n".join(part.text for part in output.content)
                 print(f"Asistente: {reply}")
         return False
@@ -176,9 +173,10 @@ def main():
                                 input=agent.messages,
                                 tools=agent.tools,
                             )
-                #assistant_reply = response.output_text
-                #messages.append({"role": "assistant", "content": assistant_reply})
-                #print(f"Asistente: {assistant_reply}")
+                assistant_reply = response.output_text
+                if assistant_reply:
+                    messages.append({"role": "assistant", "content": assistant_reply})
+                    print(f"Asistente: {assistant_reply}")
                 called_tools = agent.process_response(response)
                 if not called_tools:
                     break

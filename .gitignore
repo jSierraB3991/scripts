@@ -9,3 +9,6 @@ cpp/lsbtw
 go/38-basic-term/build
 python/code_agent/memories.db
 python/ollama_agent/buy_data.db
+python/ollama_agent/basic_agent
+python/code_agent/ejemplo.db
+python/aiagent/calculator.py
