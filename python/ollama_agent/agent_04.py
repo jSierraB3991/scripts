@@ -94,11 +94,11 @@ agent = Agent(model=model,
 
 while True:
     print("Escribe 'salir', 'quit' o 'exit' para salir")
-    user_input = input(f"{MODEL} > ")
+    user_input = input(f"💬 {MODEL} > ")
     if user_input.lower() in ['salir', 'quit', 'exit']:
         print("Adiosito")
         break
-    print("Pensando...")
+    print("🤖 Pensando...")
     agent_result = agent(user_input)
     print()
     print(f"context_size: {agent_result.context_size}")
