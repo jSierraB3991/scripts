@@ -30,7 +30,7 @@ func (a Arguments) toString() string {
 	)
 }
 
-func main7() {
+func main() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
@@ -43,6 +43,11 @@ func main7() {
 
 	ctx := context.Background()
 	tools := buildTools()
+
+	// userInput := "Busca mis archivos de descargas (~/Descargas) y organízalos por tipo, contando las carpetas"
+	userInput := "Hazme un resumen de .bashrc, ignora los comentarios"
+	// userInput := "¿Qué archivos de Bash tengo en mi carpeta de descargas? (~/Descargas)"
+	// userInput := "¿Cuántos proyectos de Go tengo en ~/source/github?, ignora la carpeta scripts y dime cuáles son"
 
 	messages := []api.Message{
 		{
@@ -67,14 +72,12 @@ Reglas:
 - Responde en español.`, home),
 		},
 		{
-			Role: "user",
-			// Content:"Busca mis archivos de descargas (~/Descargas) y organízalos por tipo, contando las carpetas",
-			Content: "¿Cuántos proyectos de Go tengo en ~/source/github?, ignora la carpeta scripts y dime cuáles son",
-			// Content: "Hazme un resumen de ~/.bashrc, ignora los comentarios",
-			// Content: "¿Qué archivos de Bash tengo en mi carpeta de descargas? (~/Descargas)",
+			Role:    "user",
+			Content: userInput,
 		},
 	}
 
+	fmt.Printf("> %s\n", userInput)
 	// Ciclo de tool calling.
 	for turn := 0; turn < 10; turn++ {
 		req := &api.ChatRequest{

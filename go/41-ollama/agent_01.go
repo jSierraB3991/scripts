@@ -8,7 +8,7 @@ import (
 	"github.com/ollama/ollama/api"
 )
 
-func main() {
+func main1() {
 	ctx := context.Background()
 	client, err := api.ClientFromEnvironment()
 	if err != nil {
