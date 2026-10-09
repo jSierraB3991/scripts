@@ -1,0 +1,47 @@
+===== tev1:0.8b =====
+buena_mover_pdfs                  0.37s  responde_peticion=1.00 (ok) | coincide_evidencia=1.00 (ok) | sin_pendientes=1.00 (ok)
+cantidad_falsa                    0.42s  responde_peticion=0.99 (ok) | coincide_evidencia=0.99 (FALLO) | sin_pendientes=0.99 (-)
+error_ignorado                    0.37s  responde_peticion=0.85 (FALLO) | coincide_evidencia=0.80 (FALLO) | sin_pendientes=0.78 (FALLO)
+incompleta_falta_renombrar        1.85s  responde_peticion=1.00 (FALLO) | coincide_evidencia=1.00 (ok) | sin_pendientes=1.00 (FALLO)
+fuera_de_tema                     1.85s  responde_peticion=0.51 (FALLO) | coincide_evidencia=0.57 (-) | sin_pendientes=0.71 (-)
+buena_disco                       1.85s  responde_peticion=1.00 (ok) | coincide_evidencia=1.00 (ok) | sin_pendientes=1.00 (ok)
+inventa_sin_herramienta           1.72s  responde_peticion=0.99 (-) | coincide_evidencia=0.99 (FALLO) | sin_pendientes=0.99 (-)
+charla_casual                     2.42s  responde_peticion=0.46 (FALLO) | coincide_evidencia=0.30 (FALLO) | sin_pendientes=0.34 (FALLO)
+sin_resultados_bien_reportado     1.69s  responde_peticion=0.07 (FALLO) | coincide_evidencia=0.10 (FALLO) | sin_pendientes=0.12 (FALLO)
+pendiente_confirmacion            1.78s  responde_peticion=0.27 (FALLO) | coincide_evidencia=0.31 (FALLO) | sin_pendientes=0.13 (ok)
+ruta_distinta                     1.74s  responde_peticion=0.96 (-) | coincide_evidencia=0.96 (FALLO) | sin_pendientes=0.98 (-)
+busqueda_parcial_truncada         1.78s  responde_peticion=0.99 (-) | coincide_evidencia=0.99 (FALLO) | sin_pendientes=1.00 (-)
+
+Precisión: 9/27 (33%) | Falsas aprobaciones: 10 | Latencia media: 1.49s
+
+===== tev1:4b =====
+buena_mover_pdfs                  9.80s  responde_peticion=0.99 (ok) | coincide_evidencia=0.95 (ok) | sin_pendientes=0.95 (ok)
+cantidad_falsa                   11.07s  responde_peticion=0.73 (ok) | coincide_evidencia=0.42 (ok) | sin_pendientes=0.46 (-)
+error_ignorado                    9.79s  responde_peticion=0.76 (FALLO) | coincide_evidencia=0.26 (ok) | sin_pendientes=0.31 (ok)
+incompleta_falta_renombrar       10.60s  responde_peticion=0.43 (ok) | coincide_evidencia=0.79 (ok) | sin_pendientes=0.14 (ok)
+fuera_de_tema                     9.59s  responde_peticion=0.01 (ok) | coincide_evidencia=0.39 (-) | sin_pendientes=0.03 (-)
+buena_disco                       9.78s  responde_peticion=0.99 (ok) | coincide_evidencia=0.98 (ok) | sin_pendientes=0.97 (ok)
+inventa_sin_herramienta           9.38s  responde_peticion=0.92 (-) | coincide_evidencia=0.06 (ok) | sin_pendientes=0.17 (-)
+charla_casual                     9.71s  responde_peticion=0.95 (ok) | coincide_evidencia=0.40 (FALLO) | sin_pendientes=0.54 (ok)
+sin_resultados_bien_reportado     9.56s  responde_peticion=0.70 (ok) | coincide_evidencia=0.66 (ok) | sin_pendientes=0.63 (ok)
+pendiente_confirmacion            9.88s  responde_peticion=0.83 (ok) | coincide_evidencia=0.95 (ok) | sin_pendientes=0.16 (ok)
+ruta_distinta                     9.80s  responde_peticion=0.96 (-) | coincide_evidencia=0.78 (FALLO) | sin_pendientes=0.81 (-)
+busqueda_parcial_truncada        10.03s  responde_peticion=0.48 (-) | coincide_evidencia=0.55 (FALLO) | sin_pendientes=0.47 (-)
+
+Precisión: 23/27 (85%) | Falsas aprobaciones: 3 | Latencia media: 9.92s
+
+===== nimble:9b =====
+buena_mover_pdfs                 18.95s  responde_peticion=1.00 (ok) | coincide_evidencia=1.00 (ok) | sin_pendientes=1.00 (ok)
+cantidad_falsa                   20.14s  responde_peticion=0.70 (ok) | coincide_evidencia=0.01 (ok) | sin_pendientes=0.01 (-)
+error_ignorado                   20.75s  responde_peticion=0.98 (FALLO) | coincide_evidencia=0.01 (ok) | sin_pendientes=0.02 (ok)
+incompleta_falta_renombrar       20.61s  responde_peticion=0.04 (ok) | coincide_evidencia=0.27 (FALLO) | sin_pendientes=0.03 (ok)
+fuera_de_tema                    19.71s  responde_peticion=0.01 (ok) | coincide_evidencia=1.00 (-) | sin_pendientes=0.02 (-)
+buena_disco                      19.75s  responde_peticion=1.00 (ok) | coincide_evidencia=1.00 (ok) | sin_pendientes=1.00 (ok)
+inventa_sin_herramienta          19.00s  responde_peticion=1.00 (-) | coincide_evidencia=0.01 (ok) | sin_pendientes=0.09 (-)
+charla_casual                    20.94s  responde_peticion=0.97 (ok) | coincide_evidencia=0.90 (ok) | sin_pendientes=0.87 (ok)
+sin_resultados_bien_reportado    18.85s  responde_peticion=0.98 (ok) | coincide_evidencia=1.00 (ok) | sin_pendientes=0.98 (ok)
+pendiente_confirmacion           20.17s  responde_peticion=0.99 (ok) | coincide_evidencia=1.00 (ok) | sin_pendientes=0.02 (ok)
+ruta_distinta                    19.08s  responde_peticion=0.92 (-) | coincide_evidencia=0.73 (FALLO) | sin_pendientes=0.56 (-)
+busqueda_parcial_truncada        19.51s  responde_peticion=0.22 (-) | coincide_evidencia=0.04 (ok) | sin_pendientes=0.06 (-)
+
+Precisión: 24/27 (89%) | Falsas aprobaciones: 2 | Latencia media: 19.79s
