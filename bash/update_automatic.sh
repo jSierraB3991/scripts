@@ -1,9 +1,9 @@
 #! /bin/bash
 
-FOLDER_DB=/mnt/videogames/docker_data
+FOLDER_DB="$HOME/.local/data/updates"
 
 mkdir -p $FOLDER_DB
-mkdir -p $HOME/Descargas
+mkdir -p $HOME/Descargas/programs
 
 #Verify table
 echo "CREATE TABLE IF NOT EXISTS programs(name varchar(100), version varchar(50), date varchar(40))" | sqlite3 $FOLDER_DB/ejemplo.db 1>/dev/null 2>/dev/null
@@ -262,6 +262,7 @@ PROGRAMS=(
   "insomnia|Insomnia (API Client)"
   "java|Java GraalVM"
   "sprite|LibreSprite"
+  "vscode|VsCode OSS"
 )
 
 show_help() {
