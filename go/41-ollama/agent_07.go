@@ -30,7 +30,7 @@ func (a Arguments) toString() string {
 	)
 }
 
-func main() {
+func main7() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		log.Fatal(err)
