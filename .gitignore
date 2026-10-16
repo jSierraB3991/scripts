@@ -16,3 +16,4 @@ python/ollama_agent/file.pdf
 python/ollama_agent/image.jpg
 python/ollama_agent/agent_07_what_is_python.txt
 go/41-ollama/ollama
+python/ollama_tui/memory.json

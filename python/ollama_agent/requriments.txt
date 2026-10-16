@@ -4,3 +4,5 @@ langchain-ollama
 langchain
 streamlit
 strands-agents[ollama]
+
+langchain-openrouter
