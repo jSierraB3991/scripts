@@ -48,7 +48,7 @@ type CravingInput struct {
 	Craving string `json:"craving" jsonschema_description:"What the user feels like eating right now."`
 }
 
-func main4() {
+func main() {
 	godotenv.Load()
 	ctx := context.Background()
 

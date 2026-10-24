@@ -13,7 +13,7 @@ type WeatherInput struct {
 	Location string `json:"location" jsonschema:"required"`
 }
 
-func main() {
+func main8() {
 	fmt.Println("Star")
 	err := godotenv.Load()
 	if err != nil {
