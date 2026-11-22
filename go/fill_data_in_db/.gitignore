@@ -1,0 +1,3 @@
+build/fill_data
+src/.env
+src/__debug_bin**
