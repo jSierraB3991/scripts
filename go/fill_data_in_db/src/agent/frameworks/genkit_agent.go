@@ -40,6 +40,7 @@ func (agent *GenkitAgent) RunChat(userInput string) {
 		ai.WithSystem(agent.systemPrompt),
 		ai.WithPrompt(userInput),
 		ai.WithModelName(agent.model),
+		ai.WithTools(getToolsGenkit(g)...),
 	)
 	if err != nil {
 		log.Println(err)
@@ -57,5 +58,5 @@ func (agent *GenkitAgent) RunChat(userInput string) {
 		// y bloquear temporalmente sus solicitudes si excede una cuota establecida por ti.
 	}
 
-	log.Println(resp.Text())
+	log.Println(chatAgent.Text())
 }
